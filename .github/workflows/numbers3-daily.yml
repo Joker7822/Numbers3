@@ -1,6 +1,13 @@
 name: NUMBERS3 Daily Prediction
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - numbers3_historical_backtest.py
+      - numbers3_runner.py
+      - numbers3_evo_agent.py
+      - .github/workflows/numbers3-daily.yml
   schedule:
     # GitHub Actions cron is UTC.
     # 11:00 UTC = 20:00 JST. Sunday(0) through Thursday(4).
@@ -50,6 +57,23 @@ jobs:
             --refresh \
             --validation 1000 \
             --topk 20
+
+      - name: Historical walk-forward accuracy audit
+        env:
+          TZ: Asia/Tokyo
+        shell: bash
+        run: |
+          EXTRA=""
+          if [ "${GITHUB_EVENT_NAME}" = "push" ]; then
+            EXTRA="--force"
+          fi
+          python numbers3_historical_backtest.py \
+            --csv data/numbers3.csv \
+            --output-dir backtests \
+            --warmup 500 \
+            --refit-interval 1000 \
+            --topk 20 \
+            ${EXTRA}
 
       - name: Repack historical dataset
         run: |
