@@ -1,4 +1,11 @@
 {
-  "total_cycles": 0,
-  "status": "waiting_for_first_workflow_run"
+  "total_cycles": 51,
+  "last_completed_at": "2026-08-22T08:41:43+09:00",
+  "last_dataset_fingerprint": "948bef1e8ef21bf4ad2b",
+  "last_issue": 7054,
+  "last_duration_seconds": 35.419,
+  "last_exact_nll": 6.94205711,
+  "last_top1_rate": 0.001373,
+  "last_top20_rate": 0.020598,
+  "history_rows_kept": 51
 }
