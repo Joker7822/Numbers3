@@ -1,0 +1,12 @@
+{
+  "generation": 1,
+  "dataset_fingerprint": "ea4ce2af5f81d34f",
+  "last_draw_date": "2026-08-21",
+  "model_weights": {
+    "frequency": 0.18678807721307447,
+    "markov": 0.2875431661600632,
+    "logreg": 0.002777506150571044,
+    "extra_trees": 0.5228912504762913
+  },
+  "updated_at": "2026-08-22T07:19:14+09:00"
+}
