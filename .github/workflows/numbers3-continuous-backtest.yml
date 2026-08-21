@@ -1,0 +1,131 @@
+name: NUMBERS3 Continuous Backtest
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - numbers3_continuous_backtest.py
+      - numbers3_historical_backtest.py
+      - .github/workflows/numbers3-continuous-backtest.yml
+  workflow_dispatch:
+  schedule:
+    # Watchdog: if a chained run stopped because of a transient failure,
+    # start the continuous loop again every 6 hours.
+    - cron: "17 */6 * * *"
+
+concurrency:
+  group: numbers3-continuous-backtest
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  continuous-backtest:
+    runs-on: ubuntu-latest
+    # GitHub-hosted runners have a 6 hour job ceiling.
+    # Stop our loop earlier and hand off to the next workflow_dispatch run.
+    timeout-minutes: 355
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Configure agent git identity
+        run: |
+          git config user.name "numbers3-ai-agent"
+          git config user.email "numbers3-ai-agent@users.noreply.github.com"
+
+      - name: Run backtests continuously
+        env:
+          TZ: Asia/Tokyo
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # 5h30m. Leaves ~25 minutes before the 355 minute hard timeout
+          # for a final checkpoint and self-dispatch handoff.
+          DEADLINE=$(( $(date +%s) + 19800 ))
+          LAST_CHECKPOINT=$(date +%s)
+          CYCLES_THIS_RUN=0
+
+          restore_dataset() {
+            cat data/history_parts/part_* > /tmp/numbers3.csv.xz.b64
+            base64 -d /tmp/numbers3.csv.xz.b64 > /tmp/numbers3.csv.xz
+            xz -dc /tmp/numbers3.csv.xz > data/numbers3.csv
+          }
+
+          checkpoint() {
+            git add -- \
+              backtests/continuous_backtest_history.csv \
+              backtests/continuous_status.txt \
+              state/continuous_backtest_state.json
+
+            if ! git diff --cached --quiet; then
+              git commit -m "chore(agent): checkpoint continuous backtest"
+              # Daily prediction may have committed while this loop was running.
+              # Rebase our unique continuous-backtest files before pushing.
+              git pull --rebase origin main
+              git push origin HEAD:main
+            else
+              # Even if there is nothing new to commit, refresh code/data at checkpoints.
+              git pull --rebase origin main
+            fi
+          }
+
+          # Start from the newest main snapshot.
+          git pull --rebase origin main
+          restore_dataset
+
+          while [ "$(date +%s)" -lt "${DEADLINE}" ]; do
+            echo "[continuous] starting cycle $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds)"
+            python numbers3_continuous_backtest.py \
+              --csv data/numbers3.csv \
+              --backtest-script numbers3_historical_backtest.py \
+              --history backtests/continuous_backtest_history.csv \
+              --status backtests/continuous_status.txt \
+              --state state/continuous_backtest_state.json \
+              --warmup 500 \
+              --refit-interval 1000 \
+              --topk 20 \
+              --max-history-rows 10000
+
+            # No sleep: the next backtest starts immediately after this one finishes.
+            CYCLES_THIS_RUN=$((CYCLES_THIS_RUN + 1))
+            NOW=$(date +%s)
+
+            # Persist progress and pick up newly published draw data/code every 30 minutes.
+            if [ $((NOW - LAST_CHECKPOINT)) -ge 1800 ]; then
+              checkpoint
+              restore_dataset
+              LAST_CHECKPOINT=${NOW}
+            fi
+          done
+
+          checkpoint
+          echo "[continuous] completed ${CYCLES_THIS_RUN} cycles in this workflow run"
+
+      - name: Start next continuous run immediately
+        if: ${{ success() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run numbers3-continuous-backtest.yml \
+            --repo "${GITHUB_REPOSITORY}" \
+            --ref main
+          echo "Queued the next continuous backtest workflow run."
