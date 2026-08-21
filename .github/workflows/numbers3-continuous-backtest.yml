@@ -76,22 +76,23 @@ jobs:
               backtests/continuous_status.txt \
               state/continuous_backtest_state.json
 
-            if git diff --cached --quiet; then
-              return 0
+            if ! git diff --cached --quiet; then
+              git commit -m "chore(agent): checkpoint continuous backtest"
+              # Daily prediction may have committed while this loop was running.
+              # Rebase our unique continuous-backtest files before pushing.
+              git pull --rebase origin main
+              git push origin HEAD:main
+            else
+              # Even if there is nothing new to commit, refresh code/data at checkpoints.
+              git pull --rebase origin main
             fi
-
-            git commit -m "chore(agent): checkpoint continuous backtest"
-            # Daily prediction may have committed while this loop was running.
-            # Rebase our unique continuous-backtest files before pushing.
-            git pull --rebase origin main
-            git push origin HEAD:main
           }
 
-          while [ "$(date +%s)" -lt "${DEADLINE}" ]; do
-            # Pick up the latest official-data snapshot and code before every cycle.
-            git pull --rebase origin main
-            restore_dataset
+          # Start from the newest main snapshot.
+          git pull --rebase origin main
+          restore_dataset
 
+          while [ "$(date +%s)" -lt "${DEADLINE}" ]; do
             echo "[continuous] starting cycle $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds)"
             python numbers3_continuous_backtest.py \
               --csv data/numbers3.csv \
@@ -104,12 +105,14 @@ jobs:
               --topk 20 \
               --max-history-rows 10000
 
+            # No sleep: the next backtest starts immediately after this one finishes.
             CYCLES_THIS_RUN=$((CYCLES_THIS_RUN + 1))
             NOW=$(date +%s)
 
-            # Persist progress every 30 minutes, but do not pause between cycles.
+            # Persist progress and pick up newly published draw data/code every 30 minutes.
             if [ $((NOW - LAST_CHECKPOINT)) -ge 1800 ]; then
               checkpoint
+              restore_dataset
               LAST_CHECKPOINT=${NOW}
             fi
           done
