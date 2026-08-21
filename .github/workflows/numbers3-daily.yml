@@ -36,8 +36,9 @@ jobs:
 
       - name: Restore historical dataset
         run: |
-          base64 -d data/numbers3.csv.gz.b64 > /tmp/numbers3.csv.gz
-          gzip -dc /tmp/numbers3.csv.gz > data/numbers3.csv
+          cat data/history_parts/part_* > /tmp/numbers3.csv.xz.b64
+          base64 -d /tmp/numbers3.csv.xz.b64 > /tmp/numbers3.csv.xz
+          xz -dc /tmp/numbers3.csv.xz > data/numbers3.csv
 
       - name: Refresh, backtest, predict, and reconcile
         env:
@@ -52,8 +53,10 @@ jobs:
 
       - name: Repack historical dataset
         run: |
-          gzip -9 -c data/numbers3.csv > /tmp/numbers3.csv.gz
-          base64 /tmp/numbers3.csv.gz > data/numbers3.csv.gz.b64
+          xz -9e -c data/numbers3.csv > /tmp/numbers3.csv.xz
+          base64 /tmp/numbers3.csv.xz > /tmp/numbers3.csv.xz.b64
+          rm -f data/history_parts/part_*
+          split -b 8000 -d -a 2 /tmp/numbers3.csv.xz.b64 data/history_parts/part_
 
       - name: Commit generated data
         shell: bash
@@ -61,7 +64,7 @@ jobs:
           git config user.name "numbers3-ai-agent"
           git config user.email "numbers3-ai-agent@users.noreply.github.com"
           git add -- \
-            data/numbers3.csv.gz.b64 \
+            data/history_parts \
             predictions \
             backtests \
             state
