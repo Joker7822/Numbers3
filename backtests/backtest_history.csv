@@ -1,0 +1,2 @@
+generation,generated_at,source_last_issue,source_last_draw_date,validation_draws,validation_period_start,validation_period_end,ensemble_logloss,uniform_logloss,improvement_vs_uniform,edge_status,top1_straight_hit_rate,top20_straight_hit_rate,weight_frequency,weight_markov,weight_logreg,weight_extra_trees
+1,2026-08-22T07:19:14+09:00,7054,2026-08-21,1000,2022-10-06,2026-08-21,2.307533518775077,2.302585092994046,-0.004948425781031052,not_confirmed,0.001,0.021,0.18678807721307447,0.2875431661600632,0.002777506150571044,0.5228912504762913
