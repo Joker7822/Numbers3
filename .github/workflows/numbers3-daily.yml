@@ -1,0 +1,71 @@
+name: NUMBERS3 Daily Prediction
+
+on:
+  schedule:
+    # GitHub Actions cron is UTC.
+    # 11:00 UTC = 20:00 JST. Sunday(0) through Thursday(4).
+    - cron: "0 11 * * 0-4"
+  workflow_dispatch:
+
+concurrency:
+  group: numbers3-daily-prediction
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  predict:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Restore historical dataset
+        run: |
+          gzip -dc data/numbers3.csv.gz > data/numbers3.csv
+
+      - name: Refresh, backtest, predict, and reconcile
+        env:
+          TZ: Asia/Tokyo
+        run: |
+          python numbers3_runner.py \
+            --csv data/numbers3.csv \
+            --scraper scrapingnumbers3.py \
+            --refresh \
+            --validation 1000 \
+            --topk 20
+
+      - name: Repack historical dataset
+        run: |
+          gzip -9 -c data/numbers3.csv > data/numbers3.csv.gz
+
+      - name: Commit generated data
+        shell: bash
+        run: |
+          git config user.name "numbers3-ai-agent"
+          git config user.email "numbers3-ai-agent@users.noreply.github.com"
+          git add -- \
+            data/numbers3.csv.gz \
+            predictions \
+            backtests \
+            state
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(agent): update NUMBERS3 prediction and backtest"
+          git push
