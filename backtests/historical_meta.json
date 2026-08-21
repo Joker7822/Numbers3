@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-08-22T07:55:44+09:00",
+  "dataset_fingerprint": "948bef1e8ef21bf4ad2b",
+  "latest_issue": 7054,
+  "evaluated_draws": 6554,
+  "first_evaluated_issue": 501,
+  "last_evaluated_issue": 7054,
+  "warmup_draws": 500,
+  "refit_interval": 1000,
+  "top_k": 20,
+  "chunks": [
+    {
+      "first_issue": 501,
+      "last_issue": 1500,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_0501_1500.txt"
+    },
+    {
+      "first_issue": 1501,
+      "last_issue": 2500,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_1501_2500.txt"
+    },
+    {
+      "first_issue": 2501,
+      "last_issue": 3500,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_2501_3500.txt"
+    },
+    {
+      "first_issue": 3501,
+      "last_issue": 4500,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_3501_4500.txt"
+    },
+    {
+      "first_issue": 4501,
+      "last_issue": 5500,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_4501_5500.txt"
+    },
+    {
+      "first_issue": 5501,
+      "last_issue": 6500,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_5501_6500.txt"
+    },
+    {
+      "first_issue": 6501,
+      "last_issue": 7054,
+      "rows": 554,
+      "text": "historical_rounds/rounds_6501_7054.txt"
+    }
+  ],
+  "skipped": false,
+  "method": "past-only prequential walk-forward; periodic lightweight ML refit; causal adaptive weights"
+}

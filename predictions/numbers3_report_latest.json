@@ -1,14 +1,16 @@
 {
+  "generated_at": "2026-08-22T07:55:06+09:00",
   "generation": 1,
   "dataset_fingerprint": "ea4ce2af5f81d34f",
-  "last_draw_date": "2026-08-21",
-  "model_weights": {
-    "frequency": 0.18678807721307447,
-    "markov": 0.2875431661600632,
-    "logreg": 0.0027775061505710442,
-    "extra_trees": 0.5228912504762914
+  "dataset": {
+    "rows": 7054,
+    "first_draw_date": "1994-10-07",
+    "last_draw_date": "2026-08-21",
+    "last_issue": "第7054回",
+    "last_number": "286",
+    "model_next_weekday_candidate": "2026-08-24"
   },
-  "last_validation": {
+  "validation": {
     "draws": 1000,
     "period_start": "2022-10-06",
     "period_end": "2026-08-21",
@@ -27,7 +29,19 @@
     "uniform_expected_top20_rate": 0.02,
     "edge_status": "not_confirmed"
   },
-  "last_top_predictions": [
+  "model_weights": {
+    "frequency": 0.18678807721307447,
+    "markov": 0.2875431661600632,
+    "logreg": 0.0027775061505710442,
+    "extra_trees": 0.5228912504762914
+  },
+  "current_validation_weights": {
+    "frequency": 0.18678807721307447,
+    "markov": 0.2875431661600632,
+    "logreg": 0.0027775061505710442,
+    "extra_trees": 0.5228912504762914
+  },
+  "top_predictions": [
     {
       "rank": 1,
       "number": "470",
@@ -129,5 +143,10 @@
       "probability": 0.0015694355730740865
     }
   ],
-  "updated_at": "2026-08-22T07:55:06+09:00"
+  "notes": [
+    "未来情報を特徴量に含めない時系列ホールドアウト評価。",
+    "モデル重みは検証log lossから自動算出し、新規データ世代では前世代重みと平滑化。",
+    "検証成績が一様分布を上回らない場合、予測優位性は確認できない。",
+    "model_next_weekday_candidate は単純な平日計算で、祝日・年末年始は未反映。"
+  ]
 }
