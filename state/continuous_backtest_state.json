@@ -1,9 +1,9 @@
 {
-  "total_cycles": 583,
-  "last_completed_at": "2026-08-22T12:57:46+09:00",
+  "total_cycles": 750,
+  "last_completed_at": "2026-08-22T13:27:47+09:00",
   "last_issue": 7054,
   "mode": "evolution_engine_v2_full_replay_feedback",
-  "last_experiment_id": "exp-0000175-ea261a66b7bc",
+  "last_experiment_id": "exp-0000342-b85684f662ed",
   "current_champion_id": "champ-5c4ebf8f035b",
   "current_generation": 2,
   "replay_selection_exact_nll": 6.936741428765215,
