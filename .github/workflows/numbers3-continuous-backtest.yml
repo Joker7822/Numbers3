@@ -25,7 +25,6 @@ permissions:
 jobs:
   continuous-evolution:
     runs-on: ubuntu-latest
-    # GitHub-hosted runners have a 6 hour job ceiling. Hand off before that.
     timeout-minutes: 355
 
     steps:
@@ -54,6 +53,7 @@ jobs:
       - name: Run Champion Challenger experiments continuously
         env:
           TZ: Asia/Tokyo
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
@@ -61,6 +61,7 @@ jobs:
           DEADLINE=$(( $(date +%s) + 19800 ))
           LAST_CHECKPOINT=$(date +%s)
           CYCLES_THIS_RUN=0
+          PROMOTION_PENDING=0
 
           restore_dataset() {
             cat data/history_parts/part_* > /tmp/numbers3.csv.xz.b64
@@ -68,10 +69,21 @@ jobs:
             xz -dc /tmp/numbers3.csv.xz > data/numbers3.csv
           }
 
+          champion_id() {
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("state/evolution_champion.json")
+          print(json.loads(p.read_text(encoding="utf-8")).get("champion_id", ""))
+          PY
+          }
+
           update_compatibility_status() {
             cp experiments/latest_experiment.txt backtests/continuous_status.txt
             python - <<'PY'
           import json
+          import re
+          import pandas as pd
           from pathlib import Path
 
           old_path = Path("state/continuous_backtest_state.json")
@@ -80,10 +92,13 @@ jobs:
           old = json.loads(old_path.read_text(encoding="utf-8")) if old_path.exists() else {}
           eng = json.loads(engine_path.read_text(encoding="utf-8"))
           champ = json.loads(champion_path.read_text(encoding="utf-8"))
+          draws = pd.read_csv("data/numbers3.csv")
+          match = re.search(r"(\d+)", str(draws.iloc[-1]["回別"]))
+          latest_issue = int(match.group(1)) if match else old.get("last_issue")
           new = {
               "total_cycles": int(old.get("total_cycles", 0)) + 1,
               "last_completed_at": eng.get("last_completed_at"),
-              "last_issue": old.get("last_issue", 7054),
+              "last_issue": latest_issue,
               "mode": "evolution_engine_v2",
               "last_experiment_id": eng.get("last_experiment_id"),
               "current_champion_id": champ.get("champion_id"),
@@ -108,13 +123,21 @@ jobs:
             else
               git pull --rebase origin main
             fi
+
+            if [ "${PROMOTION_PENDING}" -eq 1 ]; then
+              gh workflow run numbers3-daily.yml --repo "${GITHUB_REPOSITORY}" --ref main
+              echo "Dispatched daily prediction with the newly promoted Champion."
+              PROMOTION_PENDING=0
+            fi
           }
 
           git pull --rebase origin main
           restore_dataset
 
           while [ "$(date +%s)" -lt "${DEADLINE}" ]; do
-            echo "[evolution] starting experiment $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds)"
+            BEFORE_CHAMPION=$(champion_id)
+            echo "[evolution] starting experiment $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds) champion=${BEFORE_CHAMPION}"
+
             python numbers3_evolution_engine.py \
               --csv data/numbers3.csv \
               --champion state/evolution_champion.json \
@@ -125,10 +148,21 @@ jobs:
               --fold-size 500
 
             update_compatibility_status
+            AFTER_CHAMPION=$(champion_id)
             CYCLES_THIS_RUN=$((CYCLES_THIS_RUN + 1))
             NOW=$(date +%s)
 
-            # No sleep: immediately generate and test the next challenger.
+            # A promotion is persisted and activated immediately.
+            if [ "${BEFORE_CHAMPION}" != "${AFTER_CHAMPION}" ]; then
+              PROMOTION_PENDING=1
+              echo "[evolution] Champion promoted: ${BEFORE_CHAMPION} -> ${AFTER_CHAMPION}"
+              checkpoint
+              restore_dataset
+              LAST_CHECKPOINT=${NOW}
+              continue
+            fi
+
+            # Otherwise persist batches every 30 minutes. No sleep between challengers.
             if [ $((NOW - LAST_CHECKPOINT)) -ge 1800 ]; then
               checkpoint
               restore_dataset
