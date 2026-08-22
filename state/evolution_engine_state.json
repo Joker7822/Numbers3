@@ -1,11 +1,11 @@
 {
-  "total_experiments": 5766,
-  "last_experiment_id": "exp-0005766-56ab93f85b2d",
-  "last_completed_at": "2026-08-23T06:38:51+09:00",
+  "total_experiments": 5790,
+  "last_experiment_id": "exp-0005790-6424cd1d7a12",
+  "last_completed_at": "2026-08-23T07:09:48+09:00",
   "last_dataset_fingerprint": "d00cd33771798e2fda3b",
   "current_champion_id": "champ-5c4ebf8f035b",
   "current_generation": 2,
-  "experiments_since_last_promotion": 5757,
+  "experiments_since_last_promotion": 5781,
   "search_mode": "structural",
   "eval_version": "rolling5-bootstrap-v3"
 }
