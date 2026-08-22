@@ -1,6 +1,6 @@
 NUMBERS3 最新予測
 ================================================================
-生成日時: 2026-08-22T12:14:31+09:00
+生成日時: 2026-08-22T15:38:27+09:00
 学習済み最終抽せん: 第7054回 / 2026-08-21 / 本数字 286
 予測対象: 第7055回
 抽せん日候補: 2026-08-24（回号を主キーに後日照合）
@@ -9,42 +9,42 @@ NUMBERS3 最新予測
 バックテスト
 ----------------------------------------------------------------
 検証期間: 2022-10-06 ～ 2026-08-21 / 1000回
-Ensemble log loss: 2.30878000
+Ensemble log loss: 2.30840274
 Uniform log loss : 2.30258509
-差(一様 - model): -0.00619491
+差(一様 - model): -0.00581765
 優位性判定: not_confirmed
-Top1 ストレート包含率: 0.0000%
-Top20 ストレート包含率: 2.4000%
+Top1 ストレート包含率: 0.1000%
+Top20 ストレート包含率: 2.3000%
 
 モデル重み
 ----------------------------------------------------------------
-extra_trees : 49.482449%
-markov      : 30.445840%
-frequency   : 19.777622%
-logreg      : 0.294090%
+extra_trees : 65.005529%
+markov      : 24.609561%
+frequency   : 10.384750%
+logreg      : 0.000160%
 
 予測ランキング
 ----------------------------------------------------------------
-01. 480  model=0.190494%  vs_uniform=1.905x
-02. 487  model=0.188659%  vs_uniform=1.887x
-03. 488  model=0.187162%  vs_uniform=1.872x
-04. 980  model=0.178129%  vs_uniform=1.781x
-05. 987  model=0.176413%  vs_uniform=1.764x
-06. 880  model=0.176269%  vs_uniform=1.763x
-07. 988  model=0.175013%  vs_uniform=1.750x
-08. 887  model=0.174572%  vs_uniform=1.746x
-09. 888  model=0.173186%  vs_uniform=1.732x
-10. 780  model=0.170617%  vs_uniform=1.706x
-11. 489  model=0.170290%  vs_uniform=1.703x
-12. 470  model=0.169064%  vs_uniform=1.691x
-13. 787  model=0.168973%  vs_uniform=1.690x
-14. 788  model=0.167632%  vs_uniform=1.676x
-15. 477  model=0.167436%  vs_uniform=1.674x
-16. 430  model=0.167007%  vs_uniform=1.670x
-17. 478  model=0.166107%  vs_uniform=1.661x
-18. 437  model=0.165398%  vs_uniform=1.654x
-19. 438  model=0.164085%  vs_uniform=1.641x
-20. 420  model=0.163498%  vs_uniform=1.635x
+01. 980  model=0.196613%  vs_uniform=1.966x
+02. 880  model=0.188077%  vs_uniform=1.881x
+03. 480  model=0.186160%  vs_uniform=1.862x
+04. 987  model=0.185565%  vs_uniform=1.856x
+05. 780  model=0.182310%  vs_uniform=1.823x
+06. 988  model=0.180384%  vs_uniform=1.804x
+07. 989  model=0.177835%  vs_uniform=1.778x
+08. 887  model=0.177509%  vs_uniform=1.775x
+09. 487  model=0.175699%  vs_uniform=1.757x
+10. 970  model=0.172620%  vs_uniform=1.726x
+11. 888  model=0.172552%  vs_uniform=1.726x
+12. 787  model=0.172066%  vs_uniform=1.721x
+13. 488  model=0.170793%  vs_uniform=1.708x
+14. 889  model=0.170115%  vs_uniform=1.701x
+15. 489  model=0.168380%  vs_uniform=1.684x
+16. 788  model=0.167261%  vs_uniform=1.673x
+17. 920  model=0.166081%  vs_uniform=1.661x
+18. 982  model=0.165624%  vs_uniform=1.656x
+19. 870  model=0.165126%  vs_uniform=1.651x
+20. 789  model=0.164898%  vs_uniform=1.649x
 
 注意
 ----------------------------------------------------------------
