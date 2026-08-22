@@ -1,9 +1,12 @@
 {
-  "total_cycles": 418,
-  "last_completed_at": "2026-08-22T12:17:01+09:00",
+  "total_cycles": 419,
+  "last_completed_at": "2026-08-22T12:27:39+09:00",
   "last_issue": 7054,
-  "mode": "evolution_engine_v2",
-  "last_experiment_id": "exp-0000010-f4ebd4f36bab",
+  "mode": "evolution_engine_v2_full_replay_feedback",
+  "last_experiment_id": "exp-0000011-44bd52946598",
   "current_champion_id": "champ-5c4ebf8f035b",
-  "current_generation": 2
+  "current_generation": 2,
+  "replay_selection_exact_nll": 6.936741428765215,
+  "replay_best_selection_exact_nll": 6.936741428765215,
+  "replay_stagnation_count": 0
 }
