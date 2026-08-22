@@ -1,20 +1,70 @@
 {
-  "champion_id": "champ-b7f02f6a077e",
-  "generation": 1,
-  "promoted_at": null,
-  "source_experiment_id": null,
+  "champion_id": "champ-5c4ebf8f035b",
+  "generation": 2,
+  "promoted_at": "2026-08-22T12:15:46+09:00",
+  "source_experiment_id": "exp-0000009-5c4ebf8f035b",
   "config": {
     "validation_draws": 1000,
     "top_k": 20,
     "half_life_draws": 1500,
     "evolution_rate": 0.7,
-    "weight_temperature": 0.02,
+    "weight_temperature": 0.01,
     "frequency_profile": "default",
     "markov_blend": 0.65,
     "transition_window": 1000,
-    "lr_c": 0.25,
+    "lr_c": 0.5,
     "tree_estimators": 240,
     "tree_min_leaf": 8,
     "random_state": 42
+  },
+  "nested_metrics": {
+    "dataset_fingerprint": "d00cd33771798e2fda3b",
+    "config_id": "5c4ebf8f035b",
+    "seed42": {
+      "seed": 42,
+      "development": {
+        "exact_nll": 6.91314930508815,
+        "digit_nll": 2.3043831016960503,
+        "top1_rate": 0.0013333333333333333,
+        "top20_rate": 0.02266666666666667,
+        "mean_rank": 484.39733333333334,
+        "fold_exact_nll": [
+          6.9175272426794905,
+          6.905790041685579,
+          6.9161306308993815
+        ]
+      },
+      "audit_report_only": {
+        "n": 1000,
+        "exact_nll": 6.921665063910046,
+        "top1_rate": 0.002,
+        "top20_rate": 0.019,
+        "mean_rank": 493.146,
+        "digit_nll": 2.307221687970016
+      }
+    },
+    "seed137": {
+      "seed": 137,
+      "development": {
+        "exact_nll": 6.912876137183929,
+        "digit_nll": 2.3042920457279763,
+        "top1_rate": 0.0013333333333333333,
+        "top20_rate": 0.021333333333333333,
+        "mean_rank": 485.0813333333333,
+        "fold_exact_nll": [
+          6.916582847790865,
+          6.904617162078458,
+          6.917428401682464
+        ]
+      },
+      "audit_report_only": {
+        "n": 1000,
+        "exact_nll": 6.916682228937849,
+        "top1_rate": 0.001,
+        "top20_rate": 0.015,
+        "mean_rank": 487.55,
+        "digit_nll": 2.305560742979283
+      }
+    }
   }
 }

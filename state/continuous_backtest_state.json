@@ -1,11 +1,9 @@
 {
-  "total_cycles": 408,
-  "last_completed_at": "2026-08-22T12:13:14+09:00",
-  "last_dataset_fingerprint": "948bef1e8ef21bf4ad2b",
+  "total_cycles": 417,
+  "last_completed_at": "2026-08-22T12:15:46+09:00",
   "last_issue": 7054,
-  "last_duration_seconds": 35.094,
-  "last_exact_nll": 6.94205711,
-  "last_top1_rate": 0.001373,
-  "last_top20_rate": 0.020598,
-  "history_rows_kept": 408
+  "mode": "evolution_engine_v2",
+  "last_experiment_id": "exp-0000009-5c4ebf8f035b",
+  "current_champion_id": "champ-5c4ebf8f035b",
+  "current_generation": 2
 }
