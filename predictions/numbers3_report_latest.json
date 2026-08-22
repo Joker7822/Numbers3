@@ -1,6 +1,9 @@
 {
-  "generated_at": "2026-08-22T15:38:27+09:00",
-  "generation": 1,
+  "generated_at": "2026-08-23T06:34:20+09:00",
+  "generation": 2,
+  "champion_generation": 2,
+  "champion_id": "champ-5c4ebf8f035b",
+  "config_id": "f8c4f8ac54a3",
   "dataset_fingerprint": "ea4ce2af5f81d34f",
   "dataset": {
     "rows": 7054,
@@ -11,142 +14,157 @@
     "model_next_weekday_candidate": "2026-08-24"
   },
   "validation": {
-    "draws": 1000,
-    "period_start": "2022-10-06",
+    "draws": 700,
+    "calibration_draws": 300,
+    "period_start": "2023-12-04",
     "period_end": "2026-08-21",
     "model_logloss": {
-      "frequency": 2.330441770970012,
-      "markov": 2.3218138050728676,
-      "logreg": 2.4412689111695975,
-      "extra_trees": 2.3121004318661846
+      "frequency": 2.3281463326885583,
+      "markov": 2.313025770465772,
+      "logreg": 2.4333294392344076,
+      "extra_trees": 2.3089548885925284
     },
-    "ensemble_logloss": 2.3084027415808404,
+    "ensemble_logloss": 2.3103239605886756,
     "uniform_logloss": 2.302585092994046,
-    "logloss_improvement_vs_uniform": -0.005817648586794455,
-    "top1_straight_hit_rate": 0.001,
-    "top20_straight_hit_rate": 0.023,
+    "logloss_improvement_vs_uniform": -0.007738867594629717,
+    "exact_nll": 6.930971881766027,
+    "uniform_exact_nll": 6.907755278982137,
+    "exact_nll_improvement_vs_uniform": -0.02321660278389004,
+    "top1_straight_hit_rate": 0.0,
+    "top20_straight_hit_rate": 0.022857142857142857,
     "uniform_expected_top1_rate": 0.001,
     "uniform_expected_top20_rate": 0.02,
     "edge_status": "not_confirmed"
   },
   "model_weights": {
-    "frequency": 0.10384750394423369,
-    "markov": 0.24609560645241788,
-    "logreg": 1.59674115466006e-06,
-    "extra_trees": 0.6500552928621939
+    "frequency": 0.08096379043108479,
+    "markov": 0.3672556667970084,
+    "logreg": 2.18900400339014e-06,
+    "extra_trees": 0.5517783537679034
   },
-  "current_validation_weights": {
-    "frequency": 0.10384750394423369,
-    "markov": 0.24609560645241788,
-    "logreg": 1.59674115466006e-06,
-    "extra_trees": 0.6500552928621939
+  "v3_config": {
+    "validation_draws": 1000,
+    "top_k": 20,
+    "half_life_draws": 1500,
+    "evolution_rate": 0.7,
+    "weight_temperature": 0.01,
+    "frequency_profile": "default",
+    "markov_blend": 0.65,
+    "transition_window": 1000,
+    "lr_c": 0.5,
+    "tree_estimators": 240,
+    "tree_min_leaf": 8,
+    "random_state": 42,
+    "uniform_blend": 1.0,
+    "autoregressive_mix": 0.0,
+    "ar_alpha": 2.0,
+    "feature_profile": "base"
   },
   "top_predictions": [
     {
       "rank": 1,
       "number": "980",
-      "probability": 0.0019661279519800788
+      "probability": 0.00180804887432227
     },
     {
       "rank": 2,
-      "number": "880",
-      "probability": 0.001880770313260144
+      "number": "480",
+      "probability": 0.001806825144375597
     },
     {
       "rank": 3,
-      "number": "480",
-      "probability": 0.0018615966205949891
+      "number": "987",
+      "probability": 0.0018033927538229763
     },
     {
       "rank": 4,
-      "number": "987",
-      "probability": 0.001855651853551541
+      "number": "487",
+      "probability": 0.0018021721752480228
     },
     {
       "rank": 5,
-      "number": "780",
-      "probability": 0.0018230984505079484
+      "number": "988",
+      "probability": 0.0017891537656921593
     },
     {
       "rank": 6,
-      "number": "988",
-      "probability": 0.001803836712979749
+      "number": "880",
+      "probability": 0.0017886317351485663
     },
     {
       "rank": 7,
-      "number": "989",
-      "probability": 0.0017783514512805473
+      "number": "488",
+      "probability": 0.0017879428243988266
     },
     {
       "rank": 8,
       "number": "887",
-      "probability": 0.0017750904331486055
+      "probability": 0.0017840256180208785
     },
     {
       "rank": 9,
-      "number": "487",
-      "probability": 0.0017569941041189051
+      "number": "888",
+      "probability": 0.0017699395463394757
     },
     {
       "rank": 10,
-      "number": "970",
-      "probability": 0.0017262014104738007
+      "number": "780",
+      "probability": 0.0016878152800144147
     },
     {
       "rank": 11,
-      "number": "888",
-      "probability": 0.0017255247993012846
+      "number": "787",
+      "probability": 0.0016834687872641885
     },
     {
       "rank": 12,
-      "number": "787",
-      "probability": 0.0017206591338498475
+      "number": "788",
+      "probability": 0.0016701766788038213
     },
     {
       "rank": 13,
-      "number": "488",
-      "probability": 0.0017079337718618115
+      "number": "989",
+      "probability": 0.0016011160559583925
     },
     {
       "rank": 14,
-      "number": "889",
-      "probability": 0.001701145956825009
+      "number": "489",
+      "probability": 0.0016000323830037497
     },
     {
       "rank": 15,
-      "number": "489",
-      "probability": 0.0016838034618245458
+      "number": "970",
+      "probability": 0.0015882132430614447
     },
     {
       "rank": 16,
-      "number": "788",
-      "probability": 0.0016726133785396953
+      "number": "470",
+      "probability": 0.0015871383030336397
     },
     {
       "rank": 17,
-      "number": "920",
-      "probability": 0.0016608054879666337
+      "number": "977",
+      "probability": 0.0015841232472967892
     },
     {
       "rank": 18,
-      "number": "982",
-      "probability": 0.001656243132351676
+      "number": "889",
+      "probability": 0.0015839212258111992
     },
     {
       "rank": 19,
-      "number": "870",
-      "probability": 0.0016512599621287555
+      "number": "477",
+      "probability": 0.001583051075474186
     },
     {
       "rank": 20,
-      "number": "789",
-      "probability": 0.001648982087876332
+      "number": "580",
+      "probability": 0.0015774096632729894
     }
   ],
   "notes": [
-    "未来情報を特徴量に含めない時系列ホールドアウト評価。",
-    "モデル重みは検証log lossから自動算出し、新規データ世代では前世代重みと平滑化。",
-    "検証成績が一様分布を上回らない場合、予測優位性は確認できない。",
-    "model_next_weekday_candidate は単純な平日計算で、祝日・年末年始は未反映。"
+    "Champion generation is the model generation; data-generation counter is no longer shown as Champion generation.",
+    "Validation uses a calibration prefix followed by untouched scoring draws.",
+    "Joint prediction supports uniform shrinkage and an autoregressive within-number component."
   ]
 }

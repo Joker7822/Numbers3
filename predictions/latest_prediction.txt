@@ -1,50 +1,52 @@
 NUMBERS3 最新予測
 ================================================================
-生成日時: 2026-08-22T15:38:27+09:00
+生成日時: 2026-08-23T06:34:20+09:00
 学習済み最終抽せん: 第7054回 / 2026-08-21 / 本数字 286
 予測対象: 第7055回
 抽せん日候補: 2026-08-24（回号を主キーに後日照合）
-世代: 1
+Champion世代: 2
+Champion ID: champ-5c4ebf8f035b
+設定ID: f8c4f8ac54a3
 
 バックテスト
 ----------------------------------------------------------------
-検証期間: 2022-10-06 ～ 2026-08-21 / 1000回
-Ensemble log loss: 2.30840274
+検証期間: 2023-12-04 ～ 2026-08-21 / 700回
+Ensemble log loss: 2.31032396
 Uniform log loss : 2.30258509
-差(一様 - model): -0.00581765
+差(一様 - model): -0.00773887
 優位性判定: not_confirmed
-Top1 ストレート包含率: 0.1000%
-Top20 ストレート包含率: 2.3000%
+Top1 ストレート包含率: 0.0000%
+Top20 ストレート包含率: 2.2857%
 
 モデル重み
 ----------------------------------------------------------------
-extra_trees : 65.005529%
-markov      : 24.609561%
-frequency   : 10.384750%
-logreg      : 0.000160%
+extra_trees : 55.177835%
+markov      : 36.725567%
+frequency   : 8.096379%
+logreg      : 0.000219%
 
 予測ランキング
 ----------------------------------------------------------------
-01. 980  model=0.196613%  vs_uniform=1.966x
-02. 880  model=0.188077%  vs_uniform=1.881x
-03. 480  model=0.186160%  vs_uniform=1.862x
-04. 987  model=0.185565%  vs_uniform=1.856x
-05. 780  model=0.182310%  vs_uniform=1.823x
-06. 988  model=0.180384%  vs_uniform=1.804x
-07. 989  model=0.177835%  vs_uniform=1.778x
-08. 887  model=0.177509%  vs_uniform=1.775x
-09. 487  model=0.175699%  vs_uniform=1.757x
-10. 970  model=0.172620%  vs_uniform=1.726x
-11. 888  model=0.172552%  vs_uniform=1.726x
-12. 787  model=0.172066%  vs_uniform=1.721x
-13. 488  model=0.170793%  vs_uniform=1.708x
-14. 889  model=0.170115%  vs_uniform=1.701x
-15. 489  model=0.168380%  vs_uniform=1.684x
-16. 788  model=0.167261%  vs_uniform=1.673x
-17. 920  model=0.166081%  vs_uniform=1.661x
-18. 982  model=0.165624%  vs_uniform=1.656x
-19. 870  model=0.165126%  vs_uniform=1.651x
-20. 789  model=0.164898%  vs_uniform=1.649x
+01. 980  model=0.180805%  vs_uniform=1.808x
+02. 480  model=0.180683%  vs_uniform=1.807x
+03. 987  model=0.180339%  vs_uniform=1.803x
+04. 487  model=0.180217%  vs_uniform=1.802x
+05. 988  model=0.178915%  vs_uniform=1.789x
+06. 880  model=0.178863%  vs_uniform=1.789x
+07. 488  model=0.178794%  vs_uniform=1.788x
+08. 887  model=0.178403%  vs_uniform=1.784x
+09. 888  model=0.176994%  vs_uniform=1.770x
+10. 780  model=0.168782%  vs_uniform=1.688x
+11. 787  model=0.168347%  vs_uniform=1.683x
+12. 788  model=0.167018%  vs_uniform=1.670x
+13. 989  model=0.160112%  vs_uniform=1.601x
+14. 489  model=0.160003%  vs_uniform=1.600x
+15. 970  model=0.158821%  vs_uniform=1.588x
+16. 470  model=0.158714%  vs_uniform=1.587x
+17. 977  model=0.158412%  vs_uniform=1.584x
+18. 889  model=0.158392%  vs_uniform=1.584x
+19. 477  model=0.158305%  vs_uniform=1.583x
+20. 580  model=0.157741%  vs_uniform=1.577x
 
 注意
 ----------------------------------------------------------------
@@ -52,3 +54,10 @@ logreg      : 0.000160%
 ・当選金額は購入方式（ストレート/ボックス/セット/ミニ）で異なります。
 ・抽せん後は predictions/cumulative_results.txt に方式別の照合結果を追記します。
 ・一様分布よりバックテストが良くない場合、予測優位性は確認できません。
+
+V3 joint評価
+----------------------------------------------------------------
+Exact NLL: 6.93097188
+Uniform Exact NLL: 6.90775528
+差(一様-model): -0.02321660
+uniform_blend=1.0 / autoregressive_mix=0.0 / feature_profile=base
