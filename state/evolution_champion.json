@@ -1,0 +1,20 @@
+{
+  "champion_id": "champ-b7f02f6a077e",
+  "generation": 1,
+  "promoted_at": null,
+  "source_experiment_id": null,
+  "config": {
+    "validation_draws": 1000,
+    "top_k": 20,
+    "half_life_draws": 1500,
+    "evolution_rate": 0.7,
+    "weight_temperature": 0.02,
+    "frequency_profile": "default",
+    "markov_blend": 0.65,
+    "transition_window": 1000,
+    "lr_c": 0.25,
+    "tree_estimators": 240,
+    "tree_min_leaf": 8,
+    "random_state": 42
+  }
+}
