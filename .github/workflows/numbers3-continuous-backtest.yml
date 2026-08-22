@@ -1,20 +1,21 @@
-name: NUMBERS3 Continuous Backtest
+name: NUMBERS3 Continuous Evolution
 
 on:
   push:
     branches: [main]
     paths:
-      - numbers3_continuous_backtest.py
-      - numbers3_historical_backtest.py
+      - numbers3_evolution_engine.py
+      - numbers3_champion.py
+      - numbers3_runner_champion.py
+      - numbers3_evo_agent.py
       - .github/workflows/numbers3-continuous-backtest.yml
   workflow_dispatch:
   schedule:
-    # Watchdog: if a chained run stopped because of a transient failure,
-    # start the continuous loop again every 6 hours.
+    # Watchdog: restart the chain every 6 hours if a transient failure stopped it.
     - cron: "17 */6 * * *"
 
 concurrency:
-  group: numbers3-continuous-backtest
+  group: numbers3-continuous-evolution
   cancel-in-progress: false
 
 permissions:
@@ -22,10 +23,9 @@ permissions:
   actions: write
 
 jobs:
-  continuous-backtest:
+  continuous-evolution:
     runs-on: ubuntu-latest
-    # GitHub-hosted runners have a 6 hour job ceiling.
-    # Stop our loop earlier and hand off to the next workflow_dispatch run.
+    # GitHub-hosted runners have a 6 hour job ceiling. Hand off before that.
     timeout-minutes: 355
 
     steps:
@@ -51,15 +51,13 @@ jobs:
           git config user.name "numbers3-ai-agent"
           git config user.email "numbers3-ai-agent@users.noreply.github.com"
 
-      - name: Run backtests continuously
+      - name: Run Champion Challenger experiments continuously
         env:
           TZ: Asia/Tokyo
         shell: bash
         run: |
           set -euo pipefail
 
-          # 5h30m. Leaves ~25 minutes before the 355 minute hard timeout
-          # for a final checkpoint and self-dispatch handoff.
           DEADLINE=$(( $(date +%s) + 19800 ))
           LAST_CHECKPOINT=$(date +%s)
           CYCLES_THIS_RUN=0
@@ -70,46 +68,67 @@ jobs:
             xz -dc /tmp/numbers3.csv.xz > data/numbers3.csv
           }
 
+          update_compatibility_status() {
+            cp experiments/latest_experiment.txt backtests/continuous_status.txt
+            python - <<'PY'
+          import json
+          from pathlib import Path
+
+          old_path = Path("state/continuous_backtest_state.json")
+          engine_path = Path("state/evolution_engine_state.json")
+          champion_path = Path("state/evolution_champion.json")
+          old = json.loads(old_path.read_text(encoding="utf-8")) if old_path.exists() else {}
+          eng = json.loads(engine_path.read_text(encoding="utf-8"))
+          champ = json.loads(champion_path.read_text(encoding="utf-8"))
+          new = {
+              "total_cycles": int(old.get("total_cycles", 0)) + 1,
+              "last_completed_at": eng.get("last_completed_at"),
+              "last_issue": old.get("last_issue", 7054),
+              "mode": "evolution_engine_v2",
+              "last_experiment_id": eng.get("last_experiment_id"),
+              "current_champion_id": champ.get("champion_id"),
+              "current_generation": champ.get("generation"),
+          }
+          old_path.write_text(json.dumps(new, ensure_ascii=False, indent=2), encoding="utf-8")
+          PY
+          }
+
           checkpoint() {
             git add -- \
-              backtests/continuous_backtest_history.csv \
+              experiments \
               backtests/continuous_status.txt \
+              state/evolution_champion.json \
+              state/evolution_engine_state.json \
               state/continuous_backtest_state.json
 
             if ! git diff --cached --quiet; then
-              git commit -m "chore(agent): checkpoint continuous backtest"
-              # Daily prediction may have committed while this loop was running.
-              # Rebase our unique continuous-backtest files before pushing.
+              git commit -m "chore(agent): checkpoint evolution experiments"
               git pull --rebase origin main
               git push origin HEAD:main
             else
-              # Even if there is nothing new to commit, refresh code/data at checkpoints.
               git pull --rebase origin main
             fi
           }
 
-          # Start from the newest main snapshot.
           git pull --rebase origin main
           restore_dataset
 
           while [ "$(date +%s)" -lt "${DEADLINE}" ]; do
-            echo "[continuous] starting cycle $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds)"
-            python numbers3_continuous_backtest.py \
+            echo "[evolution] starting experiment $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds)"
+            python numbers3_evolution_engine.py \
               --csv data/numbers3.csv \
-              --backtest-script numbers3_historical_backtest.py \
-              --history backtests/continuous_backtest_history.csv \
-              --status backtests/continuous_status.txt \
-              --state state/continuous_backtest_state.json \
-              --warmup 500 \
-              --refit-interval 1000 \
-              --topk 20 \
-              --max-history-rows 10000
+              --champion state/evolution_champion.json \
+              --engine-state state/evolution_engine_state.json \
+              --history experiments/experiment_history.csv \
+              --latest experiments/latest_experiment.txt \
+              --audit-draws 1000 \
+              --fold-size 500
 
-            # No sleep: the next backtest starts immediately after this one finishes.
+            update_compatibility_status
             CYCLES_THIS_RUN=$((CYCLES_THIS_RUN + 1))
             NOW=$(date +%s)
 
-            # Persist progress and pick up newly published draw data/code every 30 minutes.
+            # No sleep: immediately generate and test the next challenger.
             if [ $((NOW - LAST_CHECKPOINT)) -ge 1800 ]; then
               checkpoint
               restore_dataset
@@ -118,9 +137,9 @@ jobs:
           done
 
           checkpoint
-          echo "[continuous] completed ${CYCLES_THIS_RUN} cycles in this workflow run"
+          echo "[evolution] completed ${CYCLES_THIS_RUN} experiments in this workflow run"
 
-      - name: Start next continuous run immediately
+      - name: Start next evolution run immediately
         if: ${{ success() }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -128,4 +147,4 @@ jobs:
           gh workflow run numbers3-continuous-backtest.yml \
             --repo "${GITHUB_REPOSITORY}" \
             --ref main
-          echo "Queued the next continuous backtest workflow run."
+          echo "Queued the next continuous evolution workflow run."
