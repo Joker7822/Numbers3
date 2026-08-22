@@ -6,7 +6,9 @@ on:
     paths:
       - numbers3_historical_backtest.py
       - numbers3_runner.py
-      - numbers3_runner_champion.py
+      - numbers3_runner_champion_v3.py
+      - numbers3_v3_models.py
+      - numbers3_live_scoreboard.py
       - numbers3_champion.py
       - numbers3_evo_agent.py
       - state/evolution_champion.json
@@ -50,11 +52,11 @@ jobs:
           base64 -d /tmp/numbers3.csv.xz.b64 > /tmp/numbers3.csv.xz
           xz -dc /tmp/numbers3.csv.xz > data/numbers3.csv
 
-      - name: Refresh, backtest, predict, and reconcile with Champion
+      - name: Refresh, predict, reconcile, and update live-only leaderboard
         env:
           TZ: Asia/Tokyo
         run: |
-          python numbers3_runner_champion.py \
+          python numbers3_runner_champion_v3.py \
             --champion state/evolution_champion.json \
             --csv data/numbers3.csv \
             --scraper scrapingnumbers3.py \
@@ -62,7 +64,7 @@ jobs:
             --validation 1000 \
             --topk 20
 
-      - name: Historical walk-forward accuracy audit
+      - name: Historical walk-forward baseline audit
         env:
           TZ: Asia/Tokyo
         shell: bash
@@ -100,5 +102,5 @@ jobs:
             echo "No generated changes to commit."
             exit 0
           fi
-          git commit -m "chore(agent): update NUMBERS3 prediction and backtest"
+          git commit -m "chore(agent): update NUMBERS3 v3 prediction and backtest"
           git push
