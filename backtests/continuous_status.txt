@@ -1,30 +1,30 @@
 NUMBERS3 Evolution Engine v3
 ============================================================================================
-実験: exp-0005790-6424cd1d7a12 / generated=2026-08-23T07:09:48+09:00
+実験: exp-0005804-93e379335cc8 / generated=2026-08-23T07:31:46+09:00
 Champion(before): champ-5c4ebf8f035b
-Challenger: chal-6424cd1d7a12
-判定: REJECTED
-理由: rejected: rolling-fold improvement/consistency/bootstrap threshold not met
-昇格後からの実験数: 5780 / search=structural
+Challenger: chal-93e379335cc8
+判定: PROMOTED
+理由: rolling 5-fold + confirmation seed + paired bootstrap passed; final audit not used
+昇格後からの実験数: 5794 / search=structural
 
 Rolling 5-fold development（昇格判定に使用）
 --------------------------------------------------------------------------------------------
-Champion Exact NLL : 6.92454512
-Challenger Exact NLL: 6.92128086
-改善量: +0.00326426
-fold勝利数: 4/5 / 最大fold悪化: 0.00182444
-paired bootstrap P(Challenger better): 71.0000%
-確認seed実行: False / pass=False
+Champion Exact NLL : 6.91969887
+Challenger Exact NLL: 6.90829437
+改善量: +0.01140451
+fold勝利数: 5/5 / 最大fold悪化: 0.00000000
+paired bootstrap P(Challenger better): 99.0000%
+確認seed実行: True / pass=True
 
 Final audit holdout（報告専用・昇格判定には不使用）
 --------------------------------------------------------------------------------------------
 Champion Exact NLL : 6.92376292
-Challenger Exact NLL: 6.92596899
-差: -0.00220607
+Challenger Exact NLL: 6.91064318
+差: +0.01311973
 
 現在のChampion
 --------------------------------------------------------------------------------------------
-ID: champ-5c4ebf8f035b / generation=2
-{"ar_alpha": 2.0, "autoregressive_mix": 0.0, "evolution_rate": 0.7, "feature_profile": "base", "frequency_profile": "default", "half_life_draws": 1500, "lr_c": 0.5, "markov_blend": 0.65, "random_state": 42, "top_k": 20, "transition_window": 1000, "tree_estimators": 240, "tree_min_leaf": 8, "uniform_blend": 1.0, "validation_draws": 1000, "weight_temperature": 0.01}
+ID: champ-93e379335cc8 / generation=3
+{"ar_alpha": 5.0, "autoregressive_mix": 0.0, "evolution_rate": 1.0, "feature_profile": "base", "frequency_profile": "balanced", "half_life_draws": 1500, "lr_c": 1.0, "markov_blend": 0.45, "random_state": 42, "top_k": 20, "transition_window": 300, "tree_estimators": 320, "tree_min_leaf": 8, "uniform_blend": 0.5, "validation_draws": 1000, "weight_temperature": 0.08}
 
 注意: final auditはモデル選択に使用しません。adaptive trialの多重比較対策としてbootstrap閾値を強化します。
