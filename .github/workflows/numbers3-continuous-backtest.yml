@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - numbers3_evolution_engine.py
+      - numbers3_evolution_feedback.py
+      - numbers3_champion_replay.py
       - numbers3_champion.py
       - numbers3_runner_champion.py
       - numbers3_evo_agent.py
@@ -15,7 +17,6 @@ on:
     - cron: "17 */6 * * *"
 
 concurrency:
-  # Reuse the pre-v2 group so this cutover cancels an old continuous-backtest run.
   group: numbers3-continuous-backtest
   cancel-in-progress: true
 
@@ -79,6 +80,18 @@ jobs:
           PY
           }
 
+          replay_latest_champion() {
+            echo "[replay] checking latest Champion against all historical draws"
+            python numbers3_champion_replay.py \
+              --csv data/numbers3.csv \
+              --champion state/evolution_champion.json \
+              --state state/champion_replay_state.json \
+              --output-dir backtests/champion_replay \
+              --warmup 500 \
+              --refit-interval 500 \
+              --audit-draws 1000
+          }
+
           update_compatibility_status() {
             cp experiments/latest_experiment.txt backtests/continuous_status.txt
             python - <<'PY'
@@ -90,9 +103,11 @@ jobs:
           old_path = Path("state/continuous_backtest_state.json")
           engine_path = Path("state/evolution_engine_state.json")
           champion_path = Path("state/evolution_champion.json")
+          replay_path = Path("state/champion_replay_state.json")
           old = json.loads(old_path.read_text(encoding="utf-8")) if old_path.exists() else {}
           eng = json.loads(engine_path.read_text(encoding="utf-8"))
           champ = json.loads(champion_path.read_text(encoding="utf-8"))
+          replay = json.loads(replay_path.read_text(encoding="utf-8")) if replay_path.exists() else {}
           draws = pd.read_csv("data/numbers3.csv")
           match = re.search(r"(\d+)", str(draws.iloc[-1]["回別"]))
           latest_issue = int(match.group(1)) if match else old.get("last_issue")
@@ -100,10 +115,13 @@ jobs:
               "total_cycles": int(old.get("total_cycles", 0)) + 1,
               "last_completed_at": eng.get("last_completed_at"),
               "last_issue": latest_issue,
-              "mode": "evolution_engine_v2",
+              "mode": "evolution_engine_v2_full_replay_feedback",
               "last_experiment_id": eng.get("last_experiment_id"),
               "current_champion_id": champ.get("champion_id"),
               "current_generation": champ.get("generation"),
+              "replay_selection_exact_nll": (replay.get("selection") or {}).get("exact_nll"),
+              "replay_best_selection_exact_nll": replay.get("best_selection_exact_nll"),
+              "replay_stagnation_count": replay.get("stagnation_count", 0),
           }
           old_path.write_text(json.dumps(new, ensure_ascii=False, indent=2), encoding="utf-8")
           PY
@@ -113,12 +131,14 @@ jobs:
             git add -- \
               experiments \
               backtests/continuous_status.txt \
+              backtests/champion_replay \
               state/evolution_champion.json \
               state/evolution_engine_state.json \
+              state/champion_replay_state.json \
               state/continuous_backtest_state.json
 
             if ! git diff --cached --quiet; then
-              git commit -m "chore(agent): checkpoint evolution experiments"
+              git commit -m "chore(agent): checkpoint evolution and Champion replay"
               git pull --rebase origin main
               git push origin HEAD:main
             else
@@ -127,19 +147,21 @@ jobs:
 
             if [ "${PROMOTION_PENDING}" -eq 1 ]; then
               gh workflow run numbers3-daily.yml --repo "${GITHUB_REPOSITORY}" --ref main
-              echo "Dispatched daily prediction with the newly promoted Champion."
+              echo "Dispatched daily prediction with the newly replayed Champion."
               PROMOTION_PENDING=0
             fi
           }
 
           git pull --rebase origin main
           restore_dataset
+          replay_latest_champion
 
           while [ "$(date +%s)" -lt "${DEADLINE}" ]; do
             BEFORE_CHAMPION=$(champion_id)
             echo "[evolution] starting experiment $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds) champion=${BEFORE_CHAMPION}"
 
-            python numbers3_evolution_engine.py \
+            # Historical replay feedback widens the mutation search after stagnation.
+            python numbers3_evolution_feedback.py \
               --csv data/numbers3.csv \
               --champion state/evolution_champion.json \
               --engine-state state/evolution_engine_state.json \
@@ -154,10 +176,14 @@ jobs:
             NOW=$(date +%s)
 
             if [ "${BEFORE_CHAMPION}" != "${AFTER_CHAMPION}" ]; then
-              PROMOTION_PENDING=1
               echo "[evolution] Champion promoted: ${BEFORE_CHAMPION} -> ${AFTER_CHAMPION}"
+              # Every model update immediately re-predicts the complete causal history.
+              replay_latest_champion
+              update_compatibility_status
+              PROMOTION_PENDING=1
               checkpoint
               restore_dataset
+              replay_latest_champion
               LAST_CHECKPOINT=${NOW}
               continue
             fi
@@ -167,6 +193,7 @@ jobs:
             if [ "${CYCLES_THIS_RUN}" -eq 1 ]; then
               checkpoint
               restore_dataset
+              replay_latest_champion
               LAST_CHECKPOINT=${NOW}
               continue
             fi
@@ -174,6 +201,8 @@ jobs:
             if [ $((NOW - LAST_CHECKPOINT)) -ge 1800 ]; then
               checkpoint
               restore_dataset
+              # If a new draw entered the dataset, refresh the current Champion replay.
+              replay_latest_champion
               LAST_CHECKPOINT=${NOW}
             fi
           done
