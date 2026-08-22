@@ -15,8 +15,9 @@ on:
     - cron: "17 */6 * * *"
 
 concurrency:
-  group: numbers3-continuous-evolution
-  cancel-in-progress: false
+  # Reuse the pre-v2 group so this cutover cancels an old continuous-backtest run.
+  group: numbers3-continuous-backtest
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -152,7 +153,6 @@ jobs:
             CYCLES_THIS_RUN=$((CYCLES_THIS_RUN + 1))
             NOW=$(date +%s)
 
-            # A promotion is persisted and activated immediately.
             if [ "${BEFORE_CHAMPION}" != "${AFTER_CHAMPION}" ]; then
               PROMOTION_PENDING=1
               echo "[evolution] Champion promoted: ${BEFORE_CHAMPION} -> ${AFTER_CHAMPION}"
@@ -162,7 +162,15 @@ jobs:
               continue
             fi
 
-            # Otherwise persist batches every 30 minutes. No sleep between challengers.
+            # The first experiment is always published immediately so a new deployment
+            # can be verified without waiting for the normal 30 minute checkpoint.
+            if [ "${CYCLES_THIS_RUN}" -eq 1 ]; then
+              checkpoint
+              restore_dataset
+              LAST_CHECKPOINT=${NOW}
+              continue
+            fi
+
             if [ $((NOW - LAST_CHECKPOINT)) -ge 1800 ]; then
               checkpoint
               restore_dataset
