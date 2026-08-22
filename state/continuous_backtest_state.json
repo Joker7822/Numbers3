@@ -1,11 +1,11 @@
 {
-  "total_cycles": 255,
-  "last_completed_at": "2026-08-22T10:42:36+09:00",
+  "total_cycles": 306,
+  "last_completed_at": "2026-08-22T11:12:45+09:00",
   "last_dataset_fingerprint": "948bef1e8ef21bf4ad2b",
   "last_issue": 7054,
-  "last_duration_seconds": 35.433,
+  "last_duration_seconds": 34.992,
   "last_exact_nll": 6.94205711,
   "last_top1_rate": 0.001373,
   "last_top20_rate": 0.020598,
-  "history_rows_kept": 255
+  "history_rows_kept": 306
 }
