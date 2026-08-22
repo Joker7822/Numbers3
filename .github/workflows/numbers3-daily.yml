@@ -6,12 +6,14 @@ on:
     paths:
       - numbers3_historical_backtest.py
       - numbers3_runner.py
-      - numbers3_runner_champion_v3.py
-      - numbers3_v3_models.py
+      - numbers3_runner_champion_v4.py
+      - numbers3_v4_models.py
+      - numbers3_champion_pool.py
       - numbers3_live_scoreboard.py
       - numbers3_champion.py
       - numbers3_evo_agent.py
       - state/evolution_champion.json
+      - state/champion_pool.json
       - .github/workflows/numbers3-daily.yml
   schedule:
     # GitHub Actions cron is UTC.
@@ -52,12 +54,13 @@ jobs:
           base64 -d /tmp/numbers3.csv.xz.b64 > /tmp/numbers3.csv.xz
           xz -dc /tmp/numbers3.csv.xz > data/numbers3.csv
 
-      - name: Refresh, predict, reconcile, and update live-only leaderboard
+      - name: Refresh, predict with Champion Pool, reconcile, and update live-only leaderboard
         env:
           TZ: Asia/Tokyo
         run: |
-          python numbers3_runner_champion_v3.py \
+          python numbers3_runner_champion_v4.py \
             --champion state/evolution_champion.json \
+            --pool state/champion_pool.json \
             --csv data/numbers3.csv \
             --scraper scrapingnumbers3.py \
             --refresh \
@@ -102,5 +105,5 @@ jobs:
             echo "No generated changes to commit."
             exit 0
           fi
-          git commit -m "chore(agent): update NUMBERS3 v3 prediction and backtest"
+          git commit -m "chore(agent): update NUMBERS3 v4 Champion Pool prediction"
           git push
