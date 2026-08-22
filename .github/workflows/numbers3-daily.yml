@@ -13,7 +13,6 @@ on:
       - numbers3_champion.py
       - numbers3_evo_agent.py
       - state/evolution_champion.json
-      - state/champion_pool.json
       - .github/workflows/numbers3-daily.yml
   schedule:
     # GitHub Actions cron is UTC.
@@ -31,7 +30,7 @@ permissions:
 jobs:
   predict:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     steps:
       - name: Checkout
