@@ -88,7 +88,7 @@ jobs:
               --state state/champion_replay_state.json \
               --output-dir backtests/champion_replay \
               --warmup 500 \
-              --refit-interval 500 \
+              --refit-interval 1000 \
               --audit-draws 1000
           }
 
