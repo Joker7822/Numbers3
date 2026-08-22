@@ -1,19 +1,19 @@
-name: NUMBERS3 Continuous Evolution
+name: NUMBERS3 Continuous Evolution v3
 
 on:
   push:
     branches: [main]
     paths:
-      - numbers3_evolution_engine.py
-      - numbers3_evolution_feedback.py
-      - numbers3_champion_replay.py
+      - numbers3_evolution_engine_v3.py
+      - numbers3_v3_models.py
+      - numbers3_champion_replay_v3.py
+      - numbers3_runner_champion_v3.py
+      - numbers3_live_scoreboard.py
       - numbers3_champion.py
-      - numbers3_runner_champion.py
       - numbers3_evo_agent.py
       - .github/workflows/numbers3-continuous-backtest.yml
   workflow_dispatch:
   schedule:
-    # Watchdog: restart the chain every 6 hours if a transient failure stopped it.
     - cron: "17 */6 * * *"
 
 concurrency:
@@ -52,7 +52,7 @@ jobs:
           git config user.name "numbers3-ai-agent"
           git config user.email "numbers3-ai-agent@users.noreply.github.com"
 
-      - name: Run Champion Challenger experiments continuously
+      - name: Run v3 Champion Challenger experiments continuously
         env:
           TZ: Asia/Tokyo
           GH_TOKEN: ${{ github.token }}
@@ -81,8 +81,8 @@ jobs:
           }
 
           replay_latest_champion() {
-            echo "[replay] checking latest Champion against all historical draws"
-            python numbers3_champion_replay.py \
+            echo "[replay-v3] checking latest Champion against all historical draws"
+            python numbers3_champion_replay_v3.py \
               --csv data/numbers3.csv \
               --champion state/evolution_champion.json \
               --state state/champion_replay_state.json \
@@ -115,10 +115,12 @@ jobs:
               "total_cycles": int(old.get("total_cycles", 0)) + 1,
               "last_completed_at": eng.get("last_completed_at"),
               "last_issue": latest_issue,
-              "mode": "evolution_engine_v2_full_replay_feedback",
+              "mode": "evolution_engine_v3_rolling5_bootstrap_structural",
               "last_experiment_id": eng.get("last_experiment_id"),
               "current_champion_id": champ.get("champion_id"),
               "current_generation": champ.get("generation"),
+              "experiments_since_last_promotion": eng.get("experiments_since_last_promotion"),
+              "search_mode": eng.get("search_mode"),
               "replay_selection_exact_nll": (replay.get("selection") or {}).get("exact_nll"),
               "replay_best_selection_exact_nll": replay.get("best_selection_exact_nll"),
               "replay_stagnation_count": replay.get("stagnation_count", 0),
@@ -138,7 +140,7 @@ jobs:
               state/continuous_backtest_state.json
 
             if ! git diff --cached --quiet; then
-              git commit -m "chore(agent): checkpoint evolution and Champion replay"
+              git commit -m "chore(agent): checkpoint v3 evolution and Champion replay"
               git pull --rebase origin main
               git push origin HEAD:main
             else
@@ -147,7 +149,7 @@ jobs:
 
             if [ "${PROMOTION_PENDING}" -eq 1 ]; then
               gh workflow run numbers3-daily.yml --repo "${GITHUB_REPOSITORY}" --ref main
-              echo "Dispatched daily prediction with the newly replayed Champion."
+              echo "Dispatched daily prediction with the newly replayed v3 Champion."
               PROMOTION_PENDING=0
             fi
           }
@@ -158,17 +160,17 @@ jobs:
 
           while [ "$(date +%s)" -lt "${DEADLINE}" ]; do
             BEFORE_CHAMPION=$(champion_id)
-            echo "[evolution] starting experiment $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds) champion=${BEFORE_CHAMPION}"
+            echo "[evolution-v3] starting experiment $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds) champion=${BEFORE_CHAMPION}"
 
-            # Historical replay feedback widens the mutation search after stagnation.
-            python numbers3_evolution_feedback.py \
+            python numbers3_evolution_engine_v3.py \
               --csv data/numbers3.csv \
               --champion state/evolution_champion.json \
               --engine-state state/evolution_engine_state.json \
               --history experiments/experiment_history.csv \
               --latest experiments/latest_experiment.txt \
               --audit-draws 1000 \
-              --fold-size 500
+              --fold-size 300 \
+              --folds 5
 
             update_compatibility_status
             AFTER_CHAMPION=$(champion_id)
@@ -176,8 +178,7 @@ jobs:
             NOW=$(date +%s)
 
             if [ "${BEFORE_CHAMPION}" != "${AFTER_CHAMPION}" ]; then
-              echo "[evolution] Champion promoted: ${BEFORE_CHAMPION} -> ${AFTER_CHAMPION}"
-              # Every model update immediately re-predicts the complete causal history.
+              echo "[evolution-v3] Champion promoted: ${BEFORE_CHAMPION} -> ${AFTER_CHAMPION}"
               replay_latest_champion
               update_compatibility_status
               PROMOTION_PENDING=1
@@ -188,8 +189,6 @@ jobs:
               continue
             fi
 
-            # The first experiment is always published immediately so a new deployment
-            # can be verified without waiting for the normal 30 minute checkpoint.
             if [ "${CYCLES_THIS_RUN}" -eq 1 ]; then
               checkpoint
               restore_dataset
@@ -201,14 +200,13 @@ jobs:
             if [ $((NOW - LAST_CHECKPOINT)) -ge 1800 ]; then
               checkpoint
               restore_dataset
-              # If a new draw entered the dataset, refresh the current Champion replay.
               replay_latest_champion
               LAST_CHECKPOINT=${NOW}
             fi
           done
 
           checkpoint
-          echo "[evolution] completed ${CYCLES_THIS_RUN} experiments in this workflow run"
+          echo "[evolution-v3] completed ${CYCLES_THIS_RUN} experiments in this workflow run"
 
       - name: Start next evolution run immediately
         if: ${{ success() }}
@@ -218,4 +216,4 @@ jobs:
           gh workflow run numbers3-continuous-backtest.yml \
             --repo "${GITHUB_REPOSITORY}" \
             --ref main
-          echo "Queued the next continuous evolution workflow run."
+          echo "Queued the next continuous v3 evolution workflow run."
