@@ -1,24 +1,24 @@
 NUMBERS3 Evolution Engine v2
 ====================================================================================
-実験: exp-0004081-e1d7dd48c6b5 / generated=2026-08-23T01:04:30+09:00
+実験: exp-0004238-8bc94966a3f0 / generated=2026-08-23T01:34:42+09:00
 Champion(before): champ-5c4ebf8f035b
-Challenger: chal-e1d7dd48c6b5
+Challenger: chal-8bc94966a3f0
 判定: REJECTED
 理由: rejected: development improvement/consistency threshold not met
 
 Nested development folds（昇格判定に使用）
 ------------------------------------------------------------------------------------
 Champion Exact NLL : 6.91314931
-Challenger Exact NLL: 6.91673585
-改善量(champion-challenger): -0.00358654
-fold勝利数: 0/3 / 最大fold悪化: 0.00832183
+Challenger Exact NLL: 6.92501478
+改善量(champion-challenger): -0.01186547
+fold勝利数: 0/3 / 最大fold悪化: 0.02014783
 確認seed実行: False / pass=False
 
 Final audit holdout（報告専用・昇格判定には不使用）
 ------------------------------------------------------------------------------------
 Champion Exact NLL : 6.91917365
-Challenger Exact NLL: 6.91863904
-差: +0.00053461
+Challenger Exact NLL: 6.93037298
+差: -0.01119934
 
 現在のChampion
 ------------------------------------------------------------------------------------
