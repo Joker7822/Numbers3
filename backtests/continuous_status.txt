@@ -1,28 +1,30 @@
-NUMBERS3 Evolution Engine v2
-====================================================================================
-実験: exp-0005765-05c4157ea382 / generated=2026-08-23T06:22:10+09:00
+NUMBERS3 Evolution Engine v3
+============================================================================================
+実験: exp-0005766-56ab93f85b2d / generated=2026-08-23T06:38:51+09:00
 Champion(before): champ-5c4ebf8f035b
-Challenger: chal-05c4157ea382
+Challenger: chal-56ab93f85b2d
 判定: REJECTED
-理由: rejected: development improvement/consistency threshold not met
+理由: rejected: rolling-fold improvement/consistency/bootstrap threshold not met
+昇格後からの実験数: 5756 / search=structural
 
-Nested development folds（昇格判定に使用）
-------------------------------------------------------------------------------------
-Champion Exact NLL : 6.91314931
-Challenger Exact NLL: 6.92432947
-改善量(champion-challenger): -0.01118016
-fold勝利数: 0/3 / 最大fold悪化: 0.02037420
+Rolling 5-fold development（昇格判定に使用）
+--------------------------------------------------------------------------------------------
+Champion Exact NLL : 6.92454512
+Challenger Exact NLL: 6.93053564
+改善量: -0.00599052
+fold勝利数: 1/5 / 最大fold悪化: 0.01186620
+paired bootstrap P(Challenger better): 17.5833%
 確認seed実行: False / pass=False
 
 Final audit holdout（報告専用・昇格判定には不使用）
-------------------------------------------------------------------------------------
-Champion Exact NLL : 6.91917365
-Challenger Exact NLL: 6.92710758
-差: -0.00793394
+--------------------------------------------------------------------------------------------
+Champion Exact NLL : 6.92376292
+Challenger Exact NLL: 6.93217342
+差: -0.00841050
 
 現在のChampion
-------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 ID: champ-5c4ebf8f035b / generation=2
-{"evolution_rate": 0.7, "frequency_profile": "default", "half_life_draws": 1500, "lr_c": 0.5, "markov_blend": 0.65, "random_state": 42, "top_k": 20, "transition_window": 1000, "tree_estimators": 240, "tree_min_leaf": 8, "validation_draws": 1000, "weight_temperature": 0.01}
+{"ar_alpha": 2.0, "autoregressive_mix": 0.0, "evolution_rate": 0.7, "feature_profile": "base", "frequency_profile": "default", "half_life_draws": 1500, "lr_c": 0.5, "markov_blend": 0.65, "random_state": 42, "top_k": 20, "transition_window": 1000, "tree_estimators": 240, "tree_min_leaf": 8, "uniform_blend": 1.0, "validation_draws": 1000, "weight_temperature": 0.01}
 
-注意: Final auditはモデル選択に利用しません。結果を見て昇格させるとholdout汚染になります。
+注意: final auditはモデル選択に使用しません。adaptive trialの多重比較対策としてbootstrap閾値を強化します。

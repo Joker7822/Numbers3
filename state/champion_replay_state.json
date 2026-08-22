@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-08-22T12:27:30+09:00",
+  "generated_at": "2026-08-23T06:35:30+09:00",
   "dataset_fingerprint": "d00cd33771798e2fda3b",
   "champion_id": "champ-5c4ebf8f035b",
   "generation": 2,
-  "config_id": "5c4ebf8f035b",
+  "config_id": "f8c4f8ac54a3",
   "latest_issue": 7054,
   "evaluated_draws": 6554,
   "warmup": 500,
@@ -50,7 +50,8 @@
   },
   "best_selection_exact_nll": 6.936741428765215,
   "improvement_vs_previous_best": 0.0,
-  "improved_best": true,
-  "stagnation_count": 0,
+  "improved_best": false,
+  "stagnation_count": 1,
+  "replay_version": "v3",
   "skipped": false
 }
