@@ -1,26 +1,26 @@
 NUMBERS3 Evolution Engine v3
 ============================================================================================
-実験: exp-0005804-93e379335cc8 / generated=2026-08-23T07:31:46+09:00
-Champion(before): champ-5c4ebf8f035b
-Challenger: chal-93e379335cc8
-判定: PROMOTED
-理由: rolling 5-fold + confirmation seed + paired bootstrap passed; final audit not used
-昇格後からの実験数: 5794 / search=structural
+実験: exp-0005828-003b9b5162f8 / generated=2026-08-23T08:02:14+09:00
+Champion(before): champ-93e379335cc8
+Challenger: chal-003b9b5162f8
+判定: REJECTED
+理由: rejected: rolling-fold improvement/consistency/bootstrap threshold not met
+昇格後からの実験数: 23 / search=wider
 
 Rolling 5-fold development（昇格判定に使用）
 --------------------------------------------------------------------------------------------
-Champion Exact NLL : 6.91969887
-Challenger Exact NLL: 6.90829437
-改善量: +0.01140451
-fold勝利数: 5/5 / 最大fold悪化: 0.00000000
-paired bootstrap P(Challenger better): 99.0000%
-確認seed実行: True / pass=True
+Champion Exact NLL : 6.90922832
+Challenger Exact NLL: 6.90932661
+改善量: -0.00009830
+fold勝利数: 4/5 / 最大fold悪化: 0.00458155
+paired bootstrap P(Challenger better): 50.3333%
+確認seed実行: False / pass=False
 
 Final audit holdout（報告専用・昇格判定には不使用）
 --------------------------------------------------------------------------------------------
-Champion Exact NLL : 6.92376292
-Challenger Exact NLL: 6.91064318
-差: +0.01311973
+Champion Exact NLL : 6.91064318
+Challenger Exact NLL: 6.91018871
+差: +0.00045448
 
 現在のChampion
 --------------------------------------------------------------------------------------------
