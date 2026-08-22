@@ -1,9 +1,10 @@
 {
-  "generated_at": "2026-08-23T07:35:30+09:00",
+  "generated_at": "2026-08-23T08:11:26+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
-  "config_id": "93e379335cc8",
+  "config_id": "pool-90c3165cf721",
+  "primary_config_id": "20fc1e094187",
   "dataset_fingerprint": "ea4ce2af5f81d34f",
   "dataset": {
     "rows": 7054,
@@ -42,7 +43,7 @@
     "logreg": 0.0567902995185269,
     "extra_trees": 0.3367369039479593
   },
-  "v3_config": {
+  "v4_config": {
     "validation_draws": 1000,
     "top_k": 20,
     "half_life_draws": 1500,
@@ -58,7 +59,20 @@
     "uniform_blend": 0.5,
     "autoregressive_mix": 0.0,
     "ar_alpha": 5.0,
-    "feature_profile": "base"
+    "feature_profile": "base",
+    "power_beta": 1.0
+  },
+  "champion_pool": {
+    "pool_id": "pool-90c3165cf721",
+    "size": 1,
+    "members": [
+      {
+        "champion_id": "champ-93e379335cc8",
+        "config_id": "20fc1e094187",
+        "weight": 1.0,
+        "dev_exact_nll": 6.909228319381661
+      }
+    ]
   },
   "top_predictions": [
     {
@@ -139,7 +153,7 @@
     {
       "rank": 16,
       "number": "827",
-      "probability": 0.001296896883609844
+      "probability": 0.0012968968836098442
     },
     {
       "rank": 17,
@@ -163,8 +177,8 @@
     }
   ],
   "notes": [
-    "Champion generation is the model generation; data-generation counter is no longer shown as Champion generation.",
-    "Validation uses a calibration prefix followed by untouched scoring draws.",
-    "Joint prediction supports uniform shrinkage and an autoregressive within-number component."
+    "Prediction is a weighted Champion Pool ensemble; promotion governance still uses strict single-Champion comparisons.",
+    "Each member is power-calibrated after uniform shrinkage and optional autoregressive mixing.",
+    "Live archive stores the full 1000-number distribution before the draw."
   ]
 }

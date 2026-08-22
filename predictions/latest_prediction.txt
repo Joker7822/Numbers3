@@ -1,12 +1,13 @@
 NUMBERS3 最新予測
 ================================================================
-生成日時: 2026-08-23T07:35:30+09:00
+生成日時: 2026-08-23T08:11:26+09:00
 学習済み最終抽せん: 第7054回 / 2026-08-21 / 本数字 286
 予測対象: 第7055回
 抽せん日候補: 2026-08-24（回号を主キーに後日照合）
 Champion世代: 3
-Champion ID: champ-93e379335cc8
-設定ID: 93e379335cc8
+Primary Champion ID: champ-93e379335cc8
+Champion Pool ID: pool-90c3165cf721
+Pool size: 1
 
 バックテスト
 ----------------------------------------------------------------
@@ -55,9 +56,11 @@ logreg      : 5.679030%
 ・抽せん後は predictions/cumulative_results.txt に方式別の照合結果を追記します。
 ・一様分布よりバックテストが良くない場合、予測優位性は確認できません。
 
-V3 joint評価
+V4 joint評価
 ----------------------------------------------------------------
 Exact NLL: 6.91245547
 Uniform Exact NLL: 6.90775528
 差(一様-model): -0.00470019
-uniform_blend=0.5 / autoregressive_mix=0.0 / feature_profile=base
+primary uniform_blend=0.5 / power_beta=1.0 / autoregressive_mix=0.0 / feature_profile=base
+Champion Pool:
+  champ-93e379335cc8 weight=100.0000% dev_nll=6.909228319381661

@@ -1,7 +1,8 @@
 {
   "generation": 3,
   "champion_id": "champ-93e379335cc8",
-  "config_id": "93e379335cc8",
+  "config_id": "pool-90c3165cf721",
+  "primary_config_id": "20fc1e094187",
   "dataset_fingerprint": "ea4ce2af5f81d34f",
   "last_draw_date": "2026-08-21",
   "model_weights": {
@@ -112,7 +113,7 @@
     {
       "rank": 16,
       "number": "827",
-      "probability": 0.001296896883609844
+      "probability": 0.0012968968836098442
     },
     {
       "rank": 17,
@@ -135,5 +136,17 @@
       "probability": 0.0012932437326201533
     }
   ],
-  "updated_at": "2026-08-23T07:35:30+09:00"
+  "champion_pool": {
+    "pool_id": "pool-90c3165cf721",
+    "size": 1,
+    "members": [
+      {
+        "champion_id": "champ-93e379335cc8",
+        "config_id": "20fc1e094187",
+        "weight": 1.0,
+        "dev_exact_nll": 6.909228319381661
+      }
+    ]
+  },
+  "updated_at": "2026-08-23T08:11:26+09:00"
 }
