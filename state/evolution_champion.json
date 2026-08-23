@@ -1633,7 +1633,7 @@
     "replay_version": "v3"
   },
   "historical_replay": {
-    "generated_at": "2026-08-23T08:13:25+09:00",
+    "generated_at": "2026-08-24T06:46:07+09:00",
     "dataset_fingerprint": "d00cd33771798e2fda3b",
     "selection": {
       "n": 5554,
@@ -1664,7 +1664,7 @@
     "full": {
       "n": 6554,
       "exact_nll": 6.9129410873873365,
-      "digit_nll": 2.304367672678049,
+      "digit_nll": 2.3043676726780493,
       "mean_rank": 497.11214525480625,
       "top1_rate": 0.00091547146780592,
       "top3_rate": 0.0021361000915471468,
@@ -1674,9 +1674,15 @@
       "box20_rate": 0.09566676838571865,
       "mini20_rate": 0.1052792187976808
     },
-    "stagnation_count": 1,
-    "replay_version": "v4-champion-pool",
-    "champion_pool_id": "pool-90c3165cf721"
+    "stagnation_count": 2,
+    "replay_version": "v4-champion-pool-text-v1",
+    "champion_pool_id": "pool-90c3165cf721",
+    "text_report": {
+      "version": "replay-text-v1",
+      "latest_path": "backtests/champion_replay/latest_results.txt",
+      "archive_path": "backtests/champion_replay/text_archive/generation_0003_pool-90c3165cf721.txt",
+      "rows": 6554
+    }
   },
   "nested_metrics_v4": {
     "eval_version": "rolling5-bootstrap-metasearch-v4",

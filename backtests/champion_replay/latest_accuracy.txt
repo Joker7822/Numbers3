@@ -1,6 +1,6 @@
 NUMBERS3 Champion Pool v4 全過去回リプレイ
 ================================================================================================
-生成日時: 2026-08-23T08:13:25+09:00
+生成日時: 2026-08-24T06:46:07+09:00
 Primary Champion: champ-93e379335cc8 / generation=3
 Champion Pool: pool-90c3165cf721 / members=1
 対象最新回: 第7054回
@@ -31,5 +31,8 @@ Top1: 0.1000% / Top20: 2.6000%
 ------------------------------------------------------------------------------------------------
 Exact NLL: 6.91294109 / 平均順位: 497.11/1000
 Top1: 0.0915% / Top20: 2.2124%
+
+詳細な各回照合: backtests/champion_replay/latest_results.txt
+世代別TXT: backtests/champion_replay/text_archive/
 
 重要: final auditは探索・昇格・Pool重み決定には使用しません。
