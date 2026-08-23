@@ -9,6 +9,8 @@ on:
       - numbers3_runner_champion_v4.py
       - numbers3_v4_models.py
       - numbers3_champion_pool.py
+      - numbers3_champion_replay_v4.py
+      - numbers3_replay_text_report.py
       - numbers3_live_scoreboard.py
       - numbers3_champion.py
       - numbers3_evo_agent.py
@@ -66,6 +68,20 @@ jobs:
             --validation 1000 \
             --topk 20
 
+      - name: Re-run all historical predictions with latest model and write reconciliation TXT
+        env:
+          TZ: Asia/Tokyo
+        run: |
+          python numbers3_champion_replay_v4.py \
+            --csv data/numbers3.csv \
+            --champion state/evolution_champion.json \
+            --pool state/champion_pool.json \
+            --state state/champion_replay_state.json \
+            --output-dir backtests/champion_replay \
+            --warmup 500 \
+            --refit-interval 500 \
+            --audit-draws 1000
+
       - name: Historical walk-forward baseline audit
         env:
           TZ: Asia/Tokyo
@@ -104,5 +120,5 @@ jobs:
             echo "No generated changes to commit."
             exit 0
           fi
-          git commit -m "chore(agent): update NUMBERS3 v4 Champion Pool prediction"
+          git commit -m "chore(agent): update NUMBERS3 v4 prediction and replay reconciliation"
           git push
