@@ -15,6 +15,7 @@ import numbers3_evo_agent as agent
 import numbers3_champion_replay as old
 from numbers3_champion import load_champion
 from numbers3_champion_pool import load_pool
+from numbers3_replay_text_report import write_replay_text_reports
 from numbers3_v4_models import (
     U_EXACT,
     build_features,
@@ -29,7 +30,7 @@ from numbers3_v4_models import (
 JST = ZoneInfo("Asia/Tokyo")
 U_DIGIT = math.log(10.0)
 KS = (1, 3, 5, 10, 20)
-REPLAY_VERSION = "v4-champion-pool"
+REPLAY_VERSION = "v4-champion-pool-text-v1"
 
 
 def digit_nll(actual: np.ndarray, p: np.ndarray) -> float:
@@ -86,6 +87,8 @@ def render_summary(path: Path, champion: dict, pool: dict, full: dict, selection
         "全評価期間", "-" * 96,
         f"Exact NLL: {full['exact_nll']:.8f} / 平均順位: {full['mean_rank']:.2f}/1000",
         f"Top1: {full['top1_rate']:.4%} / Top20: {full['top20_rate']:.4%}", "",
+        "詳細な各回照合: backtests/champion_replay/latest_results.txt",
+        "世代別TXT: backtests/champion_replay/text_archive/", "",
         "重要: final auditは探索・昇格・Pool重み決定には使用しません。",
     ]
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -116,7 +119,8 @@ def run_replay(csv_path: Path, champion_path: Path, pool_path: Path, state_path:
         except Exception:
             state = {}
     if (not force and state.get("dataset_fingerprint") == fp and state.get("champion_pool_id") == pid
-            and state.get("replay_version") == REPLAY_VERSION and (outdir / "latest_rounds.csv").exists()):
+            and state.get("replay_version") == REPLAY_VERSION and (outdir / "latest_rounds.csv").exists()
+            and (outdir / "latest_results.txt").exists()):
         print(json.dumps({**state, "skipped": True}, ensure_ascii=False, indent=2))
         return {**state, "skipped": True}
     if len(df) <= warmup + audit_draws + 200:
@@ -216,12 +220,18 @@ def run_replay(csv_path: Path, champion_path: Path, pool_path: Path, state_path:
         "improved_best": improved, "stagnation_count": stagnation,
         "replay_version": REPLAY_VERSION, "skipped": False,
     }
+    text_report = write_replay_text_reports(
+        outdir, result, champion, pool, replay, full, selection, audit, audit_draws
+    )
+    replay["text_report"] = text_report
+
     state_path.parent.mkdir(parents=True, exist_ok=True)
     state_path.write_text(json.dumps(replay, ensure_ascii=False, indent=2), encoding="utf-8")
     champion["historical_replay"] = {
         "generated_at": now, "dataset_fingerprint": fp, "selection": selection,
         "audit_report_only": audit, "full": full, "stagnation_count": stagnation,
         "replay_version": REPLAY_VERSION, "champion_pool_id": pid,
+        "text_report": text_report,
     }
     champion_path.write_text(json.dumps(champion, ensure_ascii=False, indent=2), encoding="utf-8")
 
