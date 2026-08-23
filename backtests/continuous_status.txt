@@ -1,28 +1,28 @@
 NUMBERS3 Evolution Engine v4
 ================================================================================================
-実験: exp-0005944-51e93c56234c / generated=2026-08-23T10:50:16+09:00
+実験: exp-0005945-9e2cc1208dbb / generated=2026-08-23T11:03:54+09:00
 Champion(before): champ-93e379335cc8
-Challenger: chal-51e93c56234c
+Challenger: chal-9e2cc1208dbb
 判定: REJECTED
 理由: rejected: v4 development/consistency/alpha-spending threshold not met
 search=broad / meta=meta_lcb / candidate_pool=192
-meta predicted NLL=6.90727996838448 / uncertainty=0.0017603391622356174
+meta predicted NLL=6.907025771455705 / uncertainty=0.000883127363845886
 
 Rolling 5-fold development（昇格判定に使用）
 ------------------------------------------------------------------------------------------------
 Champion Exact NLL : 6.90922832
-Challenger Exact NLL: 6.90664727
-改善量: +0.00258105
-fold勝利数: 3/5 / 最大fold悪化: 0.00627259
-paired bootstrap P(Challenger better): 83.4583%
+Challenger Exact NLL: 6.90593876
+改善量: +0.00328956
+fold勝利数: 3/5 / 最大fold悪化: 0.00451384
+paired bootstrap P(Challenger better): 91.6667%
 必要bootstrap閾値: 99.0000%
 確認seed実行: False / pass=False
 
 Final audit holdout（報告専用・昇格判定には不使用）
 ------------------------------------------------------------------------------------------------
 Champion Exact NLL : 6.91064318
-Challenger Exact NLL: 6.90713739
-差: +0.00350579
+Challenger Exact NLL: 6.90771819
+差: +0.00292500
 
 現在のPrimary Champion
 ------------------------------------------------------------------------------------------------
