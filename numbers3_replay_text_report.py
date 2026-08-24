@@ -6,7 +6,7 @@ from typing import Any
 
 import pandas as pd
 
-REPORT_VERSION = "replay-text-v1"
+REPORT_VERSION = "replay-text-v2"
 
 
 def _straight_bucket(row: pd.Series) -> str:
@@ -21,6 +21,14 @@ def _straight_bucket(row: pd.Series) -> str:
     if int(row.get("hit20", 0)):
         return "TOP20"
     return "OUT"
+
+
+def _has_any_hit(row: pd.Series) -> bool:
+    return bool(
+        int(row.get("hit20", 0))
+        or int(row.get("box20", 0))
+        or int(row.get("mini20", 0))
+    )
 
 
 def _summary_line(name: str, m: dict[str, Any]) -> str:
@@ -41,7 +49,11 @@ def _render(
     selection: dict[str, Any],
     audit: dict[str, Any],
     audit_draws: int,
-) -> str:
+) -> tuple[str, int]:
+    display_mask = result.apply(_has_any_hit, axis=1)
+    displayed_rows = int(display_mask.sum())
+    omitted_rows = int(len(result) - displayed_rows)
+
     lines = [
         "NUMBERS3 最新モデル 全過去回再予測・照合結果",
         "=" * 112,
@@ -50,6 +62,8 @@ def _render(
         f"primary_champion={champion['champion_id']} generation={int(champion.get('generation', 1))}",
         f"champion_pool={pool['pool_id']} members={len(pool.get('members') or [])}",
         f"latest_issue={int(replay['latest_issue'])} evaluated_draws={len(result)} audit_draws={audit_draws}",
+        f"displayed_rows={displayed_rows} omitted_all_miss_rows={omitted_rows}",
+        "display_policy=ストレートTop20・BOX20・MINI20のすべてが外れた回は各回一覧に掲載しない",
         "method=causal_walk_forward (第N回の予測には第N-1回以前のデータだけを使用)",
         "note=これは最新モデルを過去へ再適用した再予測結果であり、当時保存されたlive予測そのものではありません。",
         "",
@@ -68,7 +82,7 @@ def _render(
 
     lines += [
         "",
-        "各回照合",
+        "各回照合（全口外れは非掲載）",
         "-" * 112,
         "columns: issue date segment pred actual rank straight box20 mini20 exact_nll refit_issue",
         "straight: TOP1/TOP3/TOP5/TOP10/TOP20/OUT; box20,mini20: 1=Top20内で該当 0=非該当",
@@ -76,6 +90,8 @@ def _render(
 
     split = max(0, len(result) - int(audit_draws))
     for idx, row in result.reset_index(drop=True).iterrows():
+        if not _has_any_hit(row):
+            continue
         segment = "SEL" if idx < split else "AUDIT"
         lines.append(
             f"{int(row['target_issue']):07d} {row['draw_date']} {segment:5s} "
@@ -87,8 +103,10 @@ def _render(
 
     lines += [
         "",
-        "照合件数",
+        "照合件数（集計は全評価回を母数に計算）",
         "-" * 112,
+        f"Displayed_hit_rows={displayed_rows}",
+        f"Omitted_all_miss_rows={omitted_rows}",
         f"Top1_hits={int(result['hit1'].sum())}",
         f"Top3_hits={int(result['hit3'].sum())}",
         f"Top5_hits={int(result['hit5'].sum())}",
@@ -97,9 +115,10 @@ def _render(
         f"BOX20_hits={int(result['box20'].sum())}",
         f"MINI20_hits={int(result['mini20'].sum())}",
         "",
+        "重要: 全口外れは表示だけ省略します。NLL・的中率などの集計からは除外しません。",
         "重要: AUDIT_REPORT_ONLYは探索・昇格・Pool重み決定には使用しません。",
     ]
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines) + "\n", displayed_rows
 
 
 def write_replay_text_reports(
@@ -113,7 +132,7 @@ def write_replay_text_reports(
     audit: dict[str, Any],
     audit_draws: int,
 ) -> dict[str, Any]:
-    text = _render(result, champion, pool, replay, full, selection, audit, audit_draws)
+    text, displayed_rows = _render(result, champion, pool, replay, full, selection, audit, audit_draws)
     outdir.mkdir(parents=True, exist_ok=True)
     latest = outdir / "latest_results.txt"
     latest.write_text(text, encoding="utf-8")
@@ -129,5 +148,7 @@ def write_replay_text_reports(
         "version": REPORT_VERSION,
         "latest_path": str(latest),
         "archive_path": str(archive),
-        "rows": int(len(result)),
+        "evaluated_rows": int(len(result)),
+        "displayed_rows": displayed_rows,
+        "omitted_all_miss_rows": int(len(result) - displayed_rows),
     }
