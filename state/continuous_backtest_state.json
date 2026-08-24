@@ -1,18 +1,18 @@
 {
-  "total_cycles": 8052,
-  "last_completed_at": "2026-08-24T20:36:17+09:00",
-  "last_issue": 7054,
+  "total_cycles": 8078,
+  "last_completed_at": "2026-08-24T21:06:26+09:00",
+  "last_issue": 7055,
   "mode": "evolution_engine_v4_power_pool_meta",
-  "last_experiment_id": "exp-0007643-c0d89f649d32",
+  "last_experiment_id": "exp-0007669-aa0f640a3bb2",
   "current_champion_id": "champ-93e379335cc8",
   "current_generation": 3,
   "champion_pool_id": "pool-90c3165cf721",
   "champion_pool_members": 1,
-  "experiments_since_last_promotion": 1839,
+  "experiments_since_last_promotion": 1865,
   "search_mode": "structural",
   "meta_search_strategy": "meta_lcb",
-  "meta_model_rows": 7642,
-  "replay_selection_exact_nll": 6.913293749487087,
+  "meta_model_rows": 7668,
+  "replay_selection_exact_nll": 6.9133144667217445,
   "replay_best_selection_exact_nll": 6.913293749487087,
-  "replay_stagnation_count": 0
+  "replay_stagnation_count": 1
 }
