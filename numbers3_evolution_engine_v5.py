@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -32,7 +33,6 @@ def _stability_target(row: pd.Series) -> tuple[dict, float] | None:
         if not np.isfinite(wins):
             wins = 0.0
         miss_fraction = max(0.0, 1.0 - wins / folds)
-        # Lower is better. Penalize a low mean NLL that is concentrated in only a few folds.
         target = nll + 0.35 * max(0.0, worst) + 0.0020 * miss_fraction
         return cfg, float(target)
     except Exception:
@@ -86,7 +86,6 @@ def choose_candidate(history: pd.DataFrame, candidates: list[dict], experiment_n
     mean = tree_preds.mean(axis=0)
     std = tree_preds.std(axis=0)
 
-    # Keep exploration, but less often than exploitation because thousands of trials already exist.
     if experiment_no % 12 == 0:
         idx = int(np.argmax(std))
         strategy = "stability_meta_uncertainty"
@@ -117,7 +116,6 @@ def compare_dev(champion_results, challenger_results, since: int, generation: in
     boot = float(v4.paired_bootstrap_probability(champion_results, challenger_results))
     threshold = float(v4.alpha_spending_threshold(since, generation))
 
-    # Seven chronological folds are grouped into early / middle / recent regimes.
     groups = np.array_split(diffs, 3)
     regime_improvements = [float(g.mean()) for g in groups]
     regime_wins = int(sum(v > 0.0 for v in regime_improvements))
@@ -158,7 +156,20 @@ def compare_dev(champion_results, challenger_results, since: int, generation: in
     }
 
 
+def _v5_reason(row: dict | pd.Series) -> str:
+    decision = str(row.get("decision", ""))
+    confirmation_run = str(row.get("confirmation_run", "False")).lower() in ("true", "1")
+    confirmation_passed = str(row.get("confirmation_passed", "False")).lower() in ("true", "1")
+    if decision == "PROMOTED":
+        return "v5 rolling7 + regime stability + power calibration + confirmation seed + paired bootstrap passed; final audit unused"
+    if confirmation_run and not confirmation_passed:
+        return "rejected: confirmation seed did not reproduce v5 rolling7/regime-stability improvement"
+    return "rejected: v5 rolling7/regime-stability/alpha-spending threshold not met"
+
+
 def write_latest(path: Path, row: dict, champion: dict, pool: dict) -> None:
+    row = dict(row)
+    row["reason"] = _v5_reason(row)
     _ORIGINAL_WRITE_LATEST(path, row, champion, pool)
     text = path.read_text(encoding="utf-8")
     text = text.replace("NUMBERS3 Evolution Engine v4", "NUMBERS3 Evolution Engine v5 Stability", 1)
@@ -181,13 +192,35 @@ def write_latest(path: Path, row: dict, champion: dict, pool: dict) -> None:
     path.write_text(text.rstrip() + "\n" + "\n".join(extra) + "\n", encoding="utf-8")
 
 
+def _cli_value(flag: str, default: str) -> str:
+    try:
+        i = sys.argv.index(flag)
+        return sys.argv[i + 1]
+    except (ValueError, IndexError):
+        return default
+
+
+def fix_history_reason() -> None:
+    path = Path(_cli_value("--history", "experiments/experiment_history.csv"))
+    if not path.exists():
+        return
+    df = pd.read_csv(path)
+    if df.empty or "reason" not in df.columns:
+        return
+    last = df.index[-1]
+    if str(df.at[last, "eval_version"]) != EVAL_VERSION:
+        return
+    df.at[last, "reason"] = _v5_reason(df.loc[last])
+    df.to_csv(path, index=False, encoding="utf-8-sig")
+
+
 def main() -> None:
-    # Patch v4's orchestration while retaining its audited promotion, Pool and checkpoint logic.
     v4.EVAL_VERSION = EVAL_VERSION
     v4.choose_candidate = choose_candidate
     v4.compare_dev = compare_dev
     v4.write_latest = write_latest
     v4.main()
+    fix_history_reason()
 
 
 if __name__ == "__main__":
