@@ -3,33 +3,33 @@
   "champion_id": "champ-93e379335cc8",
   "config_id": "pool-90c3165cf721",
   "primary_config_id": "20fc1e094187",
-  "dataset_fingerprint": "ea4ce2af5f81d34f",
-  "last_draw_date": "2026-08-21",
+  "dataset_fingerprint": "887474639fc1f06a",
+  "last_draw_date": "2026-08-24",
   "model_weights": {
-    "frequency": 0.30704562004728275,
-    "markov": 0.29950763148338294,
-    "logreg": 0.056797833349370934,
-    "extra_trees": 0.3366489151199635
+    "frequency": 0.30641674603188296,
+    "markov": 0.2985232813200993,
+    "logreg": 0.05840271192298901,
+    "extra_trees": 0.3366572607250287
   },
   "last_validation": {
     "draws": 700,
     "calibration_draws": 300,
-    "period_start": "2023-12-04",
-    "period_end": "2026-08-21",
+    "period_start": "2023-12-05",
+    "period_end": "2026-08-24",
     "model_logloss": {
-      "frequency": 2.317021074669801,
-      "markov": 2.3190095897156575,
-      "logreg": 2.4520209271744355,
-      "extra_trees": 2.3096575341609467
+      "frequency": 2.317432065549287,
+      "markov": 2.319519918858132,
+      "logreg": 2.4500387667277277,
+      "extra_trees": 2.3099025222042955
     },
-    "ensemble_logloss": 2.30425363831162,
+    "ensemble_logloss": 2.304303234894955,
     "uniform_logloss": 2.302585092994046,
-    "logloss_improvement_vs_uniform": -0.0016685453175742104,
-    "exact_nll": 6.912505329026909,
+    "logloss_improvement_vs_uniform": -0.0017181419009091314,
+    "exact_nll": 6.9126853779687005,
     "uniform_exact_nll": 6.907755278982137,
-    "exact_nll_improvement_vs_uniform": -0.004750050044772358,
-    "top1_straight_hit_rate": 0.002857142857142857,
-    "top20_straight_hit_rate": 0.027142857142857142,
+    "exact_nll_improvement_vs_uniform": -0.0049300989865637135,
+    "top1_straight_hit_rate": 0.0014285714285714286,
+    "top20_straight_hit_rate": 0.02857142857142857,
     "uniform_expected_top1_rate": 0.001,
     "uniform_expected_top20_rate": 0.02,
     "edge_status": "not_confirmed"
@@ -37,103 +37,103 @@
   "last_top_predictions": [
     {
       "rank": 1,
-      "number": "420",
-      "probability": 0.0013695311429754884
+      "number": "937",
+      "probability": 0.001453900950520363
     },
     {
       "rank": 2,
-      "number": "427",
-      "probability": 0.0013614401838218226
+      "number": "930",
+      "probability": 0.0014129561235560473
     },
     {
       "rank": 3,
-      "number": "428",
-      "probability": 0.0013552462266100114
+      "number": "237",
+      "probability": 0.0013976782689807572
     },
     {
       "rank": 4,
-      "number": "480",
-      "probability": 0.001354174213512452
+      "number": "987",
+      "probability": 0.0013856544253028511
     },
     {
       "rank": 5,
-      "number": "487",
-      "probability": 0.0013462261500906008
+      "number": "938",
+      "probability": 0.0013830801546919707
     },
     {
       "rank": 6,
-      "number": "470",
-      "probability": 0.0013456181457529568
+      "number": "230",
+      "probability": 0.0013591467197952858
     },
     {
       "rank": 7,
-      "number": "488",
-      "probability": 0.0013401415853539957
+      "number": "437",
+      "probability": 0.00134892671562867
     },
     {
       "rank": 8,
-      "number": "477",
-      "probability": 0.0013377496962647954
+      "number": "980",
+      "probability": 0.0013476389823216654
     },
     {
       "rank": 9,
-      "number": "478",
-      "probability": 0.0013317260792217052
+      "number": "917",
+      "probability": 0.001340948830353954
     },
     {
       "rank": 10,
-      "number": "429",
-      "probability": 0.0013310260182820416
+      "number": "637",
+      "probability": 0.0013379734059369998
     },
     {
       "rank": 11,
-      "number": "489",
-      "probability": 0.0013163491340234348
+      "number": "137",
+      "probability": 0.0013343261703036165
     },
     {
       "rank": 12,
-      "number": "620",
-      "probability": 0.001309210876300709
+      "number": "287",
+      "probability": 0.0013334541767542135
     },
     {
       "rank": 13,
-      "number": "479",
-      "probability": 0.0013081719514351337
+      "number": "238",
+      "probability": 0.0013310316330041496
     },
     {
       "rank": 14,
-      "number": "820",
-      "probability": 0.0013056851953576335
+      "number": "988",
+      "probability": 0.0013199004796812753
     },
     {
       "rank": 15,
-      "number": "627",
-      "probability": 0.0013016811952769256
+      "number": "939",
+      "probability": 0.001313849156351746
     },
     {
       "rank": 16,
-      "number": "827",
-      "probability": 0.0012981883206809601
+      "number": "430",
+      "probability": 0.0013124877567851556
     },
     {
       "rank": 17,
-      "number": "628",
-      "probability": 0.0012959169192258264
+      "number": "933",
+      "probability": 0.0013053563347735753
     },
     {
       "rank": 18,
-      "number": "680",
-      "probability": 0.0012949192727756788
+      "number": "910",
+      "probability": 0.0013048523107667756
     },
     {
       "rank": 19,
-      "number": "828",
-      "probability": 0.0012924491592184299
+      "number": "630",
+      "probability": 0.0013020046021654217
     },
     {
       "rank": 20,
-      "number": "450",
-      "probability": 0.0012923236046751554
+      "number": "977",
+      "probability": 0.0013012559817101113
     }
   ],
   "champion_pool": {
@@ -148,5 +148,5 @@
       }
     ]
   },
-  "updated_at": "2026-08-24T12:46:55+09:00"
+  "updated_at": "2026-08-24T20:27:07+09:00"
 }
