@@ -1633,57 +1633,57 @@
     "replay_version": "v3"
   },
   "historical_replay": {
-    "generated_at": "2026-08-24T20:29:28+09:00",
-    "dataset_fingerprint": "32411cdd75ba315a4a8a",
+    "generated_at": "2026-08-25T20:28:33+09:00",
+    "dataset_fingerprint": "23988996bc5eea16756e",
     "selection": {
-      "n": 5555,
-      "exact_nll": 6.9133144667217445,
-      "digit_nll": 2.304482618639176,
-      "mean_rank": 497.5933393339334,
-      "top1_rate": 0.0009000900090009,
-      "top3_rate": 0.0018001800180018,
-      "top5_rate": 0.004140414041404141,
-      "top10_rate": 0.009900990099009901,
-      "top20_rate": 0.021422142214221424,
-      "box20_rate": 0.09468946894689469,
-      "mini20_rate": 0.10333033303330333
+      "n": 5556,
+      "exact_nll": 6.913289357313468,
+      "digit_nll": 2.3044740501853993,
+      "mean_rank": 497.5219582433405,
+      "top1_rate": 0.0008999280057595393,
+      "top3_rate": 0.0017998560115190785,
+      "top5_rate": 0.00413966882649388,
+      "top10_rate": 0.009899208063354932,
+      "top20_rate": 0.021418286537077034,
+      "box20_rate": 0.09467242620590353,
+      "mini20_rate": 0.103491720662347
     },
     "audit_report_only": {
       "n": 1000,
-      "exact_nll": 6.910746873155021,
-      "digit_nll": 2.303687850240787,
-      "mean_rank": 494.089,
+      "exact_nll": 6.910895220105966,
+      "digit_nll": 2.3037375129658435,
+      "mean_rank": 494.485,
       "top1_rate": 0.001,
       "top3_rate": 0.004,
       "top5_rate": 0.004,
       "top10_rate": 0.008,
       "top20_rate": 0.026,
       "box20_rate": 0.101,
-      "mini20_rate": 0.117
+      "mini20_rate": 0.116
     },
     "full": {
-      "n": 6555,
-      "exact_nll": 6.912922766711565,
-      "digit_nll": 2.304361372506699,
-      "mean_rank": 497.0587337909992,
-      "top1_rate": 0.0009153318077803204,
-      "top3_rate": 0.0021357742181540807,
-      "top5_rate": 0.004118993135011442,
-      "top10_rate": 0.009610983981693364,
-      "top20_rate": 0.02212051868802441,
-      "box20_rate": 0.09565217391304348,
-      "mini20_rate": 0.10541571319603356
+      "n": 6556,
+      "exact_nll": 6.912924174700976,
+      "digit_nll": 2.3043617046668583,
+      "mean_rank": 497.05872483221475,
+      "top1_rate": 0.0009151921903599756,
+      "top3_rate": 0.0021354484441732766,
+      "top5_rate": 0.00411836485661989,
+      "top10_rate": 0.009609517998779744,
+      "top20_rate": 0.022117144600366078,
+      "box20_rate": 0.09563758389261745,
+      "mini20_rate": 0.10539963392312386
     },
-    "stagnation_count": 1,
+    "stagnation_count": 0,
     "replay_version": "v4-champion-pool-text-v1",
     "champion_pool_id": "pool-90c3165cf721",
     "text_report": {
       "version": "replay-text-v2",
       "latest_path": "backtests/champion_replay/latest_results.txt",
       "archive_path": "backtests/champion_replay/text_archive/generation_0003_pool-90c3165cf721.txt",
-      "evaluated_rows": 6555,
+      "evaluated_rows": 6556,
       "displayed_rows": 1121,
-      "omitted_all_miss_rows": 5434
+      "omitted_all_miss_rows": 5435
     }
   },
   "nested_metrics_v4": {
