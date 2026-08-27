@@ -1,15 +1,15 @@
 {
-  "total_experiments": 10828,
-  "last_experiment_id": "exp-0010828-39a8b6ce5a01",
-  "last_completed_at": "2026-08-27T17:41:16+09:00",
+  "total_experiments": 10855,
+  "last_experiment_id": "exp-0010855-0e0eb0807041",
+  "last_completed_at": "2026-08-27T18:12:25+09:00",
   "last_dataset_fingerprint": "c5e3cf9fc9e6c8564994",
   "current_champion_id": "champ-93e379335cc8",
   "current_generation": 3,
-  "experiments_since_last_promotion": 5024,
+  "experiments_since_last_promotion": 5051,
   "search_mode": "structural",
   "eval_version": "rolling7-bootstrap-metasearch-stability-v5",
   "meta_search_strategy": "stability_meta_lcb",
-  "meta_model_rows": 10827,
+  "meta_model_rows": 10854,
   "champion_pool_id": "pool-90c3165cf721",
   "champion_pool_members": 1
 }
