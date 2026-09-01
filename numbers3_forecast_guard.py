@@ -11,6 +11,8 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 
+import numbers3_live_health as live_health
+
 JST = ZoneInfo("Asia/Tokyo")
 SALES_CUTOFF = time(18, 30)
 
@@ -117,10 +119,19 @@ def main() -> None:
     ap.add_argument("--archive", default="predictions/live_forecast_archive.csv")
     ap.add_argument("--out", default="predictions/forecast_continuity.json")
     args = ap.parse_args()
-    result = verify(Path(args.csv), Path(args.archive), Path(args.out))
+    out_path = Path(args.out)
+    result = verify(Path(args.csv), Path(args.archive), out_path)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     if result.get("status") != "ok":
         raise SystemExit(2)
+
+    pred_dir = out_path.parent
+    health = live_health.write_health(
+        pred_dir,
+        pred_dir / "live_health.json",
+        pred_dir / "live_health.txt",
+    )
+    print(json.dumps({"live_health": health}, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
