@@ -2,5 +2,8 @@
   "scored_draws": 5,
   "missing_issues": [
     7059
-  ]
+  ],
+  "reporting_version": "canonical-live-v2",
+  "purchase_txt": "predictions/live_purchase_scoreboard.txt",
+  "cumulative_txt": "predictions/cumulative_results.txt"
 }

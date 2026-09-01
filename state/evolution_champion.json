@@ -1633,7 +1633,7 @@
     "replay_version": "v3"
   },
   "historical_replay": {
-    "generated_at": "2026-09-01T02:55:59+09:00",
+    "generated_at": "2026-09-01T13:00:48+09:00",
     "dataset_fingerprint": "6efe9d1159a540a1c443",
     "selection": {
       "n": 5560,
@@ -1674,7 +1674,7 @@
       "box20_rate": 0.09557926829268293,
       "mini20_rate": 0.10548780487804878
     },
-    "stagnation_count": 1,
+    "stagnation_count": 2,
     "replay_version": "v4-champion-pool-text-v1",
     "champion_pool_id": "pool-90c3165cf721",
     "text_report": {
