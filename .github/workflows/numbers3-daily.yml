@@ -10,6 +10,7 @@ on:
       - numbers3_runner_champion_v5.py
       - numbers3_live_purchase_audit.py
       - numbers3_live_reporting.py
+      - numbers3_forecast_guard.py
       - numbers3_v4_models.py
       - numbers3_champion_pool.py
       - numbers3_champion_replay_v4.py
@@ -21,8 +22,11 @@ on:
       - .github/workflows/numbers3-daily.yml
   schedule:
     # GitHub Actions cron is UTC.
-    # 11:00 UTC = 20:00 JST. Sunday(0) through Thursday(4).
+    # Primary: 11:00 UTC = 20:00 JST, Sunday through Thursday.
     - cron: "0 11 * * 0-4"
+    # Recovery: 20:00 UTC = 05:00 JST on the following Monday through Friday.
+    # The archive de-duplicates the same target/champion/config, so a successful primary run is not double-scored.
+    - cron: "0 20 * * 0-4"
   workflow_dispatch:
 
 concurrency:
@@ -40,6 +44,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -70,6 +76,54 @@ jobs:
             --refresh \
             --validation 1000 \
             --topk 20
+
+      - name: Verify current forecast continuity
+        env:
+          TZ: Asia/Tokyo
+        run: |
+          python numbers3_forecast_guard.py \
+            --csv data/numbers3.csv \
+            --archive predictions/live_forecast_archive.csv \
+            --out predictions/forecast_continuity.json
+
+      - name: Repack historical dataset for critical checkpoint
+        run: |
+          xz -9e -c data/numbers3.csv > /tmp/numbers3.csv.xz
+          base64 /tmp/numbers3.csv.xz > /tmp/numbers3.csv.xz.b64
+          rm -f data/history_parts/part_*
+          split -b 8000 -d -a 2 /tmp/numbers3.csv.xz.b64 data/history_parts/part_
+
+      - name: Critical checkpoint - persist draw data and live forecast first
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "numbers3-ai-agent"
+          git config user.email "numbers3-ai-agent@users.noreply.github.com"
+          git add -- data/history_parts predictions state/numbers3_agent_state.json
+
+          if git diff --cached --quiet; then
+            echo "No critical prediction changes to commit."
+          else
+            git commit -m "chore(agent): checkpoint NUMBERS3 live forecast before replay"
+          fi
+
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo "Critical checkpoint rebase conflict; refusing to lose or overwrite a live forecast."
+              exit 1
+            fi
+            if git push origin HEAD:main; then
+              echo "Critical live forecast checkpoint persisted on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Critical push raced with another writer; retrying (${attempt}/5)."
+            sleep $((attempt * 3))
+          done
+
+          echo "Failed to persist the critical live forecast after 5 attempts."
+          exit 1
 
       - name: Re-run all historical predictions with latest model and write reconciliation TXT
         env:
@@ -103,26 +157,48 @@ jobs:
             --topk 20 \
             ${EXTRA}
 
-      - name: Repack historical dataset
-        run: |
-          xz -9e -c data/numbers3.csv > /tmp/numbers3.csv.xz
-          base64 /tmp/numbers3.csv.xz > /tmp/numbers3.csv.xz.b64
-          rm -f data/history_parts/part_*
-          split -b 8000 -d -a 2 /tmp/numbers3.csv.xz.b64 data/history_parts/part_
-
-      - name: Commit generated data
+      - name: Best-effort checkpoint of replay and backtests
         shell: bash
         run: |
+          set -euo pipefail
           git config user.name "numbers3-ai-agent"
           git config user.email "numbers3-ai-agent@users.noreply.github.com"
-          git add -- \
-            data/history_parts \
-            predictions \
-            backtests \
-            state
+          git add -- backtests state/champion_replay_state.json
+
           if git diff --cached --quiet; then
-            echo "No generated changes to commit."
+            echo "No replay/backtest changes to commit."
             exit 0
           fi
-          git commit -m "chore(agent): update NUMBERS3 prediction, live purchase audit, and replay reconciliation"
-          git push
+
+          git commit -m "chore(agent): update NUMBERS3 replay reconciliation"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            LOCAL_CHAMPION=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          print(json.loads(Path('state/evolution_champion.json').read_text(encoding='utf-8')).get('champion_id', ''))
+          PY
+          )
+            REMOTE_CHAMPION=$(git show origin/main:state/evolution_champion.json | python -c 'import json,sys; print(json.load(sys.stdin).get("champion_id", ""))')
+            if [ "${LOCAL_CHAMPION}" != "${REMOTE_CHAMPION}" ]; then
+              echo "Champion changed during daily replay (${LOCAL_CHAMPION} -> ${REMOTE_CHAMPION}); skipping stale replay push."
+              exit 0
+            fi
+
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo "Replay output conflicted with Continuous Evolution; live forecast is already safely checkpointed, so skipping non-critical replay push."
+              exit 0
+            fi
+            if git push origin HEAD:main; then
+              echo "Replay/backtest checkpoint persisted on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Replay push raced with another writer; retrying (${attempt}/3)."
+            sleep $((attempt * 3))
+          done
+
+          echo "Replay/backtest push could not be persisted, but the live forecast critical checkpoint succeeded."
+          exit 0
