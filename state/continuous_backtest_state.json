@@ -1,18 +1,18 @@
 {
-  "total_cycles": 16267,
-  "last_completed_at": "2026-09-01T13:02:32+09:00",
+  "total_cycles": 16285,
+  "last_completed_at": "2026-09-01T13:25:22+09:00",
   "last_issue": 7060,
   "mode": "evolution_engine_v5_stability_meta",
-  "last_experiment_id": "exp-0015858-9472915b345b",
+  "last_experiment_id": "exp-0015876-f949078b9239",
   "current_champion_id": "champ-93e379335cc8",
   "current_generation": 3,
   "champion_pool_id": "pool-90c3165cf721",
   "champion_pool_members": 1,
-  "experiments_since_last_promotion": 10054,
+  "experiments_since_last_promotion": 10072,
   "search_mode": "structural",
-  "meta_search_strategy": "stability_meta_lcb",
-  "meta_model_rows": 15857,
+  "meta_search_strategy": "stability_meta_uncertainty",
+  "meta_model_rows": 15875,
   "replay_selection_exact_nll": 6.913227998886966,
   "replay_best_selection_exact_nll": 6.913224833290349,
-  "replay_stagnation_count": 1
+  "replay_stagnation_count": 2
 }
