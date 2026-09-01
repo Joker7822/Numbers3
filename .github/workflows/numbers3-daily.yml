@@ -9,6 +9,7 @@ on:
       - numbers3_runner_champion_v4.py
       - numbers3_runner_champion_v5.py
       - numbers3_live_purchase_audit.py
+      - numbers3_live_reporting.py
       - numbers3_v4_models.py
       - numbers3_champion_pool.py
       - numbers3_champion_replay_v4.py
