@@ -22,9 +22,9 @@
       "logreg": 2.4532812981077834,
       "extra_trees": 2.3145377810118393
     },
-    "ensemble_logloss": 2.304455503359423,
+    "ensemble_logloss": 2.3044555033594225,
     "uniform_logloss": 2.302585092994046,
-    "logloss_improvement_vs_uniform": -0.001870410365377051,
+    "logloss_improvement_vs_uniform": -0.0018704103653766069,
     "exact_nll": 6.913032616172196,
     "uniform_exact_nll": 6.907755278982137,
     "exact_nll_improvement_vs_uniform": -0.005277337190059406,
@@ -148,5 +148,5 @@
       }
     ]
   },
-  "updated_at": "2026-09-01T13:07:11+09:00"
+  "updated_at": "2026-09-01T13:14:46+09:00"
 }

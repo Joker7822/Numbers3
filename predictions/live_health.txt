@@ -1,0 +1,37 @@
+NUMBERS3 Live Health
+============================================================================================
+STATUS: DEGRADED_HISTORY
+理由: current forecast is safe, but historical live forecast gaps remain
+
+次回予測 continuity
+--------------------------------------------------------------------------------------------
+guard: ok
+latest issue: 7060 / expected target: 7061
+generated: 2026-09-01T02:53:30+09:00
+Champion: champ-93e379335cc8 / generation=3 / config=pool-90c3165cf721
+
+Prospective live evidence
+--------------------------------------------------------------------------------------------
+scored draws: 5 / evidence=INSUFFICIENT_LIVE_SAMPLE
+Exact NLL: 6.83189435 / uniform=6.90775528 / improvement=+0.07586093
+mean actual rank: 274.60/1000
+
+Virtual purchase audit
+--------------------------------------------------------------------------------------------
+scored: 5 / any-hit draws: 2
+stake=72,800円 return=31,500円 profit=-41,300円 ROI=-56.7308%
+straight: hits=0 stake=20,000円 return=0円 ROI=-100.0000%
+box     : hits=1 stake=18,800円 return=13,500円 ROI=-28.1915%
+set     : hits=1 stake=20,000円 return=6,700円 ROI=-66.5000%
+mini    : hits=1 stake=14,000円 return=11,300円 ROI=-19.2857%
+
+Forecast coverage
+--------------------------------------------------------------------------------------------
+coverage: 5/6 (83.33%)
+historical missing issues: 7059
+過去欠番はreplayで埋めません。抽せん前に永続保存された予測だけをprospective成績として扱います。
+
+判定基準
+--------------------------------------------------------------------------------------------
+CRITICAL=current forecast continuity failure / DEGRADED_HISTORY=current safe but historical gaps / OK=no recorded gap.
+live n<100は観測段階。NLLやROIが良く見えても予測優位性の証拠とは扱いません。
