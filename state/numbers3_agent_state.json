@@ -53,7 +53,7 @@
     {
       "rank": 4,
       "number": "832",
-      "probability": 0.001397761299482268
+      "probability": 0.0013977612994822682
     },
     {
       "rank": 5,
@@ -63,17 +63,17 @@
     {
       "rank": 6,
       "number": "882",
-      "probability": 0.0013845782739889266
+      "probability": 0.0013845782739889268
     },
     {
       "rank": 7,
       "number": "472",
-      "probability": 0.0013658580872437107
+      "probability": 0.001365858087243711
     },
     {
       "rank": 8,
       "number": "432",
-      "probability": 0.001355082755259993
+      "probability": 0.0013550827552599929
     },
     {
       "rank": 9,
@@ -93,22 +93,22 @@
     {
       "rank": 12,
       "number": "278",
-      "probability": 0.0013343254506476294
+      "probability": 0.0013343254506476296
     },
     {
       "rank": 13,
       "number": "878",
-      "probability": 0.0013271189021012877
+      "probability": 0.001327118902101288
     },
     {
       "rank": 14,
       "number": "182",
-      "probability": 0.0013255319778504946
+      "probability": 0.0013255319778504948
     },
     {
       "rank": 15,
       "number": "238",
-      "probability": 0.001323942532423915
+      "probability": 0.0013239425324239151
     },
     {
       "rank": 16,
@@ -118,22 +118,22 @@
     {
       "rank": 17,
       "number": "277",
-      "probability": 0.0013163407464090492
+      "probability": 0.0013163407464090494
     },
     {
       "rank": 18,
       "number": "288",
-      "probability": 0.0013118434862562345
+      "probability": 0.0013118434862562348
     },
     {
       "rank": 19,
       "number": "877",
-      "probability": 0.0013092895420920925
+      "probability": 0.0013092895420920927
     },
     {
       "rank": 20,
       "number": "237",
-      "probability": 0.00130618164218171
+      "probability": 0.0013061816421817102
     }
   ],
   "champion_pool": {
@@ -148,5 +148,5 @@
       }
     ]
   },
-  "updated_at": "2026-09-02T23:59:35+09:00"
+  "updated_at": "2026-09-03T07:32:01+09:00"
 }
