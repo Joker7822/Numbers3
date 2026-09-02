@@ -109,7 +109,7 @@ jobs:
 
           for attempt in 1 2 3 4 5; do
             git fetch origin main
-            if ! git rebase origin/main; then
+            if ! git rebase --autostash origin/main; then
               git rebase --abort || true
               echo "Critical checkpoint rebase conflict; refusing to lose or overwrite a live forecast."
               exit 1
@@ -187,7 +187,7 @@ jobs:
               exit 0
             fi
 
-            if ! git rebase origin/main; then
+            if ! git rebase --autostash origin/main; then
               git rebase --abort || true
               echo "Replay output conflicted with Continuous Evolution; live forecast is already safely checkpointed, so skipping non-critical replay push."
               exit 0
