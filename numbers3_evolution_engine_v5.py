@@ -169,13 +169,24 @@ def _v5_reason(row: dict | pd.Series) -> str:
 
 def write_latest(path: Path, row: dict, champion: dict, pool: dict) -> None:
     row = dict(row)
-    row["reason"] = _v5_reason(row)
+    is_v5 = str(row.get("eval_version", "")) == EVAL_VERSION
+    # v6 reuses this stable report helper. Preserve an explicit newer-version
+    # reason instead of overwriting it with a v5 label.
+    if is_v5 or not str(row.get("reason", "")).strip():
+        row["reason"] = _v5_reason(row)
     _ORIGINAL_WRITE_LATEST(path, row, champion, pool)
     text = path.read_text(encoding="utf-8")
     text = text.replace("NUMBERS3 Evolution Engine v4", "NUMBERS3 Evolution Engine v5 Stability", 1)
     s = LAST_STABILITY or {}
     regime = s.get("regime_improvements") or []
     regime_text = " / ".join(f"{x:+.8f}" for x in regime) if regime else "n/a"
+    if is_v5:
+        objective_text = "development NLL + worst-fold penalty + fold-loss penalty"
+    else:
+        objective_text = (
+            "development NLL + worst-fold + worst-regime + fold-dispersion "
+            "+ fold/regime-loss penalties"
+        )
     extra = [
         "",
         "期間安定性ゲート（昇格判定に使用）",
@@ -186,7 +197,7 @@ def write_latest(path: Path, row: dict, champion: dict, pool: dict) -> None:
         f"recent regime改善量: {s.get('recent_regime_improvement', float('nan')):+.8f}",
         f"worst regime regression: {s.get('worst_regime_regression', float('nan')):.8f}",
         f"fold improvement std: {s.get('fold_improvement_std', float('nan')):.8f}",
-        "Meta-search objective: development NLL + worst-fold penalty + fold-loss penalty",
+        f"Meta-search objective: {objective_text}",
         "目的: 一部期間だけ強い候補ではなく、時系列区間をまたいで安定する候補を優先する。",
     ]
     path.write_text(text.rstrip() + "\n" + "\n".join(extra) + "\n", encoding="utf-8")
