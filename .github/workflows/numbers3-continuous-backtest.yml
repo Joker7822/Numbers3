@@ -1,16 +1,19 @@
-name: NUMBERS3 Continuous Evolution v5 Stability
+name: NUMBERS3 Continuous Evolution v6 Structural Diversity
 
 on:
   push:
     branches: [main]
     paths:
+      - numbers3_evolution_engine_v6.py
       - numbers3_evolution_engine_v5.py
       - numbers3_evolution_engine_v4.py
       - numbers3_v4_models.py
       - numbers3_champion_pool.py
       - numbers3_champion_replay_v4.py
       - numbers3_runner_champion_v4.py
+      - numbers3_runner_champion_v5.py
       - numbers3_live_scoreboard.py
+      - test_numbers3_v6_structural_models.py
       - numbers3_champion.py
       - numbers3_evo_agent.py
       - .github/workflows/numbers3-continuous-backtest.yml
@@ -49,12 +52,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Run v6 structural model compatibility tests
+        run: |
+          python -m unittest test_numbers3_v6_structural_models.py
+
       - name: Configure agent git identity
         run: |
           git config user.name "numbers3-ai-agent"
           git config user.email "numbers3-ai-agent@users.noreply.github.com"
 
-      - name: Run v5 stability-aware meta-guided experiments continuously
+      - name: Run v6 structural-diversity meta-guided experiments continuously
         env:
           TZ: Asia/Tokyo
           GH_TOKEN: ${{ github.token }}
@@ -83,7 +90,7 @@ jobs:
           }
 
           replay_latest_pool() {
-            echo "[replay-v5] checking Champion Pool against all historical draws"
+            echo "[replay-v6] checking Champion Pool against all historical draws"
             python numbers3_champion_replay_v4.py \
               --csv data/numbers3.csv \
               --champion state/evolution_champion.json \
@@ -107,11 +114,13 @@ jobs:
           engine_path = Path("state/evolution_engine_state.json")
           champion_path = Path("state/evolution_champion.json")
           pool_path = Path("state/champion_pool.json")
+          shadow_path = Path("state/champion_pool_candidates.json")
           replay_path = Path("state/champion_replay_state.json")
           old = json.loads(old_path.read_text(encoding="utf-8")) if old_path.exists() else {}
           eng = json.loads(engine_path.read_text(encoding="utf-8"))
           champ = json.loads(champion_path.read_text(encoding="utf-8"))
           pool = json.loads(pool_path.read_text(encoding="utf-8")) if pool_path.exists() else {}
+          shadow = json.loads(shadow_path.read_text(encoding="utf-8")) if shadow_path.exists() else {}
           replay = json.loads(replay_path.read_text(encoding="utf-8")) if replay_path.exists() else {}
           draws = pd.read_csv("data/numbers3.csv")
           match = re.search(r"(\d+)", str(draws.iloc[-1]["回別"]))
@@ -120,16 +129,18 @@ jobs:
               "total_cycles": int(old.get("total_cycles", 0)) + 1,
               "last_completed_at": eng.get("last_completed_at"),
               "last_issue": latest_issue,
-              "mode": "evolution_engine_v5_stability_meta",
+              "mode": "evolution_engine_v6_structural_diversity",
               "last_experiment_id": eng.get("last_experiment_id"),
               "current_champion_id": champ.get("champion_id"),
               "current_generation": champ.get("generation"),
               "champion_pool_id": pool.get("pool_id"),
               "champion_pool_members": len(pool.get("members") or []),
+              "shadow_pool_candidates": int(shadow.get("candidate_count", 0)),
               "experiments_since_last_promotion": eng.get("experiments_since_last_promotion"),
               "search_mode": eng.get("search_mode"),
               "meta_search_strategy": eng.get("meta_search_strategy"),
               "meta_model_rows": eng.get("meta_model_rows"),
+              "structural_model_version": eng.get("structural_model_version"),
               "replay_selection_exact_nll": (replay.get("selection") or {}).get("exact_nll"),
               "replay_best_selection_exact_nll": replay.get("best_selection_exact_nll"),
               "replay_stagnation_count": replay.get("stagnation_count", 0),
@@ -149,19 +160,19 @@ jobs:
           }
 
           checkpoint() {
-            # Persist only the authoritative evolution state. Replay files are derived
-            # artifacts and are intentionally excluded because Daily Prediction writes
-            # the same paths and can regenerate them from the current Champion Pool.
+            # Persist only authoritative evolution state. Rejected structural models
+            # are stored as shadow Pool candidates and never affect live prediction.
             git add -- \
               experiments \
               backtests/continuous_status.txt \
               state/evolution_champion.json \
               state/champion_pool.json \
+              state/champion_pool_candidates.json \
               state/evolution_engine_state.json \
               state/continuous_backtest_state.json
 
             if ! git diff --cached --quiet; then
-              git commit -m "chore(agent): checkpoint v5 stability evolution state"
+              git commit -m "chore(agent): checkpoint v6 structural-diversity evolution state"
             fi
 
             discard_local_replay_artifacts
@@ -170,7 +181,7 @@ jobs:
 
             if [ "${PROMOTION_PENDING}" -eq 1 ]; then
               gh workflow run numbers3-daily.yml --repo "${GITHUB_REPOSITORY}" --ref main
-              echo "Dispatched daily prediction with the newly updated v5 Champion Pool."
+              echo "Dispatched daily prediction with the newly updated v6 Champion Pool."
               PROMOTION_PENDING=0
             fi
           }
@@ -181,9 +192,9 @@ jobs:
 
           while [ "$(date +%s)" -lt "${DEADLINE}" ]; do
             BEFORE_CHAMPION=$(champion_id)
-            echo "[evolution-v5] starting experiment $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds) champion=${BEFORE_CHAMPION}"
+            echo "[evolution-v6] starting experiment $((CYCLES_THIS_RUN + 1)) at $(date -Iseconds) champion=${BEFORE_CHAMPION}"
 
-            python numbers3_evolution_engine_v5.py \
+            python numbers3_evolution_engine_v6.py \
               --csv data/numbers3.csv \
               --champion state/evolution_champion.json \
               --pool state/champion_pool.json \
@@ -202,7 +213,7 @@ jobs:
             NOW=$(date +%s)
 
             if [ "${BEFORE_CHAMPION}" != "${AFTER_CHAMPION}" ]; then
-              echo "[evolution-v5] Champion promoted: ${BEFORE_CHAMPION} -> ${AFTER_CHAMPION}"
+              echo "[evolution-v6] Champion promoted: ${BEFORE_CHAMPION} -> ${AFTER_CHAMPION}"
               replay_latest_pool
               update_compatibility_status
               PROMOTION_PENDING=1
@@ -230,7 +241,7 @@ jobs:
           done
 
           checkpoint
-          echo "[evolution-v5] completed ${CYCLES_THIS_RUN} experiments in this workflow run"
+          echo "[evolution-v6] completed ${CYCLES_THIS_RUN} experiments in this workflow run"
 
       - name: Start next evolution run immediately
         if: ${{ success() }}
@@ -240,4 +251,4 @@ jobs:
           gh workflow run numbers3-continuous-backtest.yml \
             --repo "${GITHUB_REPOSITORY}" \
             --ref main
-          echo "Queued the next continuous v5 stability evolution workflow run."
+          echo "Queued the next continuous v6 structural-diversity evolution workflow run."
