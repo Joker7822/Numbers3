@@ -42,6 +42,27 @@ class V6StructuralModelsTest(unittest.TestCase):
         actual = final_joint(self.base_position_probs, self.history, cfg)
         np.testing.assert_allclose(actual, expected, rtol=0.0, atol=2e-15)
 
+    def test_inactive_v6_parameters_canonicalize_to_legacy_config(self) -> None:
+        legacy = extended_config({"uniform_blend": 0.5, "power_beta": 1.0})
+        inactive = extended_config({
+            "uniform_blend": 0.5,
+            "power_beta": 1.0,
+            "interaction_mix": 0.0,
+            "interaction_alpha": 10.0,
+            "regime_mix": 0.0,
+            "regime_window": 1500,
+        })
+        self.assertEqual(v4_config_id(legacy), v4_config_id(inactive))
+        self.assertNotIn("interaction_mix", inactive)
+        self.assertNotIn("regime_window", inactive)
+
+    def test_pairwise_only_ignores_inactive_regime_window_in_config_id(self) -> None:
+        a = extended_config({"interaction_mix": 0.20, "regime_mix": 0.0, "regime_window": 100})
+        b = extended_config({"interaction_mix": 0.20, "regime_mix": 0.0, "regime_window": 1500})
+        self.assertEqual(v4_config_id(a), v4_config_id(b))
+        self.assertEqual(a["regime_window"], 300)
+        self.assertEqual(b["regime_window"], 300)
+
     def test_pairwise_joint_is_valid_probability_distribution(self) -> None:
         cfg = extended_config({
             "interaction_mix": 0.20,
