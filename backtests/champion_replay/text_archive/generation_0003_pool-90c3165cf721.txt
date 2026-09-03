@@ -1,7 +1,7 @@
 NUMBERS3 最新モデル 全過去回再予測・照合結果
 ================================================================================================================
 report_version=replay-text-v2
-generated_at=2026-09-03T22:12:03+09:00
+generated_at=2026-09-03T23:55:38+09:00
 primary_champion=champ-93e379335cc8 generation=3
 champion_pool=pool-90c3165cf721 members=1
 latest_issue=7063 evaluated_draws=6563 audit_draws=1000
