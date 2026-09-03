@@ -94,7 +94,6 @@ def _select_diverse_members(
     if not members:
         return []
 
-    # Deduplicate config IDs and keep the best measured version of each config.
     by_cfg: dict[str, dict[str, Any]] = {}
     for member in members:
         cid = member.get("config_id") or v4_config_id(member["config"])
@@ -118,18 +117,12 @@ def _select_diverse_members(
     selected = [primary]
     remaining = [m for m in candidates if m is not primary]
 
-    # Prefer promoted Champions with genuinely different structural assumptions.
     while remaining and len(selected) < max_members:
         eligible = [
             m for m in remaining
             if min(_structural_distance(m["config"], s["config"]) for s in selected) >= min_distance
         ]
-        if eligible:
-            pick = eligible[0]  # candidates are already ordered by dev NLL.
-        else:
-            # If history contains no sufficiently diverse promoted Champion, keep
-            # the best remaining one rather than silently shrinking the Pool.
-            pick = remaining[0]
+        pick = eligible[0] if eligible else remaining[0]
         selected.append(pick)
         remaining.remove(pick)
 
@@ -150,7 +143,7 @@ def _pool_payload(primary_id: str, members: list[dict[str, Any]], updated_at: st
         "version": POOL_VERSION,
         "updated_at": updated_at or _now(),
         "primary_champion_id": primary_id,
-        "diversity_policy": "promoted_champions_only; prefer >=20% structural-key distance; rejected models stay shadow-only",
+        "diversity_policy": "active members are promoted Champions only; history never auto-backfills a live Pool; prefer >=20% structural-key distance on future promotions",
         "members": members,
         "pool_id": pool_id(members),
     }
@@ -187,31 +180,19 @@ def load_pool(path: Path, champion: dict[str, Any]) -> dict[str, Any]:
 
 
 def seed_from_history(pool: dict[str, Any], history: pd.DataFrame, max_members: int = 5) -> dict[str, Any]:
+    """Preserve the authoritative live Pool; never auto-activate historical models.
+
+    Earlier versions attempted to repopulate the Pool from every historical
+    PROMOTED row. That can change live predictions merely because engine code was
+    upgraded. v6 keeps current persisted members only. New members are added
+    exclusively by update_pool after a fresh promotion passes all gates.
+    """
+    del history  # History is intentionally not an activation source.
     members = list(pool.get("members") or [])
-    seen = {m.get("config_id") for m in members}
-    if not history.empty and "decision" in history and "challenger_config_json" in history:
-        promoted = history[history["decision"].astype(str).eq("PROMOTED")].copy()
-        if "eval_version" in promoted:
-            promoted = promoted[promoted["eval_version"].astype(str).str.contains(r"rolling(?:5|7)", na=False, regex=True)]
-        for _, row in promoted.tail(max_members * 8).iterrows():
-            try:
-                cfg = extended_config(json.loads(str(row["challenger_config_json"])))
-                cid = v4_config_id(cfg)
-                if cid in seen:
-                    continue
-                nll = pd.to_numeric(pd.Series([row.get("dev_challenger_exact_nll")]), errors="coerce").iloc[0]
-                members.append(_member(
-                    str(row.get("champion_after") or f"champ-{cid}"),
-                    0,
-                    cfg, None if pd.isna(nll) else float(nll), str(row.get("generated_at") or _now()),
-                ))
-                seen.add(cid)
-            except Exception:
-                continue
     primary_id = str(pool.get("primary_champion_id") or (members[0]["champion_id"] if members else ""))
     members = _select_diverse_members(members, primary_id, max_members=max_members)
     members = _weights(members)
-    pool.update(_pool_payload(primary_id, members))
+    pool.update(_pool_payload(primary_id, members, pool.get("updated_at")))
     return pool
 
 
