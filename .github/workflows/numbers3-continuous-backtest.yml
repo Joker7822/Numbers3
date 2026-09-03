@@ -138,24 +138,35 @@ jobs:
           PY
           }
 
+          discard_local_replay_artifacts() {
+            # Daily Prediction owns persisted replay output. Continuous may generate a
+            # local replay for compatibility metrics, but it must never block the
+            # evolution-state checkpoint when Daily updated the same generated files.
+            git restore --source=HEAD --staged --worktree -- \
+              backtests/champion_replay \
+              state/champion_replay_state.json || true
+            git clean -fd -- backtests/champion_replay
+          }
+
           checkpoint() {
+            # Persist only the authoritative evolution state. Replay files are derived
+            # artifacts and are intentionally excluded because Daily Prediction writes
+            # the same paths and can regenerate them from the current Champion Pool.
             git add -- \
               experiments \
               backtests/continuous_status.txt \
-              backtests/champion_replay \
               state/evolution_champion.json \
               state/champion_pool.json \
               state/evolution_engine_state.json \
-              state/champion_replay_state.json \
               state/continuous_backtest_state.json
 
             if ! git diff --cached --quiet; then
-              git commit -m "chore(agent): checkpoint v5 stability evolution and Champion Pool replay"
-              git pull --rebase origin main
-              git push origin HEAD:main
-            else
-              git pull --rebase origin main
+              git commit -m "chore(agent): checkpoint v5 stability evolution state"
             fi
+
+            discard_local_replay_artifacts
+            git pull --rebase origin main
+            git push origin HEAD:main
 
             if [ "${PROMOTION_PENDING}" -eq 1 ]; then
               gh workflow run numbers3-daily.yml --repo "${GITHUB_REPOSITORY}" --ref main
