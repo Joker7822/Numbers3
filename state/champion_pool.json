@@ -1,7 +1,8 @@
 {
-  "version": "champion-pool-v4",
+  "version": "champion-pool-v5-diversity",
   "updated_at": "2026-09-03T21:54:26+09:00",
   "primary_champion_id": "champ-93e379335cc8",
+  "diversity_policy": "active members are promoted Champions only; history never auto-backfills a live Pool; prefer >=20% structural-key distance on future promotions",
   "members": [
     {
       "champion_id": "champ-93e379335cc8",
