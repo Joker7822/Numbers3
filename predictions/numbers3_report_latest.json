@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-06T22:56:56+09:00",
+  "generated_at": "2026-09-07T07:05:16+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
@@ -78,37 +78,37 @@
     {
       "rank": 1,
       "number": "167",
-      "probability": 0.001512182627331674
+      "probability": 0.0015121826273316737
     },
     {
       "rank": 2,
       "number": "187",
-      "probability": 0.001503489997852903
+      "probability": 0.0015034899978529027
     },
     {
       "rank": 3,
       "number": "160",
-      "probability": 0.0014957618725203717
+      "probability": 0.0014957618725203715
     },
     {
       "rank": 4,
       "number": "180",
-      "probability": 0.0014872102645662564
+      "probability": 0.0014872102645662562
     },
     {
       "rank": 5,
       "number": "177",
-      "probability": 0.001481232738823471
+      "probability": 0.0014812327388234706
     },
     {
       "rank": 6,
       "number": "170",
-      "probability": 0.0014653140876018835
+      "probability": 0.001465314087601883
     },
     {
       "rank": 7,
       "number": "137",
-      "probability": 0.0014241678395975317
+      "probability": 0.0014241678395975313
     },
     {
       "rank": 8,
@@ -118,7 +118,7 @@
     {
       "rank": 9,
       "number": "130",
-      "probability": 0.0014091749587786541
+      "probability": 0.0014091749587786537
     },
     {
       "rank": 10,
@@ -138,17 +138,17 @@
     {
       "rank": 13,
       "number": "166",
-      "probability": 0.0013893628051276866
+      "probability": 0.0013893628051276862
     },
     {
       "rank": 14,
       "number": "277",
-      "probability": 0.0013853871196786648
+      "probability": 0.0013853871196786646
     },
     {
       "rank": 15,
       "number": "186",
-      "probability": 0.0013817249528978418
+      "probability": 0.0013817249528978413
     },
     {
       "rank": 16,
@@ -158,22 +158,22 @@
     {
       "rank": 17,
       "number": "168",
-      "probability": 0.0013697926125700644
+      "probability": 0.001369792612570064
     },
     {
       "rank": 18,
       "number": "188",
-      "probability": 0.0013623228292520325
+      "probability": 0.001362322829252032
     },
     {
       "rank": 19,
       "number": "176",
-      "probability": 0.0013621684244707016
+      "probability": 0.0013621684244707012
     },
     {
       "rank": 20,
       "number": "178",
-      "probability": 0.0013431966370441172
+      "probability": 0.0013431966370441167
     }
   ],
   "notes": [
