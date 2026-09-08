@@ -1,28 +1,28 @@
 NUMBERS3 Evolution Engine v6 Structural Diversity
 ================================================================================================
-実験: exp-0022306-24b96977aee8 / generated=2026-09-08T11:45:52+09:00
+実験: exp-0022317-1bbcc8d6e3f7 / generated=2026-09-08T12:05:23+09:00
 Champion(before): champ-93e379335cc8
-Challenger: chal-24b96977aee8
+Challenger: chal-1bbcc8d6e3f7
 判定: REJECTED
 理由: rejected: v5 rolling7/regime-stability/alpha-spending threshold not met
 search=structural / meta=v6_stability_meta_lcb / candidate_pool=192
-meta predicted NLL=6.9098431583311015 / uncertainty=0.0007441544871662139
+meta predicted NLL=6.910102320133867 / uncertainty=0.0011768683042854557
 
 Rolling 7-fold development（昇格判定に使用）
 ------------------------------------------------------------------------------------------------
 Champion Exact NLL : 6.90970511
-Challenger Exact NLL: 6.90728250
-改善量: +0.00242261
-fold勝利数: 5/7 / 最大fold悪化: 0.00671643
-paired bootstrap P(Challenger better): 89.0417%
+Challenger Exact NLL: 6.90651405
+改善量: +0.00319106
+fold勝利数: 5/7 / 最大fold悪化: 0.00800193
+paired bootstrap P(Challenger better): 93.1250%
 必要bootstrap閾値: 99.7500%
 確認seed実行: False / pass=False
 
 Final audit holdout（報告専用・昇格判定には不使用）
 ------------------------------------------------------------------------------------------------
 Champion Exact NLL : 6.91000093
-Challenger Exact NLL: 6.90734637
-差: +0.00265456
+Challenger Exact NLL: 6.90723119
+差: +0.00276974
 
 現在のPrimary Champion
 ------------------------------------------------------------------------------------------------
@@ -39,11 +39,11 @@ pool_id=pool-90c3165cf721 / members=1
 期間安定性ゲート（昇格判定に使用）
 ------------------------------------------------------------------------------------------------
 7-fold勝利条件: 5/7 (必要=5)
-early / middle / recent 改善量: +0.00149831 / -0.00136653 / +0.00759821
-regime勝利数: 2/3
-recent regime改善量: +0.00759821
-worst regime regression: 0.00136653
-fold improvement std: 0.00568768
+early / middle / recent 改善量: +0.00135110 / +0.00097307 / +0.00816897
+regime勝利数: 3/3
+recent regime改善量: +0.00816897
+worst regime regression: 0.00000000
+fold improvement std: 0.00595099
 Meta-search objective: development NLL + worst-fold penalty + fold-loss penalty
 目的: 一部期間だけ強い候補ではなく、時系列区間をまたいで安定する候補を優先する。
 
