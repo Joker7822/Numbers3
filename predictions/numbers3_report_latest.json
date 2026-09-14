@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-15T01:47:55+09:00",
+  "generated_at": "2026-09-15T08:04:02+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
@@ -78,27 +78,27 @@
     {
       "rank": 1,
       "number": "180",
-      "probability": 0.0018103714082980831
+      "probability": 0.001810371408298083
     },
     {
       "rank": 2,
       "number": "188",
-      "probability": 0.0017419259583761402
+      "probability": 0.00174192595837614
     },
     {
       "rank": 3,
       "number": "280",
-      "probability": 0.001729256980381778
+      "probability": 0.0017292569803817777
     },
     {
       "rank": 4,
       "number": "288",
-      "probability": 0.001665048431142141
+      "probability": 0.0016650484311421408
     },
     {
       "rank": 5,
       "number": "880",
-      "probability": 0.0015884735053476567
+      "probability": 0.0015884735053476565
     },
     {
       "rank": 6,
@@ -108,17 +108,17 @@
     {
       "rank": 7,
       "number": "888",
-      "probability": 0.0015316185874748706
+      "probability": 0.0015316185874748704
     },
     {
       "rank": 8,
       "number": "480",
-      "probability": 0.0015079328066902266
+      "probability": 0.0015079328066902264
     },
     {
       "rank": 9,
       "number": "186",
-      "probability": 0.001506532062203314
+      "probability": 0.0015065320622033138
     },
     {
       "rank": 10,
@@ -128,7 +128,7 @@
     {
       "rank": 11,
       "number": "980",
-      "probability": 0.0014843109797911794
+      "probability": 0.0014843109797911791
     },
     {
       "rank": 12,
@@ -153,7 +153,7 @@
     {
       "rank": 16,
       "number": "680",
-      "probability": 0.0014768242758367517
+      "probability": 0.0014768242758367515
     },
     {
       "rank": 17,
@@ -163,12 +163,12 @@
     {
       "rank": 18,
       "number": "488",
-      "probability": 0.0014552848215402744
+      "probability": 0.0014552848215402742
     },
     {
       "rank": 19,
       "number": "286",
-      "probability": 0.0014442258550562267
+      "probability": 0.0014442258550562265
     },
     {
       "rank": 20,
