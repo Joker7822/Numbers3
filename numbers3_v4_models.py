@@ -48,6 +48,17 @@ def extended_config(config: dict[str, Any] | None) -> dict[str, Any]:
             raise ValueError("regime_mix must be in [0,0.50]")
         if not (50 <= cfg["regime_window"] <= 3000):
             raise ValueError("regime_window must be in [50,3000]")
+
+        # Canonicalise parameters that cannot affect the probability path. This
+        # prevents the evolutionary search from spending trials on config IDs
+        # that are numerically identical to another model.
+        if cfg["interaction_mix"] <= 0.0 and cfg["regime_mix"] <= 0.0:
+            for k in V6_OPTIONAL_DEFAULTS:
+                cfg.pop(k, None)
+        elif cfg["regime_mix"] <= 0.0:
+            # regime_window is inactive for a pairwise-only model, so all such
+            # configs share the same canonical value.
+            cfg["regime_window"] = int(V6_OPTIONAL_DEFAULTS["regime_window"])
     return cfg
 
 
