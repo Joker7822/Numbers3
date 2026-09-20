@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-18T07:48:27+09:00",
+  "generated_at": "2026-09-20T23:30:50+09:00",
   "generation": 3,
-  "source_last_issue": "第7073回",
-  "target_issue": 7074,
-  "prediction_appended": false,
-  "history_rows": 380,
+  "source_last_issue": "第7074回",
+  "target_issue": 7075,
+  "prediction_appended": true,
+  "history_rows": 400,
   "edge_status": "not_confirmed"
 }
