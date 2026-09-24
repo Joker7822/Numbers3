@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-25T00:46:28+09:00",
+  "generated_at": "2026-09-25T08:12:08+09:00",
   "dataset_fingerprint": "1da384fc0b253f4effc3",
   "champion_id": "champ-93e379335cc8",
   "generation": 3,
@@ -12,22 +12,22 @@
   "audit_draws": 1000,
   "selection": {
     "n": 5578,
-    "exact_nll": 6.913327824749044,
-    "digit_nll": 2.304486535305573,
-    "mean_rank": 497.5557547508067,
+    "exact_nll": 6.913312820984239,
+    "digit_nll": 2.304481900441114,
+    "mean_rank": 497.45123700250986,
     "top1_rate": 0.0008963786303334528,
-    "top3_rate": 0.0017927572606669057,
+    "top3_rate": 0.001972032986733596,
     "top5_rate": 0.004123341699533883,
     "top10_rate": 0.00986016493366798,
     "top20_rate": 0.021333811401936176,
-    "box20_rate": 0.09483685908927932,
-    "mini20_rate": 0.10308354248834707
+    "box20_rate": 0.09465758336321262,
+    "mini20_rate": 0.102545715310147
   },
   "audit_report_only": {
     "n": 1000,
-    "exact_nll": 6.909892817646851,
-    "digit_nll": 2.3034131767273145,
-    "mean_rank": 492.499,
+    "exact_nll": 6.909870485759794,
+    "digit_nll": 2.303405671636603,
+    "mean_rank": 492.435,
     "top1_rate": 0.001,
     "top3_rate": 0.004,
     "top5_rate": 0.005,
@@ -38,21 +38,21 @@
   },
   "full": {
     "n": 6578,
-    "exact_nll": 6.912805628473246,
-    "digit_nll": 2.3043233613046215,
-    "mean_rank": 496.7870173304956,
+    "exact_nll": 6.912789510673439,
+    "digit_nll": 2.3043182901029398,
+    "mean_rank": 496.68865916692005,
     "top1_rate": 0.0009121313469139556,
-    "top3_rate": 0.002128306476132563,
+    "top3_rate": 0.002280328367284889,
     "top5_rate": 0.004256612952265126,
     "top10_rate": 0.00972940103374886,
     "top20_rate": 0.022195196108239588,
-    "box20_rate": 0.09562176953481301,
-    "mini20_rate": 0.10580723624201885
+    "box20_rate": 0.09546974764366069,
+    "mini20_rate": 0.10535117056856187
   },
   "best_selection_exact_nll": 6.913222449842543,
-  "improvement_vs_previous_best": -0.0001053749065009768,
+  "improvement_vs_previous_best": -9.037114169618832e-05,
   "improved_best": false,
-  "stagnation_count": 17,
+  "stagnation_count": 18,
   "replay_version": "v4-champion-pool-text-v1",
   "skipped": false,
   "text_report": {
@@ -60,7 +60,7 @@
     "latest_path": "backtests/champion_replay/latest_results.txt",
     "archive_path": "backtests/champion_replay/text_archive/generation_0003_pool-90c3165cf721.txt",
     "evaluated_rows": 6578,
-    "displayed_rows": 1127,
-    "omitted_all_miss_rows": 5451
+    "displayed_rows": 1123,
+    "omitted_all_miss_rows": 5455
   }
 }
