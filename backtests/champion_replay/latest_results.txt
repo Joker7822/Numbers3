@@ -1,18 +1,18 @@
 NUMBERS3 最新モデル 全過去回再予測・照合結果
 ================================================================================================================
 report_version=replay-text-v2
-generated_at=2026-09-25T08:12:08+09:00
+generated_at=2026-09-28T00:34:03+09:00
 primary_champion=champ-93e379335cc8 generation=3
 champion_pool=pool-90c3165cf721 members=1
-latest_issue=7078 evaluated_draws=6578 audit_draws=1000
-displayed_rows=1123 omitted_all_miss_rows=5455
+latest_issue=7079 evaluated_draws=6579 audit_draws=1000
+displayed_rows=1123 omitted_all_miss_rows=5456
 display_policy=ストレートTop20・BOX20・MINI20のすべてが外れた回は各回一覧に掲載しない
 method=causal_walk_forward (第N回の予測には第N-1回以前のデータだけを使用)
 note=これは最新モデルを過去へ再適用した再予測結果であり、当時保存されたlive予測そのものではありません。
 
-SELECTION: n=5578 exact_nll=6.91331282 mean_rank=497.45 top1=0.0896% top20=2.1334% box20=9.4658% mini20=10.2546%
-AUDIT_REPORT_ONLY: n=1000 exact_nll=6.90987049 mean_rank=492.44 top1=0.1000% top20=2.7000% box20=10.0000% mini20=12.1000%
-FULL: n=6578 exact_nll=6.91278951 mean_rank=496.69 top1=0.0912% top20=2.2195% box20=9.5470% mini20=10.5351%
+SELECTION: n=5579 exact_nll=6.91330704 mean_rank=497.43 top1=0.0896% top20=2.1330% box20=9.4820% mini20=10.2527%
+AUDIT_REPORT_ONLY: n=1000 exact_nll=6.90986212 mean_rank=492.44 top1=0.1000% top20=2.7000% box20=9.9000% mini20=12.1000%
+FULL: n=6579 exact_nll=6.91278342 mean_rank=496.67 top1=0.0912% top20=2.2192% box20=9.5455% mini20=10.5335%
 
 Pool members
 ----------------------------------------------------------------------------------------------------------------
@@ -958,7 +958,7 @@ straight: TOP1/TOP3/TOP5/TOP10/TOP20/OUT; box20,mini20: 1=Top20内で該当 0=�
 0006066 2022-10-21 SEL   pred=978 actual=570 rank=0050 straight=OUT   box20=1 mini20=0 nll=6.73423371 refit=0006000
 0006068 2022-10-25 SEL   pred=640 actual=046 rank=0278 straight=OUT   box20=1 mini20=0 nll=6.83164079 refit=0006000
 0006071 2022-10-28 SEL   pred=070 actual=849 rank=0244 straight=OUT   box20=1 mini20=0 nll=6.83459603 refit=0006000
-0006079 2022-11-09 AUDIT pred=049 actual=054 rank=0367 straight=OUT   box20=1 mini20=0 nll=6.88107643 refit=0006000
+0006079 2022-11-09 SEL   pred=049 actual=054 rank=0367 straight=OUT   box20=1 mini20=0 nll=6.88107643 refit=0006000
 0006081 2022-11-11 AUDIT pred=959 actual=754 rank=0104 straight=OUT   box20=0 mini20=1 nll=6.79855627 refit=0006000
 0006083 2022-11-15 AUDIT pred=641 actual=641 rank=0001 straight=TOP1  box20=1 mini20=1 nll=6.51711590 refit=0006000
 0006085 2022-11-17 AUDIT pred=049 actual=930 rank=0117 straight=OUT   box20=1 mini20=1 nll=6.77764584 refit=0006000
@@ -1149,7 +1149,7 @@ straight: TOP1/TOP3/TOP5/TOP10/TOP20/OUT; box20,mini20: 1=Top20内で該当 0=�
 照合件数（集計は全評価回を母数に計算）
 ----------------------------------------------------------------------------------------------------------------
 Displayed_hit_rows=1123
-Omitted_all_miss_rows=5455
+Omitted_all_miss_rows=5456
 Top1_hits=6
 Top3_hits=15
 Top5_hits=28
