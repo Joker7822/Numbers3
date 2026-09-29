@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-30T01:49:04+09:00",
+  "generated_at": "2026-09-30T08:37:23+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
@@ -78,32 +78,32 @@
     {
       "rank": 1,
       "number": "188",
-      "probability": 0.0017311866571975934
+      "probability": 0.0017311866571975937
     },
     {
       "rank": 2,
       "number": "186",
-      "probability": 0.0016008525326763792
+      "probability": 0.0016008525326763794
     },
     {
       "rank": 3,
       "number": "688",
-      "probability": 0.0015911631779812585
+      "probability": 0.0015911631779812587
     },
     {
       "rank": 4,
       "number": "288",
-      "probability": 0.0015802461150710007
+      "probability": 0.001580246115071001
     },
     {
       "rank": 5,
       "number": "180",
-      "probability": 0.001538883129919166
+      "probability": 0.0015388831299191661
     },
     {
       "rank": 6,
       "number": "488",
-      "probability": 0.001504905419515567
+      "probability": 0.0015049054195155672
     },
     {
       "rank": 7,
@@ -118,7 +118,7 @@
     {
       "rank": 9,
       "number": "189",
-      "probability": 0.0014662222317453487
+      "probability": 0.001466222231745349
     },
     {
       "rank": 10,
@@ -143,12 +143,12 @@
     {
       "rank": 14,
       "number": "788",
-      "probability": 0.0014256469134155294
+      "probability": 0.0014256469134155297
     },
     {
       "rank": 15,
       "number": "178",
-      "probability": 0.001425497375409034
+      "probability": 0.0014254973754090341
     },
     {
       "rank": 16,
@@ -158,12 +158,12 @@
     {
       "rank": 17,
       "number": "280",
-      "probability": 0.0014115185407080565
+      "probability": 0.0014115185407080567
     },
     {
       "rank": 18,
       "number": "088",
-      "probability": 0.0014078468105909406
+      "probability": 0.001407846810590941
     },
     {
       "rank": 19,
@@ -173,7 +173,7 @@
     {
       "rank": 20,
       "number": "158",
-      "probability": 0.0013924592084080631
+      "probability": 0.0013924592084080633
     }
   ],
   "notes": [
