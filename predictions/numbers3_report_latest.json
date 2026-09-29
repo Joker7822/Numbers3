@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-29T03:29:14+09:00",
+  "generated_at": "2026-09-29T09:20:08+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
@@ -22,15 +22,15 @@
     "model_logloss": {
       "frequency": 2.3131713391792608,
       "markov": 2.31236652422945,
-      "logreg": 2.450554642113435,
-      "extra_trees": 2.3081104936606995
+      "logreg": 2.450554642080762,
+      "extra_trees": 2.3081177743875982
     },
-    "ensemble_logloss": 2.3042243107129363,
+    "ensemble_logloss": 2.3042291492629943,
     "uniform_logloss": 2.302585092994046,
-    "logloss_improvement_vs_uniform": -0.0016392177188904178,
-    "exact_nll": 6.912367519047806,
+    "logloss_improvement_vs_uniform": -0.0016440562689483684,
+    "exact_nll": 6.912378554022328,
     "uniform_exact_nll": 6.907755278982137,
-    "exact_nll_improvement_vs_uniform": -0.004612240065669404,
+    "exact_nll_improvement_vs_uniform": -0.0046232750401911105,
     "top1_straight_hit_rate": 0.0014285714285714286,
     "top20_straight_hit_rate": 0.02857142857142857,
     "uniform_expected_top1_rate": 0.001,
@@ -38,10 +38,10 @@
     "edge_status": "not_confirmed"
   },
   "model_weights": {
-    "frequency": 0.30722275851408637,
-    "markov": 0.31032907574370255,
-    "logreg": 0.055162412896347414,
-    "extra_trees": 0.32728575284586364
+    "frequency": 0.3072319092934332,
+    "markov": 0.3103383190462195,
+    "logreg": 0.055164055958185736,
+    "extra_trees": 0.3272657157021615
   },
   "v4_config": {
     "validation_draws": 1000,
@@ -78,102 +78,102 @@
     {
       "rank": 1,
       "number": "186",
-      "probability": 0.0020626694673459662
+      "probability": 0.0020641501087235925
     },
     {
       "rank": 2,
       "number": "166",
-      "probability": 0.0018722993216272422
+      "probability": 0.001873600420723803
     },
     {
       "rank": 3,
       "number": "156",
-      "probability": 0.0018679004572764236
+      "probability": 0.0018691903222115202
     },
     {
       "rank": 4,
       "number": "106",
-      "probability": 0.0017472853458211969
+      "probability": 0.0017484649660802762
     },
     {
       "rank": 5,
       "number": "136",
-      "probability": 0.0017343364023155825
+      "probability": 0.0017355045628800483
     },
     {
       "rank": 6,
       "number": "686",
-      "probability": 0.0016701429335838993
+      "probability": 0.0016744054713057662
     },
     {
       "rank": 7,
       "number": "486",
-      "probability": 0.0016445028513230077
+      "probability": 0.0016455314050262133
     },
     {
       "rank": 8,
-      "number": "176",
-      "probability": 0.0016225317030956444
+      "number": "786",
+      "probability": 0.0016244807552315782
     },
     {
       "rank": 9,
       "number": "286",
-      "probability": 0.0016223943224011794
+      "probability": 0.0016237005685502588
     },
     {
       "rank": 10,
-      "number": "786",
-      "probability": 0.001620999951272633
+      "number": "176",
+      "probability": 0.0016236027063373864
     },
     {
       "rank": 11,
       "number": "126",
-      "probability": 0.001570060651069631
+      "probability": 0.001571070531449145
     },
     {
       "rank": 12,
-      "number": "986",
-      "probability": 0.0015642196304535105
+      "number": "189",
+      "probability": 0.001560976106742865
     },
     {
       "rank": 13,
-      "number": "189",
-      "probability": 0.0015589098906198876
+      "number": "986",
+      "probability": 0.0015593238960500747
     },
     {
       "rank": 14,
       "number": "116",
-      "probability": 0.0015464075959950164
+      "probability": 0.0015474073409182827
     },
     {
       "rank": 15,
       "number": "188",
-      "probability": 0.0015448724171658235
+      "probability": 0.0015414512546568044
     },
     {
       "rank": 16,
       "number": "666",
-      "probability": 0.0015275918148521576
+      "probability": 0.0015313357014067797
     },
     {
       "rank": 17,
       "number": "656",
-      "probability": 0.0015242979000842146
+      "probability": 0.0015280244822386596
     },
     {
       "rank": 18,
       "number": "586",
-      "probability": 0.0015214838564327165
+      "probability": 0.0015224680713029073
     },
     {
       "rank": 19,
       "number": "466",
-      "probability": 0.0015050753017773564
+      "probability": 0.0015059791647365453
     },
     {
       "rank": 20,
       "number": "456",
-      "probability": 0.0015018535630173066
+      "probability": 0.0015027493555789051
     }
   ],
   "notes": [
