@@ -1,6 +1,6 @@
 {
   "version": "champion-pool-shadow-v1",
-  "updated_at": "2026-10-02T07:37:57+09:00",
+  "updated_at": "2026-10-02T07:48:03+09:00",
   "primary_champion_id": "champ-93e379335cc8",
   "policy": "SHADOW_ONLY: rejected candidates never affect live prediction; admission requires stable dev evidence and structural diversity",
   "candidate_count": 3,
@@ -120,7 +120,7 @@
       "bootstrap_probability": 0.9220833333333334,
       "worst_fold_regression": 0.0031011860537271,
       "regime_wins": 2,
-      "worst_regime_regression": 0.0007028042079513241,
+      "worst_regime_regression": 0.0007028042079513,
       "structural_distance_from_primary": 0.3,
       "shadow_score": 6.9074420780146335,
       "active_for_prediction": false
