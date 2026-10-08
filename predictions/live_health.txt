@@ -6,28 +6,28 @@ STATUS: DEGRADED_HISTORY
 次回予測 continuity
 --------------------------------------------------------------------------------------------
 guard: ok
-latest issue: 7087 / expected target: 7088
-generated: 2026-10-08T02:41:59+09:00
+latest issue: 7088 / expected target: 7089
+generated: 2026-10-09T02:44:27+09:00
 Champion: champ-93e379335cc8 / generation=3 / config=pool-90c3165cf721
 
 Prospective live evidence
 --------------------------------------------------------------------------------------------
-scored draws: 32 / evidence=INSUFFICIENT_LIVE_SAMPLE
-Exact NLL: 6.87776009 / uniform=6.90775528 / improvement=+0.02999518
-mean actual rank: 412.12/1000
+scored draws: 33 / evidence=INSUFFICIENT_LIVE_SAMPLE
+Exact NLL: 6.87403856 / uniform=6.90775528 / improvement=+0.03371672
+mean actual rank: 403.64/1000
 
 Virtual purchase audit
 --------------------------------------------------------------------------------------------
-scored: 32 / any-hit draws: 12
-stake=440,800円 return=326,700円 profit=-114,100円 ROI=-25.8848%
-straight: hits=1 stake=128,000円 return=77,600円 ROI=-39.3750%
-box     : hits=7 stake=116,200円 return=92,500円 ROI=-20.3959%
-set     : hits=7 stake=125,800円 return=97,500円 ROI=-22.4960%
-mini    : hits=6 stake=70,800円 return=59,100円 ROI=-16.5254%
+scored: 33 / any-hit draws: 12
+stake=455,200円 return=326,700円 profit=-128,500円 ROI=-28.2293%
+straight: hits=1 stake=132,000円 return=77,600円 ROI=-41.2121%
+box     : hits=7 stake=119,600円 return=92,500円 ROI=-22.6589%
+set     : hits=7 stake=129,800円 return=97,500円 ROI=-24.8844%
+mini    : hits=6 stake=73,800円 return=59,100円 ROI=-19.9187%
 
 Forecast coverage
 --------------------------------------------------------------------------------------------
-coverage: 32/33 (96.97%)
+coverage: 33/34 (97.06%)
 historical missing issues: 7059
 過去欠番はreplayで埋めません。抽せん前に永続保存された予測だけをprospective成績として扱います。
 
