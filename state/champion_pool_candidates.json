@@ -1,6 +1,6 @@
 {
   "version": "champion-pool-shadow-v1",
-  "updated_at": "2026-10-10T10:18:41+09:00",
+  "updated_at": "2026-10-10T10:48:51+09:00",
   "primary_champion_id": "champ-93e379335cc8",
   "policy": "SHADOW_ONLY: rejected candidates never affect live prediction; admission requires stable dev evidence and structural diversity",
   "candidate_count": 8,
