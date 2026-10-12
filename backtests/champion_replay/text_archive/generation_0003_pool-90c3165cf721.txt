@@ -1,18 +1,18 @@
 NUMBERS3 最新モデル 全過去回再予測・照合結果
 ================================================================================================================
 report_version=replay-text-v2
-generated_at=2026-10-12T08:38:08+09:00
+generated_at=2026-10-13T05:09:49+09:00
 primary_champion=champ-93e379335cc8 generation=3
 champion_pool=pool-90c3165cf721 members=1
-latest_issue=7089 evaluated_draws=6589 audit_draws=1000
-displayed_rows=1126 omitted_all_miss_rows=5463
+latest_issue=7090 evaluated_draws=6590 audit_draws=1000
+displayed_rows=1126 omitted_all_miss_rows=5464
 display_policy=ストレートTop20・BOX20・MINI20のすべてが外れた回は各回一覧に掲載しない
 method=causal_walk_forward (第N回の予測には第N-1回以前のデータだけを使用)
 note=これは最新モデルを過去へ再適用した再予測結果であり、当時保存されたlive予測そのものではありません。
 
-SELECTION: n=5589 exact_nll=6.91320516 mean_rank=497.20 top1=0.1074% top20=2.1471% box20=9.5008% mini20=10.2881%
-AUDIT_REPORT_ONLY: n=1000 exact_nll=6.91064699 mean_rank=493.87 top1=0.0000% top20=2.7000% box20=10.0000% mini20=12.1000%
-FULL: n=6589 exact_nll=6.91281691 mean_rank=496.70 top1=0.0911% top20=2.2310% box20=9.5766% mini20=10.5631%
+SELECTION: n=5590 exact_nll=6.91318097 mean_rank=497.15 top1=0.1073% top20=2.1467% box20=9.4991% mini20=10.2862%
+AUDIT_REPORT_ONLY: n=1000 exact_nll=6.91077489 mean_rank=494.18 top1=0.0000% top20=2.7000% box20=10.0000% mini20=12.1000%
+FULL: n=6590 exact_nll=6.91281586 mean_rank=496.69 top1=0.0910% top20=2.2307% box20=9.5751% mini20=10.5615%
 
 Pool members
 ----------------------------------------------------------------------------------------------------------------
@@ -1152,7 +1152,7 @@ straight: TOP1/TOP3/TOP5/TOP10/TOP20/OUT; box20,mini20: 1=Top20内で該当 0=�
 照合件数（集計は全評価回を母数に計算）
 ----------------------------------------------------------------------------------------------------------------
 Displayed_hit_rows=1126
-Omitted_all_miss_rows=5463
+Omitted_all_miss_rows=5464
 Top1_hits=6
 Top3_hits=15
 Top5_hits=28
