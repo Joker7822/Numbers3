@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-15T00:44:13+09:00",
+  "generated_at": "2026-10-15T08:08:08+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
@@ -88,7 +88,7 @@
     {
       "rank": 3,
       "number": "259",
-      "probability": 0.0013494093312750438
+      "probability": 0.0013494093312750436
     },
     {
       "rank": 4,
@@ -98,7 +98,7 @@
     {
       "rank": 5,
       "number": "158",
-      "probability": 0.0013374323042970023
+      "probability": 0.001337432304297002
     },
     {
       "rank": 6,
@@ -153,7 +153,7 @@
     {
       "rank": 16,
       "number": "179",
-      "probability": 0.0012865401263953723
+      "probability": 0.0012865401263953721
     },
     {
       "rank": 17,
@@ -168,12 +168,12 @@
     {
       "rank": 19,
       "number": "250",
-      "probability": 0.0012802739723833734
+      "probability": 0.0012802739723833732
     },
     {
       "rank": 20,
       "number": "160",
-      "probability": 0.0012769392702906984
+      "probability": 0.0012769392702906982
     }
   ],
   "notes": [
