@@ -4,70 +4,70 @@
   "status_reason": "current forecast is safe, but historical live forecast gaps remain",
   "continuity": {
     "status": "ok",
-    "latest_issue": 7093,
-    "expected_target_issue": 7094,
+    "latest_issue": 7094,
+    "expected_target_issue": 7095,
     "valid_forecasts": 1,
-    "latest_generated_at": "2026-10-16T00:31:24+09:00",
+    "latest_generated_at": "2026-10-18T23:20:22+09:00",
     "champion_id": "champ-93e379335cc8",
     "generation": 3,
     "config_id": "pool-90c3165cf721",
-    "target_date_candidate": "2026-10-16",
+    "target_date_candidate": "2026-10-19",
     "policy": "source issue matches latest draw; 1000 finite probabilities; generated before 18:30 JST candidate-date cutoff"
   },
   "live": {
-    "scored_draws": 38,
-    "exact_nll": 6.892835348347369,
+    "scored_draws": 39,
+    "exact_nll": 6.896458238236903,
     "uniform_exact_nll": 6.907755278982137,
-    "nll_improvement_vs_uniform": 0.014919930634767375,
-    "mean_actual_rank": 448.3421052631579,
+    "nll_improvement_vs_uniform": 0.011297040745233744,
+    "mean_actual_rank": 459.0,
     "evidence_status": "INSUFFICIENT_LIVE_SAMPLE"
   },
   "purchase": {
-    "scored_draws": 38,
+    "scored_draws": 39,
     "any_hit_draws": 12,
-    "total_stake": 527000.0,
+    "total_stake": 540000.0,
     "total_return": 326700.0,
-    "total_profit": -200300.0,
-    "total_roi": -0.38007590132827324,
+    "total_profit": -213300.0,
+    "total_roi": -0.395,
     "modes": {
       "straight": {
         "hit_draws": 1,
-        "stake": 152000.0,
+        "stake": 156000.0,
         "return": 77600.0,
-        "profit": -74400.0,
-        "roi": -0.48947368421052634
+        "profit": -78400.0,
+        "roi": -0.5025641025641026
       },
       "box": {
         "hit_draws": 7,
-        "stake": 138600.0,
+        "stake": 142400.0,
         "return": 92500.0,
-        "profit": -46100.0,
-        "roi": -0.33261183261183264
+        "profit": -49900.0,
+        "roi": -0.35042134831460675
       },
       "set": {
         "hit_draws": 7,
-        "stake": 149600.0,
+        "stake": 153600.0,
         "return": 97500.0,
-        "profit": -52100.0,
-        "roi": -0.3482620320855615
+        "profit": -56100.0,
+        "roi": -0.365234375
       },
       "mini": {
         "hit_draws": 6,
-        "stake": 86800.0,
+        "stake": 88000.0,
         "return": 59100.0,
-        "profit": -27700.0,
-        "roi": -0.3191244239631336
+        "profit": -28900.0,
+        "roi": -0.32840909090909093
       }
     }
   },
   "coverage": {
-    "scored_live_draws": 38,
+    "scored_live_draws": 39,
     "missing_issues": [
       7059
     ],
     "missing_count": 1,
-    "prospective_opportunities": 39,
-    "coverage_rate": 0.9743589743589743,
+    "prospective_opportunities": 40,
+    "coverage_rate": 0.975,
     "note": "Historical missing issues are not backfilled from replay because that would contaminate prospective evaluation."
   }
 }
