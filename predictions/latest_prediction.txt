@@ -1,6 +1,6 @@
 NUMBERS3 最新予測
 ================================================================
-生成日時: 2026-10-23T00:49:24+09:00
+生成日時: 2026-10-23T08:12:31+09:00
 学習済み最終抽せん: 第7098回 / 2026-10-22 / 本数字 645
 予測対象: 第7099回
 抽せん日候補: 2026-10-23（回号を主キーに後日照合）
@@ -12,42 +12,42 @@ Pool size: 1
 バックテスト
 ----------------------------------------------------------------
 検証期間: 2024-02-07 ～ 2026-10-22 / 700回
-Ensemble log loss: 2.30453934
+Ensemble log loss: 2.30453686
 Uniform log loss : 2.30258509
-差(一様 - model): -0.00195424
+差(一様 - model): -0.00195176
 優位性判定: not_confirmed
 Top1 ストレート包含率: 0.2857%
 Top20 ストレート包含率: 3.0000%
 
 モデル重み
 ----------------------------------------------------------------
-extra_trees : 34.381606%
-frequency   : 30.084308%
-markov      : 29.215562%
-logreg      : 6.318524%
+extra_trees : 34.423679%
+frequency   : 30.065018%
+markov      : 29.196829%
+logreg      : 6.314473%
 
 予測ランキング
 ----------------------------------------------------------------
-01. 045  model=0.161039%  vs_uniform=1.610x
-02. 645  model=0.159163%  vs_uniform=1.592x
-03. 075  model=0.159068%  vs_uniform=1.591x
-04. 675  model=0.157225%  vs_uniform=1.572x
-05. 005  model=0.151620%  vs_uniform=1.516x
-06. 015  model=0.151455%  vs_uniform=1.515x
-07. 245  model=0.151394%  vs_uniform=1.514x
-08. 145  model=0.150633%  vs_uniform=1.506x
-09. 605  model=0.149903%  vs_uniform=1.499x
-10. 615  model=0.149740%  vs_uniform=1.497x
-11. 275  model=0.149594%  vs_uniform=1.496x
-12. 175  model=0.148846%  vs_uniform=1.488x
-13. 025  model=0.144793%  vs_uniform=1.448x
-14. 625  model=0.143191%  vs_uniform=1.432x
-15. 205  model=0.142793%  vs_uniform=1.428x
-16. 215  model=0.142642%  vs_uniform=1.426x
-17. 945  model=0.142451%  vs_uniform=1.425x
-18. 105  model=0.142096%  vs_uniform=1.421x
-19. 115  model=0.141947%  vs_uniform=1.419x
-20. 975  model=0.140810%  vs_uniform=1.408x
+01. 045  model=0.161083%  vs_uniform=1.611x
+02. 645  model=0.159191%  vs_uniform=1.592x
+03. 075  model=0.159097%  vs_uniform=1.591x
+04. 675  model=0.157239%  vs_uniform=1.572x
+05. 005  model=0.151647%  vs_uniform=1.516x
+06. 015  model=0.151494%  vs_uniform=1.515x
+07. 245  model=0.151440%  vs_uniform=1.514x
+08. 145  model=0.150658%  vs_uniform=1.507x
+09. 605  model=0.149915%  vs_uniform=1.499x
+10. 615  model=0.149765%  vs_uniform=1.498x
+11. 275  model=0.149626%  vs_uniform=1.496x
+12. 175  model=0.148859%  vs_uniform=1.489x
+13. 025  model=0.144821%  vs_uniform=1.448x
+14. 625  model=0.143206%  vs_uniform=1.432x
+15. 205  model=0.142823%  vs_uniform=1.428x
+16. 215  model=0.142683%  vs_uniform=1.427x
+17. 945  model=0.142481%  vs_uniform=1.425x
+18. 105  model=0.142108%  vs_uniform=1.421x
+19. 115  model=0.141969%  vs_uniform=1.420x
+20. 975  model=0.140828%  vs_uniform=1.408x
 
 注意
 ----------------------------------------------------------------
@@ -58,9 +58,9 @@ logreg      : 6.318524%
 
 V4 joint評価
 ----------------------------------------------------------------
-Exact NLL: 6.91314424
+Exact NLL: 6.91313651
 Uniform Exact NLL: 6.90775528
-差(一様-model): -0.00538897
+差(一様-model): -0.00538123
 primary uniform_blend=0.5 / power_beta=1.0 / autoregressive_mix=0.0 / feature_profile=base
 Champion Pool:
   champ-93e379335cc8 weight=100.0000% dev_nll=6.909228319381661
