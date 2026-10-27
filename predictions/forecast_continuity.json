@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "latest_issue": 7100,
-  "expected_target_issue": 7101,
+  "latest_issue": 7101,
+  "expected_target_issue": 7102,
   "valid_forecasts": 1,
-  "latest_generated_at": "2026-10-27T02:10:11+09:00",
+  "latest_generated_at": "2026-10-28T01:14:18+09:00",
   "champion_id": "champ-93e379335cc8",
   "generation": 3,
   "config_id": "pool-90c3165cf721",
-  "target_date_candidate": "2026-10-27",
+  "target_date_candidate": "2026-10-28",
   "policy": "source issue matches latest draw; 1000 finite probabilities; generated before 18:30 JST candidate-date cutoff"
 }
