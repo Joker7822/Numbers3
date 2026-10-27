@@ -38,87 +38,87 @@
     {
       "rank": 1,
       "number": "215",
-      "probability": 0.0018385820147659355
+      "probability": 0.0018385820147659353
     },
     {
       "rank": 2,
       "number": "915",
-      "probability": 0.0018137266229270904
+      "probability": 0.0018137266229270902
     },
     {
       "rank": 3,
       "number": "216",
-      "probability": 0.0017473088998214811
+      "probability": 0.001747308899821481
     },
     {
       "rank": 4,
       "number": "115",
-      "probability": 0.0017243064531769882
+      "probability": 0.0017243064531769884
     },
     {
       "rank": 5,
       "number": "916",
-      "probability": 0.0017241483081601903
+      "probability": 0.00172414830816019
     },
     {
       "rank": 6,
       "number": "116",
-      "probability": 0.0016408253796264816
+      "probability": 0.0016408253796264818
     },
     {
       "rank": 7,
       "number": "715",
-      "probability": 0.0016044289120094406
+      "probability": 0.0016044289120094404
     },
     {
       "rank": 8,
       "number": "225",
-      "probability": 0.0015908128057989628
+      "probability": 0.0015908128057989625
     },
     {
       "rank": 9,
       "number": "925",
-      "probability": 0.001570558103874177
+      "probability": 0.0015705581038741767
     },
     {
       "rank": 10,
       "number": "515",
-      "probability": 0.001545194337266049
+      "probability": 0.0015451943372660488
     },
     {
       "rank": 11,
       "number": "815",
-      "probability": 0.0015307652445985171
+      "probability": 0.001530765244598517
     },
     {
       "rank": 12,
       "number": "716",
-      "probability": 0.001529121858783088
+      "probability": 0.0015291218587830879
     },
     {
       "rank": 13,
       "number": "226",
-      "probability": 0.0015164341861041652
+      "probability": 0.001516434186104165
     },
     {
       "rank": 14,
       "number": "245",
-      "probability": 0.0015140303006499966
+      "probability": 0.0015140303006499964
     },
     {
       "rank": 15,
       "number": "015",
-      "probability": 0.0015034525495216488
+      "probability": 0.0015034525495216486
     },
     {
       "rank": 16,
       "number": "205",
-      "probability": 0.0014987347777020753
+      "probability": 0.001498734777702075
     },
     {
       "rank": 17,
       "number": "615",
-      "probability": 0.0014986593436856648
+      "probability": 0.0014986593436856646
     },
     {
       "rank": 18,
@@ -128,12 +128,12 @@
     {
       "rank": 19,
       "number": "926",
-      "probability": 0.0014975605797839472
+      "probability": 0.001497560579783947
     },
     {
       "rank": 20,
       "number": "945",
-      "probability": 0.001495201330754174
+      "probability": 0.0014952013307541739
     }
   ],
   "champion_pool": {
@@ -148,5 +148,5 @@
       }
     ]
   },
-  "updated_at": "2026-10-28T01:14:18+09:00"
+  "updated_at": "2026-10-28T08:42:39+09:00"
 }
