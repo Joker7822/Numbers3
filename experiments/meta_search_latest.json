@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-10-27T22:27:51+09:00",
-  "experiment_id": "exp-0067494-db8d0f3c8f60",
+  "generated_at": "2026-10-27T22:59:26+09:00",
+  "experiment_id": "exp-0067513-87f115451145",
   "strategy": "v6_stability_meta_lcb",
   "training_rows": 20000,
   "candidate_pool_size": 192,
-  "selected_config_id": "db8d0f3c8f60",
-  "predicted_nll": 6.909334094083416,
-  "uncertainty": 0.0016110230686450335,
-  "actual_dev_nll": 6.9072289344889555
+  "selected_config_id": "87f115451145",
+  "predicted_nll": 6.909035958852667,
+  "uncertainty": 0.0008274181272988386,
+  "actual_dev_nll": 6.906723603543971
 }
