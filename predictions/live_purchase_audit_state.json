@@ -1,7 +1,8 @@
 {
-  "scored_draws": 46,
+  "scored_draws": 47,
   "missing_issues": [
-    7059
+    7059,
+    7103
   ],
   "reporting_version": "canonical-live-v2",
   "purchase_txt": "predictions/live_purchase_scoreboard.txt",
