@@ -39,6 +39,32 @@ def number3(v):
     return raw if len(raw) == 3 and raw.isdigit() else None
 
 
+def scenario_summary(df: pd.DataFrame, *, prefix: str, unit_price: int = 200) -> dict:
+    """Exactly one independent ticket per scored draw, with missing payouts guarded."""
+    if df.empty:
+        return {"available": False}
+    ticket_stake = f"{prefix}_stake"
+    ticket_return = f"{prefix}_return"
+    ticket_hit = f"{prefix}_hit"
+    if not df[ticket_stake].eq(unit_price).all():
+        raise ValueError(f"Each {prefix} scenario must purchase exactly one ticket per draw")
+    n = len(df)
+    stake = float(df[ticket_stake].sum())
+    complete = df[ticket_return].notna().all()
+    payout = float(df[ticket_return].sum()) if complete else None
+    profit = payout - stake if payout is not None else None
+    return {
+        "available": True,
+        "draws": n, "hits": int(df[ticket_hit].sum()),
+        "hit_rate": float(df[ticket_hit].mean()),
+        "tickets_per_draw": 1, "price_yen": unit_price,
+        "stake": stake, "return": payout,
+        "profit": profit,
+        "roi": profit / stake if profit is not None and stake else None,
+        "missing_payouts": int(df[ticket_return].isna().sum()),
+    }
+
+
 def main():
     draws_file = ROOT / "data/numbers3.csv"
     if not draws_file.exists():
@@ -70,29 +96,28 @@ def main():
                 raise ValueError("Duplicate issue in walk-forward replay")
             if int(historical["target_issue"].iloc[0]) != 2:
                 raise ValueError("Historical audit must start at issue 2")
-            if not (historical["ticket_count"].eq(1) & historical["ticket_stake"].eq(200)).all():
-                raise ValueError("Historical audit contains a non-one-ticket purchase")
             if (historical["target_issue"].diff().iloc[1:] != 1).any():
                 raise ValueError("Historical replay has missing draw numbers")
-            stake = float(historical["ticket_stake"].sum())
-            all_payouts = historical["ticket_return"].notna().all()
-            ret = float(historical["ticket_return"].sum()) if all_payouts else None
+            for mode in ("straight", "box"):
+                if not historical[f"{mode}_ticket_count"].eq(1).all():
+                    raise ValueError(f"Expected exactly one {mode} ticket per draw")
             replay = {
                 "available": True,
                 "first_issue": int(historical["target_issue"].iloc[0]),
                 "last_issue": int(historical["target_issue"].iloc[-1]),
                 "draws": len(historical),
-                "hit_count": int(historical["hit1"].sum()),
-                "hit_rate": float(historical["hit1"].mean()),
-                "random_baseline": 0.001,
-                "ticket_count_per_draw": 1,
-                "ticket_price_yen": 200,
-                "stake": stake,
-                "return": ret,
-                "profit": (ret - stake) if ret is not None else None,
-                "roi": ((ret - stake) / stake) if ret is not None and stake else None,
-                "missing_payouts": int(historical["ticket_return"].isna().sum()),
+                "straight": scenario_summary(historical.rename(columns={
+                    "straight_ticket_stake": "straight_stake",
+                    "straight_ticket_return": "straight_return",
+                    "straight_ticket_hit": "straight_hit",
+                }), prefix="straight"),
+                "box": scenario_summary(historical.rename(columns={
+                    "box_ticket_stake": "box_stake",
+                    "box_ticket_return": "box_return",
+                    "box_ticket_hit": "box_hit",
+                }), prefix="box"),
                 "exact_nll": nullable_float(historical["exact_nll"].mean()),
+                "random_straight_baseline": 0.001,
                 "method": history_meta.get("method"),
                 "generated_at": history_meta.get("generated_at"),
             }
@@ -100,21 +125,18 @@ def main():
     live_file = ROOT / "predictions/live_purchase_scoreboard.csv"
     live_health = json_file(ROOT / "predictions/live_health.json")
     live = pd.read_csv(live_file, dtype={"actual": str, "top20_numbers": str}) if live_file.exists() else pd.DataFrame()
-    if not live.empty and "purchase_policy" in live and (live["purchase_policy"] != "top1_straight_one_ticket_per_draw").any():
-        raise ValueError("Live purchase audit has not been recalculated under the one-ticket policy")
+    if not live.empty and (
+        "purchase_policy" not in live
+        or (live["purchase_policy"] != "independent_one_ticket_straight_vs_box").any()
+    ):
+        raise ValueError("Live purchase audit needs re-scoring for the two independent one-ticket scenarios")
     live_summary = {"available": False}
     if not live.empty:
-        complete = live["total_return"].notna().all()
-        stake = float(live["total_stake"].sum())
-        ret = float(live["total_return"].sum()) if complete else None
         live_summary = {
             "available": True, "draws": len(live),
-            "top1_hits": int(live["top1_hit"].sum()),
-            "stake": stake, "return": ret,
-            "profit": ret - stake if ret is not None else None,
-            "roi": (ret - stake) / stake if ret is not None and stake else None,
+            "straight": scenario_summary(live, prefix="straight"),
+            "box": scenario_summary(live, prefix="box"),
             "missing_issues": live_health.get("coverage", {}).get("missing_issues", []),
-            "missing_payouts": int(live["total_return"].isna().sum()),
         }
 
     hist_by_issue = {int(r.target_issue): r for r in historical.itertuples()} if not historical.empty else {}
@@ -129,8 +151,12 @@ def main():
             "actual": row.number,
             "walkforward_top1": h.top1 if h is not None else None,
             "walkforward_hit": bool(int(h.hit1)) if h is not None else None,
+            "walkforward_box": str(h.box_ticket_number).zfill(3) if h is not None else None,
+            "walkforward_box_hit": bool(int(h.box_ticket_hit)) if h is not None else None,
             "live_top1": live_top1,
             "live_hit": bool(int(l.top1_hit)) if l is not None else None,
+            "live_box": str(l.box_ticket_number).zfill(3) if l is not None else None,
+            "live_box_hit": bool(int(l.box_hit)) if l is not None else None,
         })
 
     digit_counts = []
@@ -144,7 +170,7 @@ def main():
     old_meta = json_file(ROOT / "backtests/historical_meta.json")
     payload = {
         "generated_at": datetime.now(JST).isoformat(timespec="seconds"),
-        "source": "Joker7822/Numbers3 main repository snapshot",
+        "source": "Joker7822/Numbers3 repository snapshot",
         "last_draw": {
             "issue": int(last.issue), "date": last.date.date().isoformat(),
             "number": last.number,
@@ -168,7 +194,14 @@ def main():
             "edge_status": current.get("validation", {}).get("edge_status"),
             "model_weights": current.get("model_weights", {}),
         },
-        "disclaimer": "Past replay is retrospective and not a saved pre-draw live forecast. Buying tickets does not guarantee winnings.",
+        "purchase_policy": {
+            "description": "Independent one-ticket simulations per draw: Straight vs BOX",
+            "unit_price_yen": 200, "tickets_per_mode": 1,
+            "straight_selection": "rank 1",
+            "box_selection": "highest-ranked ticket with at least two distinct digits",
+            "never_combine_stakes_or_returns": True,
+        },
+        "disclaimer": "Historical replay is retrospective, unlike prospective live audit. Both purchase modes are independent hypothetical scenarios. Winnings are not guaranteed.",
     }
     output = ROOT / "dashboard/data/summary.json"
     output.parent.mkdir(parents=True, exist_ok=True)
