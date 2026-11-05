@@ -13,6 +13,8 @@ import pandas as pd
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.linear_model import SGDClassifier
 
+from numbers3_hit_rate_lab import best_box_by_mass, box_hit, shadow_comparison
+
 from numbers3_evo_agent import (
     AgentConfig, MODEL_NAMES, build_features, ensemble_probs, frequency_probs,
     load_history, normalize_probs, predict_ml, top_k_numbers,
@@ -174,6 +176,18 @@ def write_summary(path, df, warmup, refit):
             )
         ],
         "ボックスは3桁同一数字を除外し、次の購入可能な予測を採用。",
+        "", "BOX 的中率強化のシャドー検証（採用前・事後設計の候補）", "-" * 92,
+        *(
+            [f"既存方式: {shadow_comparison(df)['modes']['baseline']['hits']}/{n}",
+             f"並べ替え確率の合計最大: {shadow_comparison(df)['modes']['mass']['hits']}/{n}"
+             f" (既存との差={shadow_comparison(df)['modes']['mass']['delta_hits_vs_baseline']:+d}回"
+             f", paired p={shadow_comparison(df)['modes']['mass']['paired_p_exploratory']:.4f})",
+             f"3桁すべて異なる・合計確率最大: {shadow_comparison(df)['modes']['unique']['hits']}/{n}"
+             f" (既存との差={shadow_comparison(df)['modes']['unique']['delta_hits_vs_baseline']:+d}回"
+             f", paired p={shadow_comparison(df)['modes']['unique']['paired_p_exploratory']:.4f})",
+             "後から設計した政策を過去に適用した比較。独立した予測改善・未来的中率の証明ではない。"
+             ] if shadow_comparison(df)["available"] else ["候補成績は未集計"]
+        ),
         "", "直近期間", "-" * 92,
     ]
     for w in (100, 500, 1000):
@@ -268,6 +282,8 @@ def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
             rank = int(1 + np.sum(jp > ap))
             top = [n for n, _ in top_k_numbers(ens, top_k)]
             # Evaluate two separate bets, never add their stakes or payouts.
+            mass_choice, mass_probability = best_box_by_mass(jp, distinct_only=False)
+            unique_choice, unique_probability = best_box_by_mass(jp, distinct_only=True)
             box_choice = next((n for n in top if len(set(n)) > 1), None)
             if box_choice is None:
                 raise RuntimeError("No eligible BOX number in the Top20")
@@ -289,6 +305,10 @@ def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
                 "straight_ticket_profit": ticket_return - TICKET_PRICE_YEN if pd.notna(ticket_return) else np.nan,
                 "box_ticket_number": box_choice,
                 "box_ticket_count": 1, "box_ticket_stake": TICKET_PRICE_YEN,
+                "box_mass_number": mass_choice, "box_mass_hit": box_hit(mass_choice, actual),
+                "box_mass_model_probability": mass_probability,
+                "box_unique_number": unique_choice, "box_unique_hit": box_hit(unique_choice, actual),
+                "box_unique_model_probability": unique_probability,
                 "box_ticket_hit": box_hit, "box_ticket_return": box_return,
                 "box_ticket_profit": box_return - TICKET_PRICE_YEN if pd.notna(box_return) else np.nan,
                 "target_issue": issue_no(df.iloc[t]["回別"]),
@@ -332,6 +352,11 @@ def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
         "ticket_count_per_scenario": 1, "unit_price_yen": TICKET_PRICE_YEN,
         "box_selection": "first ranked candidate with at least two distinct digits",
         "ticket_file": "historical_tickets.csv",
+        "shadow_box_policies": {"baseline": "highest-ranked valid single permutation",
+                                "mass": "highest model sum across all BOX-equivalent permutations",
+                                "unique": "highest sum among tickets with 3 distinct digits",
+                                "production_policy_unchanged": True,
+                                "lookahead": False},
     }
     meta_p.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     return meta
