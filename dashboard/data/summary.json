@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-05T15:10:04+09:00",
+  "generated_at": "2026-11-05T16:10:24+09:00",
   "source": "Joker7822/Numbers3 repository snapshot",
   "last_draw": {
     "issue": 7107,
@@ -385,7 +385,7 @@
     "exact_nll": 6.945682321154228,
     "random_straight_baseline": 0.001,
     "method": "past-only prequential walk-forward; frequency/Markov before 100 draws and periodic ML afterwards; causal adaptive weights",
-    "generated_at": "2026-11-05T15:10:02+09:00"
+    "generated_at": "2026-11-05T16:10:21+09:00"
   },
   "previous_walkforward": {
     "first_issue": 501,
