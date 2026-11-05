@@ -1,0 +1,52 @@
+name: Publish Numbers3 Dashboard to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - dashboard/**
+      - .github/workflows/numbers3-pages.yml
+  schedule:
+    - cron: "30 14 * * 1-5" # 23:30 Japan time: refresh daily
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout website files
+        uses: actions/checkout@v4
+      - name: Verify dashboard
+        run: |
+          test -s dashboard/index.html
+          test -s dashboard/data/summary.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('dashboard/data/summary.json').read_text(encoding='utf-8'))
+          assert data['walkforward_from_second']['first_issue'] == 2
+          assert data['walkforward_from_second']['straight']['draws'] > 0
+          assert data['walkforward_from_second']['box']['draws'] > 0
+          print('Dashboard snapshot valid. Latest draw:', data['last_draw'])
+          PY
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload dashboard artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dashboard
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
