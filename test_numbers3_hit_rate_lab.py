@@ -62,6 +62,17 @@ class BoxHitRateLabTests(unittest.TestCase):
         self.assertGreater(paired_exact_p(5, 8), .05)
         self.assertAlmostEqual(paired_exact_p(0, 5), 0.0625)
 
+    def test_live_column_alias_is_supported(self):
+        live = pd.DataFrame([
+            {"target_issue":7100,"box_hit":1,"box_mass_hit":0,"box_unique_hit":1},
+            {"target_issue":7101,"box_hit":0,"box_mass_hit":1,"box_unique_hit":0},
+        ])
+        result = shadow_comparison(live)
+        self.assertTrue(result["available"])
+        self.assertEqual(result["modes"]["baseline"]["hits"], 1)
+        self.assertEqual(result["modes"]["mass"]["hits"], 1)
+        self.assertEqual(result["recent_5000_plus"]["draws"], 2)
+
     def test_comparison_keeps_original_and_shadows_separate(self):
         df = pd.DataFrame([
             {"target_issue":5000,"box_ticket_hit":1,"box_mass_hit":0,"box_unique_hit":1},
