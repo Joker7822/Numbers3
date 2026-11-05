@@ -10,6 +10,8 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 
+from numbers3_hit_rate_lab import shadow_comparison
+
 ROOT = Path(__file__).resolve().parent
 JST = ZoneInfo("Asia/Tokyo")
 
@@ -193,12 +195,19 @@ def main():
             "draws": old_meta.get("evaluated_draws"),
         },
         "live": live_summary,
+        "box_shadows": {
+            "historical": shadow_comparison(historical),
+            "archived_pre_draw": shadow_comparison(live),
+            "warning": "Exploratory after-the-fact selection-policy tests; not evidence of improved future hit rates.",
+            "existing_purchase_policy_unchanged": True,
+        },
         "forecast": {
             "target_issue": int(current.get("dataset", {}).get("last_issue", "第0回").replace("第", "").replace("回", "")) + 1 if current else None,
             "generated_at": current.get("generated_at"),
             "top_predictions": current.get("top_predictions", [])[:20],
             "edge_status": current.get("validation", {}).get("edge_status"),
             "model_weights": current.get("model_weights", {}),
+            "experimental_box_recommendation": current.get("experimental_box_recommendation"),
         },
         "purchase_policy": {
             "description": "Independent one-ticket simulations per draw: Straight vs BOX",

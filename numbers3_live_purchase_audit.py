@@ -12,6 +12,8 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 
+from numbers3_hit_rate_lab import best_box_by_mass, box_hit, shadow_comparison
+
 JST = ZoneInfo("Asia/Tokyo")
 EPS = 1e-15
 UNIT_PRICE = 200
@@ -244,6 +246,10 @@ def update_purchase_audit(csv_path: Path, archive_path: Path, out_csv: Path, out
         rank = 1 + int(np.sum(p > ap))
         top20 = top20_numbers(p)
         purchase = evaluate_portfolio(top20, d.actual, d)
+        # Retrospective POLICY comparisons on an archived, pre-draw joint
+        # distribution. These were not precommitted Live purchase decisions.
+        mass_choice, mass_probability = best_box_by_mass(p, distinct_only=False)
+        unique_choice, unique_probability = best_box_by_mass(p, distinct_only=True)
         gen = pd.to_numeric(r.get("generation", 0), errors="coerce")
         candidates.append({
             "target_issue": target,
@@ -259,6 +265,12 @@ def update_purchase_audit(csv_path: Path, archive_path: Path, out_csv: Path, out
             "top1_hit": int(ai == int(np.argmax(p))),
             "top20_straight_hit": int(d.actual in set(top20)),
             "top20_numbers": ";".join(top20),
+            "box_mass_number": mass_choice,
+            "box_mass_hit": box_hit(mass_choice, d.actual),
+            "box_mass_model_probability": mass_probability,
+            "box_unique_number": unique_choice,
+            "box_unique_hit": box_hit(unique_choice, d.actual),
+            "box_unique_model_probability": unique_probability,
             **purchase,
         })
 
@@ -331,6 +343,15 @@ def update_purchase_audit(csv_path: Path, archive_path: Path, out_csv: Path, out
                     f"払戻={row['box_return']}円"
                 )
 
+    if not operational.empty:
+        comp = shadow_comparison(operational)
+        lines += [
+            "", "BOX候補政策のシャドー評価（抽せん前保存確率への事後設計政策の適用）", "-" * 112,
+            f"既存方式: {comp['modes']['baseline']['hits']}/{n}",
+            f"並べ替え質量最大: {comp['modes']['mass']['hits']}/{n} / paired p={comp['modes']['mass']['paired_p_exploratory']:.4f}",
+            f"3桁すべて異なる: {comp['modes']['unique']['hits']}/{n} / paired p={comp['modes']['unique']['paired_p_exploratory']:.4f}",
+            "これは過去のLive予測数字そのものではなく、保存済み確率への再解析。新政策の将来優位性は未確認。",
+        ]
     lines += ["", "予測欠番監査", "-" * 112]
     if missing:
         lines.append("WARNING: 抽せん結果は存在するが、販売締切前の通常予測アーカイブが無い回があります。")

@@ -5,8 +5,12 @@ on:
     branches:
       - main
       - feat/numbers3-insights-dashboard-20261105
+      - feat/numbers3-box-hit-rate-challengers-20261105
     paths:
       - numbers3_historical_backtest.py
+      - numbers3_hit_rate_lab.py
+      - numbers3_runner_champion_v4.py
+      - test_numbers3_hit_rate_lab.py
       - numbers3_payout_reconciliation.py
       - data/numbers3_historical_payouts.csv
       - test_numbers3_payout_reconciliation.py
@@ -41,7 +45,7 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
       - name: Test purchase and causal replay preconditions
-        run: python -m unittest -v test_numbers3_one_ticket.py test_numbers3_payout_reconciliation.py
+        run: python -m unittest -v test_numbers3_one_ticket.py test_numbers3_payout_reconciliation.py test_numbers3_hit_rate_lab.py
       - name: Restore full draw history
         run: |
           cat data/history_parts/part_* > /tmp/numbers3.csv.xz.b64

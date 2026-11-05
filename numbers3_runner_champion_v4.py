@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 
 import numbers3_evo_agent as agent
+from numbers3_hit_rate_lab import best_box_by_mass
 import numbers3_runner as runner
 from numbers3_champion import load_champion
 from numbers3_champion_pool import load_pool
@@ -118,6 +119,7 @@ def make_run_agent(champion: dict, pool: dict):
         metrics = metrics_from_joint_rows(nums[split+cal_n:], joints)
         metrics.pop("score_exact_nlls", None)
         ranking = top_numbers(next_joint, int(runtime_cfg.top_k))
+        shadow_box, shadow_box_mass = best_box_by_mass(next_joint, distinct_only=True)
 
         aggregate_weights = {name: 0.0 for name in agent.MODEL_NAMES}
         aggregate_losses = {name: 0.0 for name in agent.MODEL_NAMES}
@@ -178,6 +180,13 @@ def make_run_agent(champion: dict, pool: dict):
                 ],
             },
             "top_predictions": [{"rank": i+1, "number": n, "probability": p} for i, (n, p) in enumerate(ranking)],
+            "experimental_box_recommendation": {
+                "number": shadow_box,
+                "model_permutation_mass": shadow_box_mass,
+                "method": "maximum joint probability summed over 6 permutations",
+                "digits_distinct": True,
+                "status": "shadow_not_production",
+            },
             "notes": [
                 "Prediction is a weighted Champion Pool ensemble; promotion governance still uses strict single-Champion comparisons.",
                 "Each member is power-calibrated after uniform shrinkage and optional autoregressive mixing.",
