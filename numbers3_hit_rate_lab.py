@@ -66,10 +66,12 @@ def shadow_comparison(df) -> dict:
     """
     if df.empty:
         return {"available": False}
-    required = ("box_ticket_hit", "box_mass_hit", "box_unique_hit")
+    # Historical replay calls it box_ticket_hit; Live audit calls it box_hit.
+    base_col = "box_ticket_hit" if "box_ticket_hit" in df else "box_hit"
+    required = (base_col, "box_mass_hit", "box_unique_hit")
     if any(c not in df.columns for c in required):
         return {"available": False}
-    old = df["box_ticket_hit"].astype(int)
+    old = df[base_col].astype(int)
     policies = {
         "baseline": old,
         "mass": df["box_mass_hit"].astype(int),
@@ -93,7 +95,7 @@ def shadow_comparison(df) -> dict:
         if not holdout.empty:
             out["recent_5000_plus"] = {
                 "draws": int(len(holdout)),
-                **{name + "_hits": int(holdout[{"baseline":"box_ticket_hit", "mass":"box_mass_hit","unique":"box_unique_hit"}[name]].sum())
+                **{name + "_hits": int(holdout[{"baseline":base_col, "mass":"box_mass_hit","unique":"box_unique_hit"}[name]].sum())
                    for name in policies},
             }
     return out
