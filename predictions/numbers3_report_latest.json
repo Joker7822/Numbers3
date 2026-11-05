@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-05T16:09:14+09:00",
+  "generated_at": "2026-11-05T17:03:27+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
@@ -22,15 +22,15 @@
     "model_logloss": {
       "frequency": 2.316118032054339,
       "markov": 2.3200869894497815,
-      "logreg": 2.4471264957557106,
-      "extra_trees": 2.3069475080837742
+      "logreg": 2.4471264957127614,
+      "extra_trees": 2.3070071563828596
     },
-    "ensemble_logloss": 2.304167020429779,
+    "ensemble_logloss": 2.3041788964530427,
     "uniform_logloss": 2.302585092994046,
-    "logloss_improvement_vs_uniform": -0.0015819274357329327,
-    "exact_nll": 6.911906174755791,
+    "logloss_improvement_vs_uniform": -0.0015938034589968453,
+    "exact_nll": 6.911938010525729,
     "uniform_exact_nll": 6.907755278982137,
-    "exact_nll_improvement_vs_uniform": -0.004150895773654462,
+    "exact_nll_improvement_vs_uniform": -0.004182731543592055,
     "top1_straight_hit_rate": 0.002857142857142857,
     "top20_straight_hit_rate": 0.032857142857142856,
     "uniform_expected_top1_rate": 0.001,
@@ -38,10 +38,10 @@
     "edge_status": "not_confirmed"
   },
   "model_weights": {
-    "frequency": 0.30604402149054444,
-    "markov": 0.2912310636462423,
-    "logreg": 0.05950873785161185,
-    "extra_trees": 0.3432161770116014
+    "frequency": 0.30612232998722533,
+    "markov": 0.29130558190237366,
+    "logreg": 0.059523964581276054,
+    "extra_trees": 0.3430481235291249
   },
   "v4_config": {
     "validation_draws": 1000,
@@ -78,104 +78,111 @@
     {
       "rank": 1,
       "number": "213",
-      "probability": 0.0014071592561744522
+      "probability": 0.001406298039104048
     },
     {
       "rank": 2,
       "number": "212",
-      "probability": 0.0013896943916966635
+      "probability": 0.0013889078840966579
     },
     {
       "rank": 3,
       "number": "215",
-      "probability": 0.001376105916186236
+      "probability": 0.0013753194173374565
     },
     {
       "rank": 4,
       "number": "113",
-      "probability": 0.001368642012255549
+      "probability": 0.001368451343306162
     },
     {
       "rank": 5,
       "number": "112",
-      "probability": 0.0013519186917134286
+      "probability": 0.0013517873952175177
     },
     {
       "rank": 6,
       "number": "218",
-      "probability": 0.001344302027301922
+      "probability": 0.001343536087377897
     },
     {
       "rank": 7,
       "number": "115",
-      "probability": 0.0013389071718170884
+      "probability": 0.0013387663781775096
     },
     {
       "rank": 8,
-      "number": "713",
-      "probability": 0.001327614395187164
+      "number": "913",
+      "probability": 0.0013249486154128813
     },
     {
       "rank": 9,
-      "number": "913",
-      "probability": 0.0013233133436025904
+      "number": "713",
+      "probability": 0.0013245532596086395
     },
     {
       "rank": 10,
-      "number": "712",
-      "probability": 0.0013116809489334543
+      "number": "912",
+      "probability": 0.0013091194028622905
     },
     {
       "rank": 11,
-      "number": "211",
-      "probability": 0.0013090007007783087
+      "number": "712",
+      "probability": 0.0013087316331924352
     },
     {
       "rank": 12,
       "number": "118",
-      "probability": 0.0013084536501779842
+      "probability": 0.0013083103091944964
     },
     {
       "rank": 13,
-      "number": "912",
-      "probability": 0.0013074627023057007
+      "number": "211",
+      "probability": 0.001308248408909242
     },
     {
       "rank": 14,
       "number": "613",
-      "probability": 0.0013060966082947484
+      "probability": 0.0013057632620297824
     },
     {
       "rank": 15,
-      "number": "715",
-      "probability": 0.0012992839879097601
+      "number": "915",
+      "probability": 0.0012967506385541728
     },
     {
       "rank": 16,
-      "number": "915",
-      "probability": 0.0012951301673832984
+      "number": "715",
+      "probability": 0.0012963687966023219
     },
     {
       "rank": 17,
       "number": "216",
-      "probability": 0.0012942975813700678
+      "probability": 0.0012936184210821573
     },
     {
       "rank": 18,
       "number": "612",
-      "probability": 0.0012905774280360998
+      "probability": 0.0012903021803310837
     },
     {
       "rank": 19,
       "number": "615",
-      "probability": 0.0012785027851921916
+      "probability": 0.0012782210692291536
     },
     {
       "rank": 20,
       "number": "219",
-      "probability": 0.0012784897852834232
+      "probability": 0.0012778229536037772
     }
   ],
+  "experimental_box_recommendation": {
+    "number": "125",
+    "model_permutation_mass": 0.007013017165466591,
+    "method": "maximum joint probability summed over 6 permutations",
+    "digits_distinct": true,
+    "status": "shadow_not_production"
+  },
   "notes": [
     "Prediction is a weighted Champion Pool ensemble; promotion governance still uses strict single-Champion comparisons.",
     "Each member is power-calibrated after uniform shrinkage and optional autoregressive mixing.",
