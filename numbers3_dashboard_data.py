@@ -27,6 +27,8 @@ def nullable_float(value):
 
 
 def number3(v):
+    # The historical CSV may use integer, padded, or formatted three-digit values.
+    # Match the repository's own digit parser instead of assuming every value is numeric.
     if pd.isna(v):
         return None
     raw = str(v).strip()
@@ -36,7 +38,9 @@ def number3(v):
             return f"{n:03d}"
     except (ValueError, TypeError, OverflowError):
         pass
-    return raw if len(raw) == 3 and raw.isdigit() else None
+    import re
+    ds = re.findall(r"\d", raw)
+    return "".join(ds[:3]) if len(ds) >= 3 else None
 
 
 def scenario_summary(df: pd.DataFrame, *, prefix: str, unit_price: int = 200) -> dict:
@@ -75,7 +79,8 @@ def main():
     df["date"] = pd.to_datetime(df["抽せん日"], errors="raise")
     df["number"] = df["本数字"].map(number3)
     if df["number"].isna().any():
-        raise ValueError("Unparseable 3-digit winning number")
+        bad = df.loc[df["number"].isna(), ["回別", "抽せん日", "本数字"]].head(8).to_dict("records")
+        raise ValueError(f"Unparseable 3-digit winning numbers: {bad}")
     df = df.sort_values(["date", "issue"]).drop_duplicates("issue", keep="last")
     last = df.iloc[-1]
     end = last["date"]
