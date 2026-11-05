@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-05T03:33:21+09:00",
+  "generated_at": "2026-11-05T16:11:15+09:00",
   "dataset_fingerprint": "7978e5902ed52517252c",
   "latest_issue": 7107,
   "evaluated_draws": 6607,
@@ -53,5 +53,10 @@
     }
   ],
   "skipped": false,
-  "method": "past-only prequential walk-forward; periodic lightweight ML refit; causal adaptive weights"
+  "method": "past-only prequential walk-forward; frequency/Markov before 100 draws and periodic ML afterwards; causal adaptive weights",
+  "purchase_policy": "independent_one_ticket_straight_vs_box",
+  "ticket_count_per_scenario": 1,
+  "unit_price_yen": 200,
+  "box_selection": "first ranked candidate with at least two distinct digits",
+  "ticket_file": "historical_tickets.csv"
 }
