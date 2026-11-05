@@ -108,7 +108,7 @@ def write_purchase_summary(
         "=" * 112,
         "正式基準: 各回について販売締切18:30 JSTより前に保存された最後の通常予測を採用。",
         "Champion replayではなく、当時保存された1000通り確率だけを採点。",
-        "仮想購入: Top20から重複する同一賭式を除き、Straight / BOX / SET / MINIを各1口。1口=200円。",
+        "仮想購入: 毎回、予測1位をStraightで1口のみ（200円）。BOX / SET / MINIは購入しない。",
         "全口外れはこのTXTの各回一覧には掲載しないが、CSV・統計母数・ROIには残す。",
         "",
     ]
@@ -277,7 +277,7 @@ def write_canonical_cumulative(
         f"照合済み全口外れ非掲載回数: {omitted}",
         "欠番: " + (",".join(str(x) for x in missing) if missing else "none"),
         "",
-        "方式別ROI・全回統計は predictions/live_purchase_scoreboard.txt を参照。",
+        "1口（予測1位Straight）ROI・全回統計は predictions/live_purchase_scoreboard.txt を参照。",
     ]
     out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
