@@ -87,14 +87,22 @@ def unique_preserve(values):
 
 
 def build_ticket_sets(top20: list[str]) -> dict[str, list[str]]:
-    """One 200-yen straight ticket for the highest-ranked forecast per draw.
+    """Two independent simulations: one straight ticket and one valid box ticket.
 
-    All four keys remain present to keep the existing scoreboard schema stable.
-    Top20 is still evaluated as a *prediction metric*, never as purchased tickets.
+    No combined purchase is assumed. BOX rejects three identical digits; if the
+    top-ranked number is such a triple, choose the next eligible ranked number.
     """
     if not top20:
         raise ValueError("top20 must contain at least one prediction")
-    return {"straight": [top20[0]], "box": [], "set": [], "mini": []}
+    box_candidate = next((n for n in top20 if len(set(n)) > 1), None)
+    if box_candidate is None:
+        raise ValueError("no eligible box candidate among ranked forecasts")
+    return {
+        "straight": [top20[0]],
+        "box": ["".join(sorted(box_candidate))],
+        "set": [],
+        "mini": [],
+    }
 
 
 def ticket_return(mode: str, bet: str, actual: str, draw: pd.Series) -> tuple[float | None, bool]:
@@ -128,7 +136,12 @@ def ticket_return(mode: str, bet: str, actual: str, draw: pd.Series) -> tuple[fl
 
 def evaluate_portfolio(top20: list[str], actual: str, draw: pd.Series) -> dict:
     tickets = build_ticket_sets(top20)
-    result: dict[str, object] = {}
+    result: dict[str, object] = {
+        "straight_ticket_number": top20[0],
+        "box_ticket_number": next(n for n in top20 if len(set(n)) > 1),
+    }
+    # This canonical total is the STRAIGHT scenario only (legacy-safe alias).
+    # BOX is reported independently and must never be added to this total.
     total_tickets = 0
     total_return = 0.0
     payout_complete = True
@@ -146,7 +159,6 @@ def evaluate_portfolio(top20: list[str], actual: str, draw: pd.Series) -> dict:
                 hits.append(bet)
                 if ret is None:
                     mode_complete = False
-                    payout_complete = False
                     hit_details.append(f"{mode}:{bet}=払戻不明")
                 else:
                     mode_return += ret
@@ -157,9 +169,15 @@ def evaluate_portfolio(top20: list[str], actual: str, draw: pd.Series) -> dict:
         result[f"{mode}_return"] = mode_return if mode_complete else np.nan
         result[f"{mode}_hit"] = int(bool(hits))
         result[f"{mode}_winning_bets"] = ";".join(hits)
-        total_tickets += len(bets)
-        if mode_complete:
-            total_return += mode_return
+        result[f"{mode}_profit"] = mode_return - stake if mode_complete else np.nan
+        result[f"{mode}_roi"] = ((mode_return - stake) / stake
+                                 if mode_complete and stake else np.nan)
+        if mode == "straight":
+            total_tickets = len(bets)
+            if mode_complete:
+                total_return = mode_return
+            else:
+                payout_complete = False
         if hits:
             hit_modes.append(mode)
 
@@ -167,14 +185,15 @@ def evaluate_portfolio(top20: list[str], actual: str, draw: pd.Series) -> dict:
     profit = total_return - total_stake if payout_complete else np.nan
     roi = profit / total_stake if payout_complete and total_stake else np.nan
     result.update({
-        "purchase_policy": "top1_straight_one_ticket_per_draw",
+        "purchase_policy": "independent_one_ticket_straight_vs_box",
         "unit_price": UNIT_PRICE,
+        "total_scenario": "straight_only",
         "total_tickets": total_tickets,
         "total_stake": total_stake,
         "total_return": total_return if payout_complete else np.nan,
         "profit": profit,
         "roi": roi,
-        "any_purchase_hit": int(bool(hit_modes)),
+        "any_purchase_hit": int(bool(hit_modes)),  # either scenario, NOT simultaneous purchase
         "hit_modes": ";".join(hit_modes),
         "hit_details": " / ".join(hit_details),
         "payout_complete": int(payout_complete),
@@ -271,53 +290,46 @@ def update_purchase_audit(csv_path: Path, archive_path: Path, out_csv: Path, out
         "NUMBERS3 通常予測 購入方式別Live照合", "=" * 112,
         "対象: 抽せん前に保存された通常予測。過去へ再適用するChampion replayとは別集計。",
         "採用予測: 各回について販売締切(18:30 JST)より前に保存された最後の予測。",
-        "仮想購入: Top20から重複する同一賭式を除き、ストレート/ボックス/セット/ミニを各1口。",
-        f"1口={UNIT_PRICE}円。ボックス/セットは3桁同一数字を購入対象外。ROI=(払戻-購入額)/購入額。", "",
+        "仮想購入: ストレート1口とボックス1口を別々に検証し、同時購入にはしない。",
+        f"各方式1回につき1口={UNIT_PRICE}円。BOXはゾロ目不可のため次の購入可能な上位候補を採用。", "",
     ]
 
     if operational.empty:
         lines.append("照合済み通常予測はありません。")
     else:
         n = len(operational)
-        total_stake = float(operational["total_stake"].sum())
-        complete = operational["payout_complete"].astype(int).eq(1).all()
-        total_return = float(operational["total_return"].sum()) if complete else np.nan
-        total_profit = total_return - total_stake if complete else np.nan
-        total_roi = total_profit / total_stake if complete and total_stake else np.nan
         lines += [
-            "集計", "-" * 112,
-            f"採点済み回数: {n}",
+            "方式別成績（互いに独立した1口購入シナリオ）", "-" * 112,
+            f"照合済み回数: {n}",
             f"Exact NLL: {operational['exact_nll'].mean():.8f} / 一様={math.log(1000):.8f}",
             f"平均実数字順位: {operational['actual_rank'].mean():.2f}/1000",
-            f"Straight Top1: {operational['top1_hit'].mean():.4%} / Top20: {operational['top20_straight_hit'].mean():.4%}",
-            f"購入方式で何らか的中: {int(operational['any_purchase_hit'].sum())}/{n} ({operational['any_purchase_hit'].mean():.4%})",
-            f"Straight的中回率: {operational['straight_hit'].mean():.4%}",
-            f"BOX的中回率: {operational['box_hit'].mean():.4%}",
-            f"SET的中回率: {operational['set_hit'].mean():.4%}",
-            f"MINI的中回率: {operational['mini_hit'].mean():.4%}",
-            f"仮想購入額合計: {int(round(total_stake)):,}円",
-            f"払戻合計: {int(round(total_return)):,}円" if complete else "払戻合計: 一部払戻データ欠損のため算出不可",
-            f"収支: {int(round(total_profit)):+,}円" if complete else "収支: 算出不可",
-            f"ROI: {total_roi:+.4%}" if complete else "ROI: 算出不可",
-            f"全口外れ非掲載回数: {int((operational['any_purchase_hit'] == 0).sum())}", "",
         ]
-
-        lines += ["的中回のみ（全口外れは非掲載）", "-" * 112]
+        for mode, label in (("straight", "ストレート"), ("box", "ボックス")):
+            stake = float(operational[f"{mode}_stake"].sum())
+            complete = operational[f"{mode}_return"].notna().all()
+            ret = float(operational[f"{mode}_return"].sum()) if complete else np.nan
+            profit = ret - stake if complete else np.nan
+            roi = profit / stake if complete and stake else np.nan
+            lines += [
+                f"{label}のみ1口: 的中 {int(operational[f'{mode}_hit'].sum())}/{n}"
+                f" ({operational[f'{mode}_hit'].mean():.4%})",
+                f"  購入額={int(stake):,}円 / 払戻="
+                + (f"{int(ret):,}円 / 損益={int(profit):+,}円 / ROI={roi:+.4%}"
+                   if complete else "欠損あり / 損益・ROI=算出不可"),
+            ]
+        lines += ["", "方式別の的中回（全回はCSVを参照）", "-" * 112]
         hit_rows = operational[operational["any_purchase_hit"].astype(int).eq(1)]
         if hit_rows.empty:
             lines.append("該当なし")
         else:
-            for _, r in hit_rows.iterrows():
-                roi = r["roi"]
-                roi_text = f"{float(roi):+.2%}" if pd.notna(roi) else "算出不可"
-                ret_text = f"{int(round(float(r['total_return']))):,}円" if pd.notna(r["total_return"]) else "払戻不明"
-                profit_text = f"{int(round(float(r['profit']))):+,}円" if pd.notna(r["profit"]) else "算出不可"
+            for _, row in hit_rows.iterrows():
                 lines.append(
-                    f"第{int(r['target_issue'])}回 {r['draw_date']} actual={r['actual']} rank={int(r['actual_rank'])} "
-                    f"hits={r['hit_modes'] or '-'} tickets={int(r['total_tickets'])} stake={int(r['total_stake']):,}円 "
-                    f"return={ret_text} profit={profit_text} ROI={roi_text} NLL={float(r['exact_nll']):.8f}"
+                    f"第{int(row['target_issue'])}回 {row['draw_date']} 実={row['actual']} "
+                    f"Straight={row['straight_ticket_number']} "
+                    f"hit={int(row['straight_hit'])} 払戻={row['straight_return']}円 / "
+                    f"BOX={row['box_ticket_number']} hit={int(row['box_hit'])} "
+                    f"払戻={row['box_return']}円"
                 )
-                lines.append(f"  {r['hit_details']}")
 
     lines += ["", "予測欠番監査", "-" * 112]
     if missing:
