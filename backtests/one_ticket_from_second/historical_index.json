@@ -1,0 +1,52 @@
+{
+  "chunks": [
+    {
+      "first_issue": 2,
+      "last_issue": 1001,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_0002_1001.txt"
+    },
+    {
+      "first_issue": 1002,
+      "last_issue": 2001,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_1002_2001.txt"
+    },
+    {
+      "first_issue": 2002,
+      "last_issue": 3001,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_2002_3001.txt"
+    },
+    {
+      "first_issue": 3002,
+      "last_issue": 4001,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_3002_4001.txt"
+    },
+    {
+      "first_issue": 4002,
+      "last_issue": 5001,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_4002_5001.txt"
+    },
+    {
+      "first_issue": 5002,
+      "last_issue": 6001,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_5002_6001.txt"
+    },
+    {
+      "first_issue": 6002,
+      "last_issue": 7001,
+      "rows": 1000,
+      "text": "historical_rounds/rounds_6002_7001.txt"
+    },
+    {
+      "first_issue": 7002,
+      "last_issue": 7107,
+      "rows": 106,
+      "text": "historical_rounds/rounds_7002_7107.txt"
+    }
+  ]
+}

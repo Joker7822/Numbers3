@@ -24,39 +24,41 @@
   },
   "purchase": {
     "scored_draws": 51,
-    "any_hit_draws": 16,
-    "total_stake": 698800.0,
-    "total_return": 430200.0,
-    "total_profit": -268600.0,
-    "total_roi": -0.38437321121923296,
+    "any_hit_draws": 1,
+    "total_stake": 10200.0,
+    "total_return": 0.0,
+    "total_profit": -10200.0,
+    "total_roi": -1.0,
+    "total_basis": "straight_only_legacy_alias_not_combined_with_box",
+    "purchase_policy": "independent_one_ticket_straight_vs_box",
     "modes": {
       "straight": {
-        "hit_draws": 1,
-        "stake": 204000.0,
-        "return": 77600.0,
-        "profit": -126400.0,
-        "roi": -0.6196078431372549
+        "hit_draws": 0,
+        "stake": 10200.0,
+        "return": 0.0,
+        "profit": -10200.0,
+        "roi": -1.0
       },
       "box": {
-        "hit_draws": 11,
-        "stake": 185600.0,
-        "return": 161600.0,
-        "profit": -24000.0,
-        "roi": -0.12931034482758622
+        "hit_draws": 1,
+        "stake": 10200.0,
+        "return": 12600.0,
+        "profit": 2400.0,
+        "roi": 0.23529411764705882
       },
       "set": {
-        "hit_draws": 11,
-        "stake": 201200.0,
-        "return": 131900.0,
-        "profit": -69300.0,
-        "roi": -0.34443339960238567
+        "hit_draws": 0,
+        "stake": 0.0,
+        "return": 0.0,
+        "profit": 0.0,
+        "roi": null
       },
       "mini": {
-        "hit_draws": 6,
-        "stake": 108000.0,
-        "return": 59100.0,
-        "profit": -48900.0,
-        "roi": -0.4527777777777778
+        "hit_draws": 0,
+        "stake": 0.0,
+        "return": 0.0,
+        "profit": 0.0,
+        "roi": null
       }
     }
   },
