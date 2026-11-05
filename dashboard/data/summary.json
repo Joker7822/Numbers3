@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-05T16:58:27+09:00",
+  "generated_at": "2026-11-05T17:03:47+09:00",
   "source": "Joker7822/Numbers3 repository snapshot",
   "last_draw": {
     "issue": 7107,
@@ -385,7 +385,7 @@
     "exact_nll": 6.945682321154228,
     "random_straight_baseline": 0.001,
     "method": "past-only prequential walk-forward; frequency/Markov before 100 draws and periodic ML afterwards; causal adaptive weights",
-    "generated_at": "2026-11-05T16:58:22+09:00",
+    "generated_at": "2026-11-05T17:03:43+09:00",
     "payout_reconciliation": {
       "source_type": "third_party_public_result_archive",
       "officially_crosschecked_all_records": false,
