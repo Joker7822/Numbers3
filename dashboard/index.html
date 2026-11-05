@@ -115,6 +115,20 @@
     <div class="callout" id="dataNote">検証データを読み込んでいます。</div>
   </section>
 
+  <section class="section" aria-labelledby="shadowTitle">
+    <div class="section-head">
+      <div><h2 id="shadowTitle">BOX的中率の強化テスト（未採用）</h2>
+      <p class="muted">過去の当選番号を使わずに選ぶ候補を、従来方式と比較します。候補は後から設計したため、将来の改善効果は未確認です。</p></div>
+    </div>
+    <div class="panel">
+      <div class="table-wrap"><table>
+        <thead><tr><th>BOX選択方式</th><th>的中 / 検証</th><th>的中率</th><th>従来との差</th></tr></thead>
+        <tbody id="shadowRows"><tr><td colspan="4">比較データの生成待ち</td></tr></tbody>
+      </table></div>
+      <p id="shadowNote" class="muted" style="margin-top:12px">既存の購入・損益集計は変更しません。</p>
+    </div>
+  </section>
+
   <section class="section" aria-labelledby="drawTitle">
     <div class="section-head">
       <div><h2 id="drawTitle">直近1か月の当選結果・予測照合</h2><p id="drawSubtitle" class="muted">—</p></div>
@@ -140,6 +154,7 @@
   <section class="section" aria-labelledby="forecastTitle">
     <div class="section-head"><div><h2 id="forecastTitle">次回の予測上位候補</h2><p id="forecastSub" class="muted">—</p></div></div>
     <div class="panel"><div class="candidate-list" id="candidates"></div>
+      <p class="muted" id="boxCandidateShadow" style="margin-top:12px">新しいBOX候補の検証情報は次回予測更新後に表示します。</p>
       <p class="muted" style="margin-top:16px">表示はモデルによる順位です。予測上位であっても当選確率が高いと確認されたことを意味しません。予測優位性が未確認ならそのまま表示します。</p>
     </div>
   </section>
@@ -195,11 +210,32 @@
       });tbody.appendChild(tr);
     });
   }
+  function renderShadows(){
+    var all=snapshot.box_shadows||{};
+    var summary=all[source==="history"?"historical":"archived_pre_draw"]||{};
+    var tbody=el("shadowRows");tbody.replaceChildren();
+    if(!summary.available){
+      var tr=document.createElement("tr"), td=document.createElement("td");
+      td.colSpan=4;td.textContent="候補方式の検証データを確認できません";
+      tr.appendChild(td);tbody.appendChild(tr);
+    } else {
+      [["baseline","従来：単一予測の最上位"],["mass","順列6/3通りの予測確率合計が最大"],["unique","3桁すべて異なる候補の確率合計が最大"]].forEach(function(pair){
+        var m=(summary.modes||{})[pair[0]]||{},tr=document.createElement("tr");
+        [pair[1],fmtInt(m.hits)+" / "+fmtInt(summary.draws),pct(m.hit_rate),
+         pair[0]==="baseline"?"基準":(m.delta_hits_vs_baseline>=0?"+":"")+fmtInt(m.delta_hits_vs_baseline)+"回"
+        ].forEach(function(value){var td=document.createElement("td");td.textContent=value;tr.appendChild(td);});
+        tbody.appendChild(tr);
+      });
+    }
+    out("shadowNote",source==="history"
+      ?"第2回からの遡及シミュレーション。候補政策は事後設計で、比較に多重探索・選択バイアスがあり得ます。的中増加があっても予測優位性は未確認です。従来方式の購入損益と混ぜません。"
+      :"販売締切前に保存した1,000通りの確率に、事後設計した候補政策を再適用した参考結果です。新政策を抽せん前から運用したLive実績ではありません。");
+  }
   function renderSource(){
     var history=source==="history";
     el("btnHistory").setAttribute("aria-pressed",String(history));
     el("btnLive").setAttribute("aria-pressed",String(!history));
-    renderCard("straight","s");renderCard("box","b");renderTable();
+    renderCard("straight","s");renderCard("box","b");renderTable();renderShadows();
     var o=snapshot[history?"walkforward_from_second":"live"]||{};
     var note=history ?
       "過去再検証：第2回からの仮想予測。初期100回未満は頻度・マルコフ方式で、学習可能になってからMLを加えます。今のモデルを当時動かしていたという意味ではありません。" :
@@ -223,6 +259,10 @@
     var forecast=snapshot.forecast||{},items=forecast.top_predictions||[],parent=el("candidates");
     parent.replaceChildren();
     out("forecastSub","予測対象：第"+(forecast.target_issue||"—")+"回 / 優位性："+(forecast.edge_status==="not_confirmed"?"未確認":forecast.edge_status||"未確認"));
+    var sh=forecast.experimental_box_recommendation||{};
+    out("boxCandidateShadow",sh.number
+      ?"検証中のBOX候補："+sh.number+"（3桁すべて異なる・6通りの合計モデル確率 "+pct(sh.model_permutation_mass)+"）。正式な購入方式には未採用で、将来的中率の改善は未確認です。"
+      :"検証中のBOX候補は次回の予測更新後に表示します。正式な購入方式は従来どおりです。");
     items.slice(0,10).forEach(function(x){
       var div=document.createElement("div"),title=document.createElement("strong"),caption=document.createElement("span");
       div.className="candidate";title.textContent=x.number||"—";
