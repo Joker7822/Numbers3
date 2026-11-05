@@ -6,6 +6,10 @@ on:
     paths:
       - dashboard/**
       - .github/workflows/numbers3-pages.yml
+  workflow_run:
+    workflows: ["NUMBERS3 Single-Ticket Historical Audit"]
+    types: [completed]
+    branches: [main]
   schedule:
     - cron: "30 14 * * 1-5" # 23:30 Japan time: refresh daily
   workflow_dispatch:
@@ -21,6 +25,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
