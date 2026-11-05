@@ -13,7 +13,7 @@ import pandas as pd
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.linear_model import SGDClassifier
 
-from numbers3_hit_rate_lab import best_box_by_mass, box_hit, shadow_comparison
+from numbers3_hit_rate_lab import best_box_by_mass, box_hit as compare_box_hit, shadow_comparison
 
 from numbers3_evo_agent import (
     AgentConfig, MODEL_NAMES, build_features, ensemble_probs, frequency_probs,
@@ -305,9 +305,9 @@ def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
                 "straight_ticket_profit": ticket_return - TICKET_PRICE_YEN if pd.notna(ticket_return) else np.nan,
                 "box_ticket_number": box_choice,
                 "box_ticket_count": 1, "box_ticket_stake": TICKET_PRICE_YEN,
-                "box_mass_number": mass_choice, "box_mass_hit": box_hit(mass_choice, actual),
+                "box_mass_number": mass_choice, "box_mass_hit": compare_box_hit(mass_choice, actual),
                 "box_mass_model_probability": mass_probability,
-                "box_unique_number": unique_choice, "box_unique_hit": box_hit(unique_choice, actual),
+                "box_unique_number": unique_choice, "box_unique_hit": compare_box_hit(unique_choice, actual),
                 "box_unique_model_probability": unique_probability,
                 "box_ticket_hit": box_hit, "box_ticket_return": box_return,
                 "box_ticket_profit": box_return - TICKET_PRICE_YEN if pd.notna(box_return) else np.nan,
