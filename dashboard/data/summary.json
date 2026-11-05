@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-05T16:35:16+09:00",
+  "generated_at": "2026-11-05T16:58:27+09:00",
   "source": "Joker7822/Numbers3 repository snapshot",
   "last_draw": {
     "issue": 7107,
@@ -385,7 +385,7 @@
     "exact_nll": 6.945682321154228,
     "random_straight_baseline": 0.001,
     "method": "past-only prequential walk-forward; frequency/Markov before 100 draws and periodic ML afterwards; causal adaptive weights",
-    "generated_at": "2026-11-05T16:35:13+09:00",
+    "generated_at": "2026-11-05T16:58:22+09:00",
     "payout_reconciliation": {
       "source_type": "third_party_public_result_archive",
       "officially_crosschecked_all_records": false,
@@ -435,6 +435,86 @@
       7059,
       7103
     ]
+  },
+  "box_shadows": {
+    "historical": {
+      "available": true,
+      "draws": 7106,
+      "retrospective_policy_design": true,
+      "production_policy_unchanged": true,
+      "modes": {
+        "baseline": {
+          "hits": 45,
+          "hit_rate": 0.0063326766113143826,
+          "delta_hits_vs_baseline": 0,
+          "baseline_only": 0,
+          "challenger_only": 0,
+          "paired_p_exploratory": 1.0
+        },
+        "mass": {
+          "hits": 48,
+          "hit_rate": 0.006754855052068675,
+          "delta_hits_vs_baseline": 3,
+          "baseline_only": 39,
+          "challenger_only": 42,
+          "paired_p_exploratory": 0.8243132151052077
+        },
+        "unique": {
+          "hits": 48,
+          "hit_rate": 0.006754855052068675,
+          "delta_hits_vs_baseline": 3,
+          "baseline_only": 39,
+          "challenger_only": 42,
+          "paired_p_exploratory": 0.8243132151052077
+        }
+      },
+      "recent_5000_plus": {
+        "draws": 2108,
+        "baseline_hits": 15,
+        "mass_hits": 11,
+        "unique_hits": 11
+      }
+    },
+    "archived_pre_draw": {
+      "available": true,
+      "draws": 51,
+      "retrospective_policy_design": true,
+      "production_policy_unchanged": true,
+      "modes": {
+        "baseline": {
+          "hits": 1,
+          "hit_rate": 0.0196078431372549,
+          "delta_hits_vs_baseline": 0,
+          "baseline_only": 0,
+          "challenger_only": 0,
+          "paired_p_exploratory": 1.0
+        },
+        "mass": {
+          "hits": 1,
+          "hit_rate": 0.0196078431372549,
+          "delta_hits_vs_baseline": 0,
+          "baseline_only": 0,
+          "challenger_only": 0,
+          "paired_p_exploratory": 1.0
+        },
+        "unique": {
+          "hits": 1,
+          "hit_rate": 0.0196078431372549,
+          "delta_hits_vs_baseline": 0,
+          "baseline_only": 0,
+          "challenger_only": 0,
+          "paired_p_exploratory": 1.0
+        }
+      },
+      "recent_5000_plus": {
+        "draws": 51,
+        "baseline_hits": 1,
+        "mass_hits": 1,
+        "unique_hits": 1
+      }
+    },
+    "warning": "Exploratory after-the-fact selection-policy tests; not evidence of improved future hit rates.",
+    "existing_purchase_policy_unchanged": true
   },
   "forecast": {
     "target_issue": 7108,
@@ -547,7 +627,8 @@
       "markov": 0.2912310636462423,
       "logreg": 0.05950873785161185,
       "extra_trees": 0.3432161770116014
-    }
+    },
+    "experimental_box_recommendation": null
   },
   "purchase_policy": {
     "description": "Independent one-ticket simulations per draw: Straight vs BOX",
