@@ -159,13 +159,21 @@ def write_summary(path, df, warmup, refit):
         f"1桁log loss: {m['digit_nll']:.8f} / 一様: {U_DIGIT:.8f}",
         f"Top20 BOX: {m['box20']}/{n} = {m['box20']/n:.4%}",
         f"Top20 ミニ: {m['mini20']}/{n} = {m['mini20']/n:.4%}",
-        "", "1口購入（予測1位Straightのみ）", "-" * 92,
-        f"購入: 各回1口 / 単価: {TICKET_PRICE_YEN:,}円 / 総購入額: {int(df.ticket_stake.sum()):,}円",
-        f"1口的中: {int(df.hit1.sum())}/{n} = {df.hit1.mean():.4%}",
-        (f"払戻: {int(df.ticket_return.sum()):,}円 / 損益: {int(df.ticket_profit.sum()):+,}円 / "
-         f"ROI: {df.ticket_profit.sum()/df.ticket_stake.sum():+.4%}"
-         if df.ticket_return.notna().all() else "払戻・損益・ROI: 当選回の払戻データが欠損しているため算出不可"),
-        "仮想購入の再検証であり、実購入や当時保存済みの予測ではありません。",
+        "", "独立した1口購入シナリオ（各回200円）", "-" * 92,
+        "対象は過去データによる仮想検証。2方式は同時購入しません。",
+        *[
+            line for mode, name in (("straight", "ストレートのみ"), ("box", "ボックスのみ"))
+            for line in (
+                f"{name}: 的中={int(df[f'{mode}_ticket_hit'].sum())}/{n} ({df[f'{mode}_ticket_hit'].mean():.4%})",
+                (f"  購入額={int(df[f'{mode}_ticket_stake'].sum()):,}円"
+                 f" / 払戻={int(df[f'{mode}_ticket_return'].sum()):,}円"
+                 f" / 損益={int(df[f'{mode}_ticket_profit'].sum()):+,}円"
+                 f" / ROI={df[f'{mode}_ticket_profit'].sum()/df[f'{mode}_ticket_stake'].sum():+.4%}"
+                 if df[f"{mode}_ticket_return"].notna().all()
+                 else "  払戻データ欠損につき損益・ROI算出不可"),
+            )
+        ],
+        "ボックスは3桁同一数字を除外し、次の購入可能な予測を採用。",
         "", "直近期間", "-" * 92,
     ]
     for w in (100, 500, 1000):
@@ -183,10 +191,14 @@ def write_summary(path, df, warmup, refit):
 
 def write_rounds(path, df):
     lines = ["NUMBERS3 過去回別予測一覧（未来情報リークなし）", "=" * 116,
-             "回号 / 日付 / 実数字 / Top1 / 実数字順位 / S20 / B20 / M20 / Top20候補", ""]
+             "回号 / 日付 / 実数字 / Straight1口 / Box1口 / S的中 / B的中 / 実数字順位 / S20 / B20 / M20 / Top20候補", ""]
     for _, r in df.sort_values("target_issue", ascending=False).iterrows():
-        lines.append(f"第{int(r.target_issue):04d}回  {r.draw_date}  実={r.actual}  Top1={r.top1}  "
-                     f"順位={int(r.actual_rank):04d}/1000  S20={'○' if r.hit20 else '×'}  "
+        lines.append(f"第{int(r.target_issue):04d}回  {r.draw_date}  実={r.actual}  "
+                     f"S={r.top1}  BOX={r.box_ticket_number} "
+                     f"S1={'○' if r.straight_ticket_hit else '×'}  "
+                     f"B1={'○' if r.box_ticket_hit else '×'}  "
+                     f"順位={int(r.actual_rank):04d}/1000  "
+                     f"S20={'○' if r.hit20 else '×'}  "
                      f"B20={'○' if r.box20 else '×'}  M20={'○' if r.mini20 else '×'}  候補={r.top20}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -255,16 +267,30 @@ def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
             actual = num3(nums[t]); ai = int(actual); ap = float(jp[ai])
             rank = int(1 + np.sum(jp > ap))
             top = [n for n, _ in top_k_numbers(ens, top_k)]
-            # Score the pre-draw top-ranked ticket against the actual result.
+            # Evaluate two separate bets, never add their stakes or payouts.
+            box_choice = next((n for n in top if len(set(n)) > 1), None)
+            if box_choice is None:
+                raise RuntimeError("No eligible BOX number in the Top20")
             ticket_hit = int(actual == top[0])
             prize = pd.to_numeric(df.iloc[t].get("ストレート", np.nan), errors="coerce") if ticket_hit else 0.0
             ticket_return = float(prize) if pd.notna(prize) else np.nan
+            box_hit = int(sorted(actual) == sorted(box_choice))
+            box_prize = pd.to_numeric(df.iloc[t].get("ボックス", np.nan), errors="coerce") if box_hit else 0.0
+            box_return = float(box_prize) if pd.notna(box_prize) else np.nan
             row = {
                 "model_stage": "ensemble_ml" if ml is not None else "frequency_markov_only",
                 "ticket_mode": "straight", "ticket_number": top[0],
                 "ticket_count": 1, "ticket_stake": TICKET_PRICE_YEN,
                 "ticket_hit": ticket_hit, "ticket_return": ticket_return,
                 "ticket_profit": ticket_return - TICKET_PRICE_YEN if pd.notna(ticket_return) else np.nan,
+                "straight_ticket_number": top[0],
+                "straight_ticket_count": 1, "straight_ticket_stake": TICKET_PRICE_YEN,
+                "straight_ticket_hit": ticket_hit, "straight_ticket_return": ticket_return,
+                "straight_ticket_profit": ticket_return - TICKET_PRICE_YEN if pd.notna(ticket_return) else np.nan,
+                "box_ticket_number": box_choice,
+                "box_ticket_count": 1, "box_ticket_stake": TICKET_PRICE_YEN,
+                "box_ticket_hit": box_hit, "box_ticket_return": box_return,
+                "box_ticket_profit": box_return - TICKET_PRICE_YEN if pd.notna(box_return) else np.nan,
                 "target_issue": issue_no(df.iloc[t]["回別"]),
                 "draw_date": str(pd.to_datetime(df.iloc[t]["抽せん日"]).date()),
                 "actual": actual, "refit_issue": refit_issue,
@@ -302,8 +328,9 @@ def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
         "last_evaluated_issue": int(result.target_issue.iloc[-1]), "warmup_draws": warmup_draws,
         "refit_interval": refit_interval, "top_k": top_k, "chunks": chunks, "skipped": False,
         "method": "past-only prequential walk-forward; frequency/Markov before 100 draws and periodic ML afterwards; causal adaptive weights",
-        "purchase_policy": "top1_straight_one_ticket_per_draw",
-        "ticket_count_per_draw": 1, "unit_price_yen": TICKET_PRICE_YEN,
+        "purchase_policy": "independent_one_ticket_straight_vs_box",
+        "ticket_count_per_scenario": 1, "unit_price_yen": TICKET_PRICE_YEN,
+        "box_selection": "first ranked candidate with at least two distinct digits",
         "ticket_file": "historical_tickets.csv",
     }
     meta_p.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
