@@ -87,11 +87,14 @@ def unique_preserve(values):
 
 
 def build_ticket_sets(top20: list[str]) -> dict[str, list[str]]:
-    straight = unique_preserve(top20)
-    box = unique_preserve(["".join(sorted(n)) for n in top20 if len(set(n)) > 1])
-    set_bets = unique_preserve([n for n in top20 if len(set(n)) > 1])
-    mini = unique_preserve([n[-2:] for n in top20])
-    return {"straight": straight, "box": box, "set": set_bets, "mini": mini}
+    """One 200-yen straight ticket for the highest-ranked forecast per draw.
+
+    All four keys remain present to keep the existing scoreboard schema stable.
+    Top20 is still evaluated as a *prediction metric*, never as purchased tickets.
+    """
+    if not top20:
+        raise ValueError("top20 must contain at least one prediction")
+    return {"straight": [top20[0]], "box": [], "set": [], "mini": []}
 
 
 def ticket_return(mode: str, bet: str, actual: str, draw: pd.Series) -> tuple[float | None, bool]:
@@ -164,7 +167,7 @@ def evaluate_portfolio(top20: list[str], actual: str, draw: pd.Series) -> dict:
     profit = total_return - total_stake if payout_complete else np.nan
     roi = profit / total_stake if payout_complete and total_stake else np.nan
     result.update({
-        "purchase_policy": "top20_unique_bets_all_modes_once",
+        "purchase_policy": "top1_straight_one_ticket_per_draw",
         "unit_price": UNIT_PRICE,
         "total_tickets": total_tickets,
         "total_stake": total_stake,
