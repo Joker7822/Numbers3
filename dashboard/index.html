@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1c2c">
+  <title>Numbers3 | 検証ダッシュボード</title>
+  <style>
+    :root{color-scheme:light;--ink:#172d3f;--sub:#617586;--line:#dbe5eb;--brand:#167d8c;--bg:#f2f6f8;--ok:#116c60;--bad:#b84d43;--warn:#b46c18}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;line-height:1.6}
+    a{color:var(--brand)}.wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+    header{background:#10283a;color:#edf7fa;padding:21px 0 30px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .mark{font-weight:800;letter-spacing:.04em;font-size:19px}.mark small{font-weight:400;font-size:12px;opacity:.74;display:block}
+    .nav a{color:#cce6ec;text-decoration:none;font-size:13px}
+    h1{font-size:clamp(25px,3.3vw,38px);line-height:1.3;margin:34px 0 11px}
+    .intro{max-width:780px;color:#c8dde6;margin:0;font-size:14px}
+    .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+    .pill{border:1px solid #526b7d;border-radius:99px;padding:4px 12px;font-size:12px;color:#d8eef5}
+    main{padding:27px 0 54px}
+    .error{background:#fff5e8;border:1px solid #e8cba0;padding:14px 18px;border-radius:12px;margin-bottom:18px;display:none}
+    .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .tile,.panel{background:#fff;border:1px solid var(--line);box-shadow:0 3px 16px rgba(25,52,70,.035);border-radius:14px}
+    .tile{padding:20px}.eyebrow{color:var(--sub);font-size:12px;font-weight:700;letter-spacing:.015em}
+    .metric{font-size:clamp(23px,2.6vw,32px);font-weight:800;margin:5px 0;line-height:1.35;font-variant-numeric:tabular-nums}
+    .muted{color:var(--sub);font-size:12px;margin:0}
+    .section{margin-top:28px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:12px}
+    h2{font-size:20px;margin:0}h3{margin:0;font-size:18px}p{margin:9px 0}
+    .switch{display:inline-flex;background:#e4edf0;padding:4px;border-radius:11px;gap:4px}
+    .switch button{border:0;border-radius:8px;padding:9px 15px;background:transparent;color:#486272;cursor:pointer;font:inherit;font-size:13px;font-weight:700}
+    .switch button[aria-pressed="true"]{background:#fff;color:#12596c;box-shadow:0 1px 6px #bcccd5}
+    .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .panel{padding:22px;min-width:0}.compare .panel{border-top:4px solid #19838b}.compare .panel:nth-child(2){border-top-color:#9670b3}
+    .mode-title{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .tag{background:#edf6f5;color:#14685e;border-radius:8px;padding:3px 8px;font-size:11px;font-weight:700}
+    .compare .panel:nth-child(2) .tag{background:#f4eef8;color:#714a90}
+    .summary-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin:18px 0}
+    .large{font-size:32px;line-height:1.15;font-weight:800;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+    .mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .mini-stat{background:#f5f8fa;border:1px solid #eef2f4;padding:10px 13px;border-radius:9px;min-width:0}
+    .mini-stat b{display:block;font-variant-numeric:tabular-nums;font-size:18px}
+    .negative{color:var(--bad)}.positive{color:var(--ok)}
+    .callout{padding:13px 16px;background:#e9f2f5;border-left:3px solid #147e91;border-radius:7px;font-size:13px;margin-top:18px}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+    table{width:100%;border-collapse:collapse;min-width:760px;text-align:left;font-size:13px}
+    th{background:#edf3f5;color:#566c7c;text-transform:none;font-size:12px}
+    th,td{padding:12px 14px;border-bottom:1px solid #edf1f4;white-space:nowrap}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#f7fafb}
+    .num{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.05em}
+    .yes{font-weight:750;color:#117967}.no{color:#8a9ca7}.unknown{color:#96a5af}
+    .charts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .digit-col h3{font-size:15px;margin-bottom:16px}.bar-line{display:grid;grid-template-columns:22px 1fr 28px;gap:9px;align-items:center;margin:8px 0;font-size:12px}
+    .bar-bg{height:9px;background:#e5edf1;border-radius:8px;overflow:hidden}.bar{height:100%;background:#42a9b1;border-radius:8px;width:0}
+    .candidate-list{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+    .candidate{border:1px solid #e3ebef;border-radius:10px;padding:13px;text-align:center;background:#f9fbfc}
+    .candidate strong{display:block;font-size:22px;letter-spacing:.05em}.candidate span{font-size:11px;color:#738697}
+    footer{font-size:12px;color:#687b89;margin-top:40px}.source-link{font-size:13px}
+    .screenreader{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+    @media(max-width:850px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.charts{grid-template-columns:1fr}.candidate-list{grid-template-columns:repeat(5,minmax(0,1fr))}}
+    @media(max-width:640px){.wrap{width:min(100% - 24px,1180px)}.compare{grid-template-columns:1fr}.tile,.panel{padding:16px}.section{margin-top:23px}.metric{font-size:24px}.candidate-list{grid-template-columns:repeat(3,minmax(0,1fr))}h1{margin-top:28px}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="nav">
+      <div class="mark">Numbers3 <small>DATA &amp; VALIDATION DASHBOARD</small></div>
+      <a href="https://github.com/Joker7822/Numbers3" target="_blank" rel="noopener noreferrer">GitHub・元データ</a>
+    </div>
+    <h1>数字を当てたか。<br>収支はいくらだったか。</h1>
+    <p class="intro">第2回からの過去再検証、抽せん前に保存したLive実績、直近1か月の当選数字を分けて可視化。ストレートとボックスは、それぞれ200円・1口を独立して検証します。</p>
+    <div class="pills"><span class="pill">1方式につき1口・200円</span><span class="pill">2方式の収支は合算しない</span><span class="pill">過去予測に未来データを使用しない</span></div>
+  </div>
+</header>
+<main class="wrap">
+  <div id="loadError" class="error" role="alert"></div>
+  <div class="metrics">
+    <div class="tile"><div class="eyebrow">最新確認済み当選数字</div><div id="latestNumber" class="metric">—</div><p id="latestIssue" class="muted">データ読込中</p></div>
+    <div class="tile"><div class="eyebrow">直近1か月の抽せん</div><div id="monthCount" class="metric">—</div><p id="monthPeriod" class="muted">—</p></div>
+    <div class="tile"><div class="eyebrow">第2回からの再検証</div><div id="replayCount" class="metric">—</div><p class="muted">学習用の第1回は採点から除外</p></div>
+    <div class="tile"><div class="eyebrow">最新データ時点</div><div id="lastDate" class="metric">—</div><p id="refreshDate" class="muted">—</p></div>
+  </div>
+
+  <section class="section" aria-labelledby="compareTitle">
+    <div class="section-head">
+      <div><h2 id="compareTitle">1口購入の方式別比較</h2><p class="muted">購入条件を変えた独立シミュレーション。2口購入の合計ではありません。</p></div>
+      <div class="switch" role="group" aria-label="検証データの種類">
+        <button type="button" id="btnHistory" aria-pressed="true">過去再検証（第2回から）</button>
+        <button type="button" id="btnLive" aria-pressed="false">実際のLive予測</button>
+      </div>
+    </div>
+    <div class="compare">
+      <article class="panel">
+        <div class="mode-title"><h3>ストレートのみ</h3><span class="tag">予測1位を購入</span></div>
+        <p class="muted">数字も並びも完全一致した場合のみ的中。</p>
+        <div class="summary-row"><div><div class="eyebrow">収支</div><div id="sProfit" class="large">—</div></div><div><div class="eyebrow">ROI（損益÷購入額）</div><div id="sRoi" class="metric">—</div></div></div>
+        <div class="mini-grid">
+          <div class="mini-stat"><div class="eyebrow">的中回数 / 評価回数</div><b id="sHits">—</b></div>
+          <div class="mini-stat"><div class="eyebrow">的中率</div><b id="sRate">—</b></div>
+          <div class="mini-stat"><div class="eyebrow">購入額</div><b id="sStake">—</b></div>
+          <div class="mini-stat"><div class="eyebrow">払戻合計</div><b id="sReturn">—</b></div>
+        </div>
+      </article>
+      <article class="panel">
+        <div class="mode-title"><h3>ボックスのみ</h3><span class="tag">購入可能な最上位</span></div>
+        <p class="muted">3つの数字が一致すれば順不同で的中。3桁同一数字は購入不可。</p>
+        <div class="summary-row"><div><div class="eyebrow">収支</div><div id="bProfit" class="large">—</div></div><div><div class="eyebrow">ROI（損益÷購入額）</div><div id="bRoi" class="metric">—</div></div></div>
+        <div class="mini-grid">
+          <div class="mini-stat"><div class="eyebrow">的中回数 / 評価回数</div><b id="bHits">—</b></div>
+          <div class="mini-stat"><div class="eyebrow">的中率</div><b id="bRate">—</b></div>
+          <div class="mini-stat"><div class="eyebrow">購入額</div><b id="bStake">—</b></div>
+          <div class="mini-stat"><div class="eyebrow">払戻合計</div><b id="bReturn">—</b></div>
+        </div>
+      </article>
+    </div>
+    <div class="callout" id="dataNote">検証データを読み込んでいます。</div>
+  </section>
+
+  <section class="section" aria-labelledby="drawTitle">
+    <div class="section-head">
+      <div><h2 id="drawTitle">直近1か月の当選結果・予測照合</h2><p id="drawSubtitle" class="muted">—</p></div>
+      <div class="source-link"><a href="https://github.com/Joker7822/Numbers3/tree/main/backtests" target="_blank" rel="noopener noreferrer">過去検証ファイル</a></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">回号</th><th scope="col">抽せん日</th><th scope="col">当選数字</th><th scope="col">ストレート1口予測</th><th scope="col">S結果</th><th scope="col">ボックス1口予測</th><th scope="col">B結果</th></tr></thead>
+        <tbody id="drawRows"><tr><td colspan="7">データ読込中</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="digitTitle">
+    <div class="section-head"><div><h2 id="digitTitle">直近1か月・桁ごとの出現数</h2><p class="muted">百・十・一の位に0〜9が何回出たか。偏りは将来の的中を保証しません。</p></div></div>
+    <div class="charts">
+      <div class="panel digit-col"><h3>百の位</h3><div id="digits0"></div></div>
+      <div class="panel digit-col"><h3>十の位</h3><div id="digits1"></div></div>
+      <div class="panel digit-col"><h3>一の位</h3><div id="digits2"></div></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="forecastTitle">
+    <div class="section-head"><div><h2 id="forecastTitle">次回の予測上位候補</h2><p id="forecastSub" class="muted">—</p></div></div>
+    <div class="panel"><div class="candidate-list" id="candidates"></div>
+      <p class="muted" style="margin-top:16px">表示はモデルによる順位です。予測上位であっても当選確率が高いと確認されたことを意味しません。予測優位性が未確認ならそのまま表示します。</p>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>集計方法：</b>過去再検証は各回の直前までの抽せんデータに限定した、事後再実行による仮想購入です。Live実績は抽せん前・18:30 JST以前に保存された予測を採点します。両者は混合しません。各方式は1回につき1口200円で、払い戻しは保存済み当選データの方式別金額を使用します。欠損がある場合、損益とROIは算出しません。</p>
+    <p><b>ボックスの制約：</b>例えば111のように同一数字3個は申込対象外。予測1位が対象外の場合は上位から最初の購入可能な数字を使用します。実購入ではなく検証用シミュレーションです。</p>
+    <p>出典：<a href="https://github.com/Joker7822/Numbers3" target="_blank" rel="noopener noreferrer">Joker7822/Numbers3</a>／<a href="https://www.mizuhobank.co.jp/tenpoinfo/atm/takarakuji/t02.html" target="_blank" rel="noopener noreferrer">みずほ銀行・ナンバーズ3のルール</a></p>
+  </footer>
+</main>
+<script>
+(function(){
+  "use strict";
+  var snapshot = null, source = "history";
+  function el(id){return document.getElementById(id);}
+  function fmtInt(n){return n === null || n === undefined || !Number.isFinite(Number(n)) ? "—" : Number(n).toLocaleString("ja-JP");}
+  function yen(n){return n === null || n === undefined || !Number.isFinite(Number(n)) ? "確認できません" : fmtInt(Math.round(n))+"円";}
+  function pct(n){return n === null || n === undefined || !Number.isFinite(Number(n)) ? "確認できません" : (Number(n)*100).toFixed(2)+"%";}
+  function out(id,value){el(id).textContent = value;}
+  function statusText(value){return value === null || value === undefined ? "—" : value ? "的中" : "外れ";}
+  function setStatus(cell,value){
+    cell.textContent = statusText(value);
+    cell.className = value === null || value === undefined ? "unknown" : value ? "yes" : "no";
+  }
+  function renderCard(mode,prefix){
+    var d=snapshot[source === "history" ? "walkforward_from_second" : "live"] || {};
+    var x=d[mode] || {};
+    var avail=x.available === true;
+    var profit=avail ? x.profit : null;
+    out(prefix+"Profit",avail ? yen(profit) : "検証待ち");
+    out(prefix+"Roi",avail ? pct(x.roi) : "—");
+    out(prefix+"Hits",avail ? fmtInt(x.hits)+" / "+fmtInt(x.draws)+"回" : "—");
+    out(prefix+"Rate",avail ? pct(x.hit_rate) : "—");
+    out(prefix+"Stake",avail ? yen(x.stake) : "—");
+    out(prefix+"Return",avail ? yen(x.return) : "—");
+    el(prefix+"Profit").classList.toggle("negative",avail && profit !== null && profit < 0);
+    el(prefix+"Profit").classList.toggle("positive",avail && profit !== null && profit > 0);
+  }
+  function renderTable(){
+    var tbody=el("drawRows"); tbody.replaceChildren();
+    var rows=snapshot.recent_draws || [];
+    if(!rows.length){var tr=document.createElement("tr"), td=document.createElement("td");td.colSpan=7;td.textContent="対象期間に抽せん結果がありません";tr.appendChild(td);tbody.appendChild(tr);return;}
+    rows.forEach(function(r){
+      var tr=document.createElement("tr");
+      var isH=source==="history";
+      var v=[String(r.issue),r.date,r.actual,isH?r.walkforward_top1:r.live_top1,null,isH?r.walkforward_box:r.live_box,null];
+      v.forEach(function(value,i){
+        var td=document.createElement("td");
+        if(i===4)setStatus(td,isH?r.walkforward_hit:r.live_hit);
+        else if(i===6)setStatus(td,isH?r.walkforward_box_hit:r.live_box_hit);
+        else{td.textContent=value===null||value===undefined?"記録なし":i===0?"第"+value+"回":value;if(i===2)td.className="num";}
+        tr.appendChild(td);
+      });tbody.appendChild(tr);
+    });
+  }
+  function renderSource(){
+    var history=source==="history";
+    el("btnHistory").setAttribute("aria-pressed",String(history));
+    el("btnLive").setAttribute("aria-pressed",String(!history));
+    renderCard("straight","s");renderCard("box","b");renderTable();
+    var o=snapshot[history?"walkforward_from_second":"live"]||{};
+    var note=history ?
+      "過去再検証：第2回からの仮想予測。初期100回未満は頻度・マルコフ方式で、学習可能になってからMLを加えます。今のモデルを当時動かしていたという意味ではありません。" :
+      "Live：実際に抽せん前に保存した確率から照合。予測の保存がない回は補完しません。欠番回号："+((o.missing_issues||[]).join(", ")||"なし")+"。";
+    if(!o.available)note="このデータの再計算結果はまだ保存されていません。GitHub Actionsの単口検証ワークフロー完了後に反映されます。";
+    out("dataNote",note);
+    out("drawSubtitle",history?"第2回から再実行した過去予測と当選数字を比較":"販売締切前に保存されたLive予測と当選数字を比較（欠番は記録なし）");
+  }
+  function renderDigits(){
+    (snapshot.digit_counts||[]).forEach(function(counts,pos){
+      var root=el("digits"+pos);root.replaceChildren();var max=Math.max(1,...counts);
+      counts.forEach(function(n,digit){
+        var line=document.createElement("div"),left=document.createElement("span"),track=document.createElement("div"),bar=document.createElement("div"),right=document.createElement("span");
+        line.className="bar-line";track.className="bar-bg";bar.className="bar";
+        left.textContent=String(digit);right.textContent=String(n);bar.style.width=(100*n/max)+"%";
+        track.appendChild(bar);line.append(left,track,right);root.appendChild(line);
+      });
+    });
+  }
+  function renderForecast(){
+    var forecast=snapshot.forecast||{},items=forecast.top_predictions||[],parent=el("candidates");
+    parent.replaceChildren();
+    out("forecastSub","予測対象：第"+(forecast.target_issue||"—")+"回 / 優位性："+(forecast.edge_status==="not_confirmed"?"未確認":forecast.edge_status||"未確認"));
+    items.slice(0,10).forEach(function(x){
+      var div=document.createElement("div"),title=document.createElement("strong"),caption=document.createElement("span");
+      div.className="candidate";title.textContent=x.number||"—";
+      caption.textContent="予測"+String(x.rank)+"位・"+pct(x.probability);div.append(title,caption);parent.appendChild(div);
+    });
+  }
+  function render(){
+    var last=snapshot.last_draw||{},period=snapshot.period||{},history=snapshot.walkforward_from_second||{};
+    out("latestNumber",last.number||"—");
+    out("latestIssue","第"+(last.issue||"—")+"回 / "+(last.date||"—"));
+    out("monthCount",fmtInt(period.draws)+"回");
+    out("monthPeriod",(period.start||"—")+" 〜 "+(period.end||"—"));
+    out("replayCount",history.available?fmtInt(history.draws)+"回":"再計算待ち");
+    out("lastDate",last.date||"—");
+    out("refreshDate","ダッシュボード集計："+(snapshot.generated_at||"—"));
+    renderSource();renderDigits();renderForecast();
+  }
+  el("btnHistory").addEventListener("click",function(){source="history";if(snapshot)renderSource();});
+  el("btnLive").addEventListener("click",function(){source="live";if(snapshot)renderSource();});
+  fetch("./data/summary.json",{cache:"no-store"})
+    .then(function(resp){if(!resp.ok)throw new Error("summary.jsonがありません（HTTP "+resp.status+"）");return resp.json();})
+    .then(function(data){snapshot=data;render();})
+    .catch(function(err){var box=el("loadError");box.style.display="block";box.textContent="データを読み込めません："+err.message+"。GitHub Actionsの単口検証が完了しているか確認し、GitHub PagesかローカルHTTPサーバーで開いてください。";});
+})();
+</script>
+</body>
+</html>
