@@ -122,8 +122,8 @@
     </div>
     <div class="panel">
       <div class="table-wrap"><table>
-        <thead><tr><th>BOX選択方式</th><th>的中 / 検証</th><th>的中率</th><th>従来との差</th></tr></thead>
-        <tbody id="shadowRows"><tr><td colspan="4">比較データの生成待ち</td></tr></tbody>
+        <thead><tr><th>BOX選択方式</th><th>的中 / 検証</th><th>的中率</th><th>従来との差</th><th>第5000回以降</th></tr></thead>
+        <tbody id="shadowRows"><tr><td colspan="5">比較データの生成待ち</td></tr></tbody>
       </table></div>
       <p id="shadowNote" class="muted" style="margin-top:12px">既存の購入・損益集計は変更しません。</p>
     </div>
@@ -216,19 +216,22 @@
     var tbody=el("shadowRows");tbody.replaceChildren();
     if(!summary.available){
       var tr=document.createElement("tr"), td=document.createElement("td");
-      td.colSpan=4;td.textContent="候補方式の検証データを確認できません";
+      td.colSpan=5;td.textContent="候補方式の検証データを確認できません";
       tr.appendChild(td);tbody.appendChild(tr);
     } else {
       [["baseline","従来：単一予測の最上位"],["mass","順列6/3通りの予測確率合計が最大"],["unique","3桁すべて異なる候補の確率合計が最大"]].forEach(function(pair){
         var m=(summary.modes||{})[pair[0]]||{},tr=document.createElement("tr");
+        var recent=summary.recent_5000_plus||{};
+        var recentKey=pair[0]+"_hits";
         [pair[1],fmtInt(m.hits)+" / "+fmtInt(summary.draws),pct(m.hit_rate),
-         pair[0]==="baseline"?"基準":(m.delta_hits_vs_baseline>=0?"+":"")+fmtInt(m.delta_hits_vs_baseline)+"回"
+         pair[0]==="baseline"?"基準":(m.delta_hits_vs_baseline>=0?"+":"")+fmtInt(m.delta_hits_vs_baseline)+"回",
+         recent[recentKey]===undefined?"—":fmtInt(recent[recentKey])+" / "+fmtInt(recent.draws)+"回"
         ].forEach(function(value){var td=document.createElement("td");td.textContent=value;tr.appendChild(td);});
         tbody.appendChild(tr);
       });
     }
     out("shadowNote",source==="history"
-      ?"第2回からの遡及シミュレーション。候補政策は事後設計で、比較に多重探索・選択バイアスがあり得ます。的中増加があっても予測優位性は未確認です。従来方式の購入損益と混ぜません。"
+      ?"第2回からの遡及シミュレーション。候補政策は事後設計のため多重探索・選択バイアスがあります。探索的ペア検定p値（確率合計最大）："+((summary.modes||{}).mass||{}).paired_p_exploratory?.toFixed(4)+"。直近成績も必ず併せて確認してください。正式採用や収支合算はしません。"
       :"販売締切前に保存した1,000通りの確率に、事後設計した候補政策を再適用した参考結果です。新政策を抽せん前から運用したLive実績ではありません。");
   }
   function renderSource(){
