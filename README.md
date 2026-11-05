@@ -11,7 +11,7 @@ NUMBERS3 の過去抽せんデータを継続更新し、時系列バックテ�
 - **ストレートのみ**: 各回の予測1位を200円・1口購入したと仮定し、3桁完全一致で的中
 - **ボックスのみ**: 各回の購入可能な予測の最上位を200円・1口購入したと仮定し、順序を問わず3桁一致で的中。全桁同一（例111）はボックス購入できないため次候補へ
 - 両方式の**購入額・払戻金・利益・ROIは独立**。2方式を同時購入した費用や収支は算出しない
-- 払戻金は各抽せん回の「ストレート」「ボックス」列の実額を使用する。的中時の払戻金が未記録なら利益・ROIを「算出不可」とする
+- 払戻金は各抽せん回の「ストレート」「ボックス」列を使用する。古いデータで的中時の払戻金が未記録の回は、日付・回号・当選数字を照合した `data/numbers3_historical_payouts.csv`（くじしるべ公開アーカイブの二次資料）で復元する。45回分を収録するが、全件の公式独立照合は未完了。なお未補完の的中があれば利益・ROIは「算出不可」とする
 - 第2回からの復元では第1回だけを観測済みとして開始。初期期間は頻度・マルコフに限定し、100回以上蓄積してから過去データで機械学習を学習。現在のChampionモデルを第2回当時から使ったとみなす検証ではない
 
 データを自動生成するワークフロー: [`numbers3-single-ticket-backtest.yml`](.github/workflows/numbers3-single-ticket-backtest.yml)
@@ -19,12 +19,15 @@ NUMBERS3 の過去抽せんデータを継続更新し、時系列バックテ�
 出力先:
 - `backtests/one_ticket_from_second/historical_accuracy.txt`（第2回からの方式別総計）
 - `backtests/one_ticket_from_second/historical_tickets.csv`（各回の購入数字・的中・払戻・損益）
+- `data/numbers3_historical_payouts.csv`（過去45回の復元金額と個別出典URL。抽せん日前の予測特徴量には利用しない）
 - `predictions/live_purchase_scoreboard.csv`（実保存予測の方式別Live照合）
 - `dashboard/data/summary.json`（ダッシュボードの表示データ）
 
 ローカルで閲覧する場合は、リポジトリのルートで `python -m http.server 8000` を実行し、
 `http://localhost:8000/dashboard/` にアクセスします。GitHub Pages を使う場合は
 `dashboard/` 以下を配信対象にしてください。初回は単口監査ワークフローが完了してから数値が生成されます。
+
+手元で全回の払戻金を再照合する場合は、バックテスト実行後に `python numbers3_payout_reconciliation.py` を実行し、次に `python numbers3_dashboard_data.py` で表示用JSONを再生成します。復元金額は [くじしるべ](https://kujishirube.info/numbers3/csv/) の公表値であり、[楽天宝くじの公開履歴](https://takarakuji.rakuten.co.jp/backnumber/numbers3/202402/) では一部の回を照合しました。
 
 **注意:** 過去再検証は当時購入した記録ではありません。また、方式ごとの単発的な好成績だけでは統計的な予測優位性を示せません。
 

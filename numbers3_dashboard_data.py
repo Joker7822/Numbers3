@@ -125,6 +125,7 @@ def main():
                 "random_straight_baseline": 0.001,
                 "method": history_meta.get("method"),
                 "generated_at": history_meta.get("generated_at"),
+                "payout_reconciliation": history_meta.get("payout_reconciliation"),
             }
 
     live_file = ROOT / "predictions/live_purchase_scoreboard.csv"
