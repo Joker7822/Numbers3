@@ -7,6 +7,9 @@ on:
       - feat/numbers3-insights-dashboard-20261105
     paths:
       - numbers3_historical_backtest.py
+      - numbers3_payout_reconciliation.py
+      - data/numbers3_historical_payouts.csv
+      - test_numbers3_payout_reconciliation.py
       - numbers3_live_purchase_audit.py
       - numbers3_live_reporting.py
       - numbers3_dashboard_data.py
@@ -38,7 +41,7 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
       - name: Test purchase and causal replay preconditions
-        run: python -m unittest -v test_numbers3_one_ticket.py
+        run: python -m unittest -v test_numbers3_one_ticket.py test_numbers3_payout_reconciliation.py
       - name: Restore full draw history
         run: |
           cat data/history_parts/part_* > /tmp/numbers3.csv.xz.b64
@@ -54,6 +57,10 @@ jobs:
             --warmup 1 \
             --refit-interval 1000 \
             --topk 20 --force
+      - name: Reconcile all sourced historical winning payouts
+        env:
+          TZ: Asia/Tokyo
+        run: python numbers3_payout_reconciliation.py
       - name: Re-score actual prospective live forecasts under the same policy
         env:
           TZ: Asia/Tokyo
