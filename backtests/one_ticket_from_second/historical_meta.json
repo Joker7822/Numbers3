@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-05T16:10:21+09:00",
+  "generated_at": "2026-11-05T16:35:13+09:00",
   "dataset_fingerprint": "7978e5902ed52517252c",
   "latest_issue": 7107,
   "evaluated_draws": 7106,
@@ -64,5 +64,16 @@
   "ticket_count_per_scenario": 1,
   "unit_price_yen": 200,
   "box_selection": "first ranked candidate with at least two distinct digits",
-  "ticket_file": "historical_tickets.csv"
+  "ticket_file": "historical_tickets.csv",
+  "payout_reconciliation": {
+    "source_type": "third_party_public_result_archive",
+    "officially_crosschecked_all_records": false,
+    "source_url": "https://kujishirube.info/numbers3/csv/",
+    "source_records": 45,
+    "matched_draws": 45,
+    "straight_payouts_recovered": 10,
+    "box_payouts_recovered": 45,
+    "straight_missing_payouts": 0,
+    "box_missing_payouts": 0
+  }
 }
