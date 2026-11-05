@@ -363,9 +363,9 @@
       "hit_rate": 0.0014072614691809737,
       "tickets_per_draw": 1,
       "price_yen": 200,
-      "stake": 1421200.0,
-      "return": 848000.0,
-      "profit": -573200.0,
+      "stake": 1421200,
+      "return": 848000,
+      "profit": -573200,
       "roi": -0.4033211370672671,
       "missing_payouts": 0
     },
@@ -376,9 +376,9 @@
       "hit_rate": 0.0063326766113143826,
       "tickets_per_draw": 1,
       "price_yen": 200,
-      "stake": 1421200.0,
-      "return": 740700.0,
-      "profit": -680500.0,
+      "stake": 1421200,
+      "return": 740700,
+      "profit": -680500,
       "roi": -0.4788207148888263,
       "missing_payouts": 0
     },
@@ -409,13 +409,13 @@
       "available": true,
       "draws": 51,
       "hits": 0,
-      "hit_rate": 0.0,
+      "hit_rate": 0,
       "tickets_per_draw": 1,
       "price_yen": 200,
-      "stake": 10200.0,
-      "return": 0.0,
-      "profit": -10200.0,
-      "roi": -1.0,
+      "stake": 10200,
+      "return": 0,
+      "profit": -10200,
+      "roi": -1,
       "missing_payouts": 0
     },
     "box": {
@@ -425,9 +425,9 @@
       "hit_rate": 0.0196078431372549,
       "tickets_per_draw": 1,
       "price_yen": 200,
-      "stake": 10200.0,
-      "return": 12600.0,
-      "profit": 2400.0,
+      "stake": 10200,
+      "return": 12600,
+      "profit": 2400,
       "roi": 0.23529411764705882,
       "missing_payouts": 0
     },
@@ -449,7 +449,7 @@
           "delta_hits_vs_baseline": 0,
           "baseline_only": 0,
           "challenger_only": 0,
-          "paired_p_exploratory": 1.0
+          "paired_p_exploratory": 1
         },
         "mass": {
           "hits": 48,
@@ -487,7 +487,7 @@
           "delta_hits_vs_baseline": 0,
           "baseline_only": 0,
           "challenger_only": 0,
-          "paired_p_exploratory": 1.0
+          "paired_p_exploratory": 1
         },
         "mass": {
           "hits": 1,
@@ -495,7 +495,7 @@
           "delta_hits_vs_baseline": 0,
           "baseline_only": 0,
           "challenger_only": 0,
-          "paired_p_exploratory": 1.0
+          "paired_p_exploratory": 1
         },
         "unique": {
           "hits": 1,
@@ -503,7 +503,7 @@
           "delta_hits_vs_baseline": 0,
           "baseline_only": 0,
           "challenger_only": 0,
-          "paired_p_exploratory": 1.0
+          "paired_p_exploratory": 1
         }
       },
       "recent_5000_plus": {
@@ -628,7 +628,13 @@
       "logreg": 0.05950873785161185,
       "extra_trees": 0.3432161770116014
     },
-    "experimental_box_recommendation": null
+    "experimental_box_recommendation": {
+      "number": "125",
+      "model_permutation_mass": 0.007013017165466591,
+      "method": "maximum joint probability summed over 6 permutations",
+      "digits_distinct": true,
+      "status": "shadow_not_production"
+    }
   },
   "purchase_policy": {
     "description": "Independent one-ticket simulations per draw: Straight vs BOX",
