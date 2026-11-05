@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - feat/numbers3-insights-dashboard-20261105
+      - feat/numbers3-box-hit-rate-challengers-20261105
     paths:
       - numbers3_historical_backtest.py
       - numbers3_hit_rate_lab.py
