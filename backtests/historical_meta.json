@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-05T16:11:15+09:00",
+  "generated_at": "2026-11-05T17:06:39+09:00",
   "dataset_fingerprint": "7978e5902ed52517252c",
   "latest_issue": 7107,
   "evaluated_draws": 6607,
@@ -58,5 +58,12 @@
   "ticket_count_per_scenario": 1,
   "unit_price_yen": 200,
   "box_selection": "first ranked candidate with at least two distinct digits",
-  "ticket_file": "historical_tickets.csv"
+  "ticket_file": "historical_tickets.csv",
+  "shadow_box_policies": {
+    "baseline": "highest-ranked valid single permutation",
+    "mass": "highest model sum across all BOX-equivalent permutations",
+    "unique": "highest sum among tickets with 3 distinct digits",
+    "production_policy_unchanged": true,
+    "lookahead": false
+  }
 }
