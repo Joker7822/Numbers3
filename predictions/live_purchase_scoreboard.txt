@@ -2,7 +2,7 @@ NUMBERS3 通常予測 購入方式別Live照合
 ================================================================================================================
 正式基準: 各回について販売締切18:30 JSTより前に保存された最後の通常予測を採用。
 Champion replayではなく、当時保存された1000通り確率だけを採点。
-仮想購入: Top20から重複する同一賭式を除き、Straight / BOX / SET / MINIを各1口。1口=200円。
+仮想購入: ストレート1口とボックス1口を独立比較（各200円）。2方式の合算購入なし。BOXは3桁同一数字を除外。
 全口外れはこのTXTの各回一覧には掲載しないが、CSV・統計母数・ROIには残す。
 
 総合
@@ -11,54 +11,20 @@ Champion replayではなく、当時保存された1000通り確率だけを採�
 Exact NLL: 6.89472948 / 一様=6.90775528
 平均実数字順位: 452.55/1000
 Straight Top1: 0.0000% / Top20: 1.9608%
-購入方式で何らか的中: 16/51 (31.3725%)
-仮想購入額合計: 698,800円
-払戻合計: 430,200円
-収支: -268,600円
-合算ROI: -38.4373%
-全口外れ非掲載回数: 35
+いずれかの方式が的中した回（方式間は合算しない）: 1/51
+両シナリオとも外れた回: 50
 
-方式別成績
+独立した1口購入結果
 ----------------------------------------------------------------------------------------------------------------
-Straight hit=1.9608% stake=204,000円 return=77,600円 profit=-126,400円 ROI=-61.9608%
-BOX      hit=21.5686% stake=185,600円 return=161,600円 profit=-24,000円 ROI=-12.9310%
-SET      hit=21.5686% stake=201,200円 return=131,900円 profit=-69,300円 ROI=-34.4433%
-MINI     hit=11.7647% stake=108,000円 return=59,100円 profit=-48,900円 ROI=-45.2778%
+Straight 1口×51回 / 的中=0/51 (0.0000%) / 購入額=10,200円 / 払戻=0円 / 損益=-10,200円 / ROI=-100.0000%
+BOX      1口×51回 / 的中=1/51 (1.9608%) / 購入額=10,200円 / 払戻=12,600円 / 損益=+2,400円 / ROI=+23.5294%
 
 的中回のみ
 ----------------------------------------------------------------------------------------------------------------
-第7057回 2026-08-26 actual=708 rank=449 hits=box;set stake=14,000円 return=20,200円 profit=+6,200円 ROI=+44.29% NLL=6.91622186 archived_versions=1 hash=52dc1323ff34720fe948
-  box:078=13500円 / set:087=6700円
-第7060回 2026-08-31 actual=877 rank=222 hits=mini stake=15,400円 return=11,300円 profit=-4,100円 ROI=-26.62% NLL=6.83873789 archived_versions=1 hash=83f1651bfa878ed84207
-  mini:77=11300円
-第7068回 2026-09-10 actual=960 rank=197 hits=mini stake=14,800円 return=10,100円 profit=-4,700円 ROI=-31.76% NLL=6.79206816 archived_versions=1 hash=a05295259fe0380c8f17
-  mini:60=10100円
-第7069回 2026-09-11 actual=908 rank=127 hits=box;set stake=13,200円 return=18,000円 profit=+4,800円 ROI=+36.36% NLL=6.74433716 archived_versions=1 hash=a59a5d63a2bf8513ee65
-  box:089=12000円 / set:980=6000円
-第7073回 2026-09-17 actual=188 rank=38 hits=mini stake=14,800円 return=8,700円 profit=-6,100円 ROI=-41.22% NLL=6.61718215 archived_versions=1 hash=15c09bf52d527155f992
-  mini:88=8700円
-第7075回 2026-09-21 actual=682 rank=260 hits=box;set stake=14,000円 return=25,200円 profit=+11,200円 ROI=+80.00% NLL=6.81750128 archived_versions=1 hash=9da6e6378321512ff462
-  box:268=12600円 / set:268=6300円 / set:286=6300円
-第7076回 2026-09-22 actual=056 rank=225 hits=mini stake=14,600円 return=12,400円 profit=-2,200円 ROI=-15.07% NLL=6.80862846 archived_versions=1 hash=f96021c43e84524530f9
-  mini:56=12400円
-第7077回 2026-09-23 actual=187 rank=6 hits=straight;box;set;mini stake=13,200円 return=149,800円 profit=+136,600円 ROI=+1034.85% NLL=6.43372371 archived_versions=1 hash=6f369935a74b7d56c33e
-  straight:187=77600円 / box:178=12900円 / set:187=45200円 / set:178=6400円 / mini:87=7700円
-第7082回 2026-09-30 actual=518 rank=630 hits=box;set stake=13,600円 return=16,900円 profit=+3,300円 ROI=+24.26% NLL=6.97873853 archived_versions=1 hash=010bc38ac5ff6ee2ab9e
-  box:158=11300円 / set:158=5600円
-第7083回 2026-10-01 actual=606 rank=69 hits=mini stake=14,600円 return=8,900円 profit=-5,700円 ROI=-39.04% NLL=6.72197065 archived_versions=1 hash=feb2f5617f4516a0ec6d
-  mini:06=8900円
-第7084回 2026-10-02 actual=869 rank=533 hits=box;set stake=13,600円 return=22,000円 profit=+8,400円 ROI=+61.76% NLL=6.93561964 archived_versions=1 hash=951e909ac0de47f1df3f
-  box:689=14700円 / set:689=7300円
-第7085回 2026-10-05 actual=869 rank=91 hits=box;set stake=13,200円 return=23,200円 profit=+10,000円 ROI=+75.76% NLL=6.67280527 archived_versions=1 hash=fa24a0db84d09512a3d3
-  box:689=15500円 / set:689=7700円
-第7100回 2026-10-26 actual=825 rank=393 hits=box;set stake=14,200円 return=18,400円 profit=+4,200円 ROI=+29.58% NLL=6.88348208 archived_versions=1 hash=982fdb56192ab5f085d6
-  box:258=12300円 / set:285=6100円
-第7102回 2026-10-28 actual=952 rank=275 hits=box;set stake=13,000円 return=17,500円 profit=+4,500円 ROI=+34.62% NLL=6.83595609 archived_versions=1 hash=2a9f308798a08f4b4ce5
-  box:259=11700円 / set:925=5800円
-第7104回 2026-10-30 actual=061 rank=893 hits=box;set stake=13,000円 return=30,400円 profit=+17,400円 ROI=+133.85% NLL=7.12448311 archived_versions=1 hash=787e2346f48a662bf48c
-  box:016=20300円 / set:610=10100円
-第7105回 2026-11-02 actual=110 rank=28 hits=box;set stake=12,600円 return=37,200円 profit=+24,600円 ROI=+195.24% NLL=6.60629342 archived_versions=1 hash=5cd42f9cea445642ea0b
-  box:011=24800円 / set:011=12400円
+第7075回 2026-09-21 actual=682 rank=260 hits=box NLL=6.81750128 archived_versions=1 hash=9da6e6378321512ff462
+  Straight1口=268 hit=0 1口購入額=200円 払戻=0円 損益=-200円
+  BOX1口=268 hit=1 1口購入額=200円 払戻=12,600円 損益=+12,400円
+  box:268=12600円
 
 予測欠番監査
 ----------------------------------------------------------------------------------------------------------------

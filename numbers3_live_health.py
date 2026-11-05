@@ -78,6 +78,8 @@ def build_health(pred_dir: Path) -> dict:
             "total_return": total_return,
             "total_profit": total_profit,
             "total_roi": total_roi,
+            "total_basis": "straight_only_legacy_alias_not_combined_with_box",
+            "purchase_policy": "independent_one_ticket_straight_vs_box",
             "modes": {},
         }
         for mode in ("straight", "box", "set", "mini"):
@@ -162,10 +164,11 @@ def write_health(pred_dir: Path, out_json: Path, out_txt: Path) -> dict:
     if purchase:
         lines += [
             f"scored: {purchase['scored_draws']} / any-hit draws: {purchase['any_hit_draws']}",
-            f"stake={_money(purchase['total_stake'])} return={_money(purchase['total_return'])} "
-            f"profit={_money(purchase['total_profit'])} ROI={_pct(purchase['total_roi'])}",
+            "直下のStraight / BOXは独立した各1口の仮想購入シナリオ。合算しません。",
         ]
         for mode, m in purchase["modes"].items():
+            if mode not in ("straight", "box"):
+                continue
             lines.append(
                 f"{mode:8s}: hits={m['hit_draws']} stake={_money(m['stake'])} return={_money(m['return'])} ROI={_pct(m['roi'])}"
             )

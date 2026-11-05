@@ -1,0 +1,105 @@
+name: NUMBERS3 Single-Ticket Historical Audit
+
+on:
+  push:
+    branches:
+      - main
+      - feat/numbers3-insights-dashboard-20261105
+    paths:
+      - numbers3_historical_backtest.py
+      - numbers3_live_purchase_audit.py
+      - numbers3_live_reporting.py
+      - numbers3_dashboard_data.py
+      - test_numbers3_one_ticket.py
+      - .github/workflows/numbers3-single-ticket-backtest.yml
+  schedule:
+    - cron: "30 13 * * 1-5" # weekdays 22:30 JST (UTC+9)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: numbers3-one-ticket-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  one-ticket-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Test purchase and causal replay preconditions
+        run: python -m unittest -v test_numbers3_one_ticket.py
+      - name: Restore full draw history
+        run: |
+          cat data/history_parts/part_* > /tmp/numbers3.csv.xz.b64
+          base64 -d /tmp/numbers3.csv.xz.b64 > /tmp/numbers3.csv.xz
+          xz -dc /tmp/numbers3.csv.xz > data/numbers3.csv
+      - name: Replay from draw 2 with one 200-yen straight ticket
+        env:
+          TZ: Asia/Tokyo
+        run: |
+          python numbers3_historical_backtest.py \
+            --csv data/numbers3.csv \
+            --output-dir backtests/one_ticket_from_second \
+            --warmup 1 \
+            --refit-interval 1000 \
+            --topk 20 --force
+      - name: Re-score actual prospective live forecasts under the same policy
+        env:
+          TZ: Asia/Tokyo
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import numbers3_runner_champion_v5 as runner
+          from numbers3_live_purchase_audit import update_purchase_audit
+          from numbers3_live_reporting import rebuild_live_reports
+          from numbers3_live_health import write_health
+          runner._install_live_number_parser()
+          pred = Path("predictions")
+          result = update_purchase_audit(
+              Path("data/numbers3.csv"),
+              pred / "live_forecast_archive.csv",
+              pred / "live_purchase_scoreboard.csv",
+              pred / "live_purchase_scoreboard.txt",
+          )
+          rebuild_live_reports(
+              Path("data/numbers3.csv"),
+              pred / "live_forecast_archive.csv",
+              pred / "live_purchase_scoreboard.csv",
+              pred / "live_purchase_scoreboard.txt",
+              pred / "cumulative_results.txt",
+              list(result["missing_issues"]),
+          )
+          write_health(pred, pred / "live_health.json", pred / "live_health.txt")
+          PY
+      - name: Build dashboard data
+        env:
+          TZ: Asia/Tokyo
+        run: python numbers3_dashboard_data.py
+      - name: Save audited outputs to the current branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "numbers3-audit-bot"
+          git config user.email "numbers3-audit-bot@users.noreply.github.com"
+          git add -- backtests/one_ticket_from_second predictions/live_purchase_scoreboard.csv \
+            predictions/live_purchase_scoreboard.txt predictions/cumulative_results.txt \
+            predictions/live_health.json predictions/live_health.txt dashboard/data/summary.json
+          if git diff --cached --quiet; then
+            echo "No updated audit data"
+            exit 0
+          fi
+          git commit -m "data: refresh second-draw 1-ticket backtest and dashboard"
+          git fetch origin "${GITHUB_REF_NAME}"
+          git rebase "origin/${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

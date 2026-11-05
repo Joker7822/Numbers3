@@ -108,7 +108,7 @@ def write_purchase_summary(
         "=" * 112,
         "正式基準: 各回について販売締切18:30 JSTより前に保存された最後の通常予測を採用。",
         "Champion replayではなく、当時保存された1000通り確率だけを採点。",
-        "仮想購入: Top20から重複する同一賭式を除き、Straight / BOX / SET / MINIを各1口。1口=200円。",
+        "仮想購入: ストレート1口とボックス1口を独立比較（各200円）。2方式の合算購入なし。BOXは3桁同一数字を除外。",
         "全口外れはこのTXTの各回一覧には掲載しないが、CSV・統計母数・ROIには残す。",
         "",
     ]
@@ -120,12 +120,9 @@ def write_purchase_summary(
         exact = pd.to_numeric(score["exact_nll"], errors="coerce")
         ranks = pd.to_numeric(score["actual_rank"], errors="coerce")
         any_hit = pd.to_numeric(score["any_purchase_hit"], errors="coerce").fillna(0)
-        total_stake = float(pd.to_numeric(score["total_stake"], errors="coerce").fillna(0).sum())
-        total_returns = pd.to_numeric(score["total_return"], errors="coerce")
-        complete = not total_returns.isna().any()
-        total_return = float(total_returns.sum()) if complete else np.nan
-        total_profit = total_return - total_stake if complete else np.nan
-        total_roi = total_profit / total_stake if complete and total_stake else np.nan
+        # Each scenario is calculated in isolation; total_* is a legacy
+        # straight-only alias and MUST NOT be summed with BOX.
+        straight_stake, straight_ret, straight_profit, straight_roi = mode_totals(score, "straight")
 
         lines += [
             "総合",
@@ -135,24 +132,21 @@ def write_purchase_summary(
             f"平均実数字順位: {ranks.mean():.2f}/1000",
             f"Straight Top1: {pd.to_numeric(score['top1_hit'], errors='coerce').mean():.4%} / "
             f"Top20: {pd.to_numeric(score['top20_straight_hit'], errors='coerce').mean():.4%}",
-            f"購入方式で何らか的中: {int(any_hit.sum())}/{n} ({any_hit.mean():.4%})",
-            f"仮想購入額合計: {money(total_stake)}",
-            f"払戻合計: {money(total_return)}",
-            f"収支: {signed_money(total_profit)}",
-            f"合算ROI: {total_roi:+.4%}" if pd.notna(total_roi) else "合算ROI: 算出不可",
-            f"全口外れ非掲載回数: {int((any_hit == 0).sum())}",
+            f"いずれかの方式が的中した回（方式間は合算しない）: {int(any_hit.sum())}/{n}",
+            f"両シナリオとも外れた回: {int((any_hit == 0).sum())}",
             "",
-            "方式別成績",
+            "独立した1口購入結果",
             "-" * 112,
         ]
 
-        for mode in ("straight", "box", "set", "mini"):
+        for mode in ("straight", "box"):
             stake, ret, profit, roi = mode_totals(score, mode)
             hit_rate = pd.to_numeric(score[f"{mode}_hit"], errors="coerce").mean()
             roi_text = f"{roi:+.4%}" if pd.notna(roi) else "算出不可"
             lines.append(
-                f"{MODE_LABELS[mode]:8s} hit={hit_rate:.4%} stake={money(stake)} "
-                f"return={money(ret)} profit={signed_money(profit)} ROI={roi_text}"
+                f"{MODE_LABELS[mode]:8s} 1口×{n}回 / 的中={int(pd.to_numeric(score[f'{mode}_hit']).sum())}/{n}"
+                f" ({hit_rate:.4%}) / 購入額={money(stake)} / 払戻={money(ret)}"
+                f" / 損益={signed_money(profit)} / ROI={roi_text}"
             )
 
         lines += ["", "的中回のみ", "-" * 112]
@@ -168,10 +162,14 @@ def write_purchase_summary(
                 lines.append(
                     f"第{target}回 {r['draw_date']} actual={str(r['actual']).zfill(3)} "
                     f"rank={int(r['actual_rank'])} hits={r.get('hit_modes', '') or '-'} "
-                    f"stake={money(r['total_stake'])} return={money(r['total_return'])} "
-                    f"profit={signed_money(r['profit'])} ROI={roi_text} "
                     f"NLL={float(r['exact_nll']):.8f} archived_versions={versions} hash={fh}"
                 )
+                for mode, name in (("straight", "Straight"), ("box", "BOX")):
+                    lines.append(
+                        f"  {name}1口={r[f'{mode}_ticket_number']} "
+                        f"hit={int(r[f'{mode}_hit'])} 1口購入額={money(r[f'{mode}_stake'])}"
+                        f" 払戻={money(r[f'{mode}_return'])} 損益={signed_money(r[f'{mode}_profit'])}"
+                    )
                 lines.append(f"  {r.get('hit_details', '')}")
 
     lines += ["", "予測欠番監査", "-" * 112]
@@ -266,10 +264,14 @@ def write_canonical_cumulative(
                     f"hits={r.get('hit_modes', '') or '-'} NLL={float(r['exact_nll']):.8f}"
                 )
                 lines.append(
-                    f"  top20={r['top20_numbers']} / stake={money(r['total_stake'])} "
-                    f"return={money(r['total_return'])} profit={signed_money(r['profit'])} "
-                    f"ROI={roi_text} / archived_versions={versions} hash={fh}"
+                    f"  top20={r['top20_numbers']} / archived_versions={versions} hash={fh}"
                 )
+                for mode, name in (("straight", "Straight"), ("box", "BOX")):
+                    lines.append(
+                        f"  {name}1口={r[f'{mode}_ticket_number']} "
+                        f"hit={int(r[f'{mode}_hit'])} stake={money(r[f'{mode}_stake'])}"
+                        f" return={money(r[f'{mode}_return'])} profit={signed_money(r[f'{mode}_profit'])}"
+                    )
                 lines.append(f"  {r.get('hit_details', '')}")
 
     lines += [
@@ -277,7 +279,7 @@ def write_canonical_cumulative(
         f"照合済み全口外れ非掲載回数: {omitted}",
         "欠番: " + (",".join(str(x) for x in missing) if missing else "none"),
         "",
-        "方式別ROI・全回統計は predictions/live_purchase_scoreboard.txt を参照。",
+        "ストレート1口・ボックス1口を別々に集計した結果は predictions/live_purchase_scoreboard.txt を参照。",
     ]
     out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 

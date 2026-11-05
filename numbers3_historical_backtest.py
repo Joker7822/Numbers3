@@ -22,6 +22,8 @@ JST = ZoneInfo("Asia/Tokyo")
 U_DIGIT = math.log(10.0)
 U_EXACT = math.log(1000.0)
 KS = (1, 3, 5, 10, 20)
+MIN_ML_TRAIN_DRAWS = 100
+TICKET_PRICE_YEN = 200
 
 
 def issue_no(v):
@@ -157,6 +159,21 @@ def write_summary(path, df, warmup, refit):
         f"1桁log loss: {m['digit_nll']:.8f} / 一様: {U_DIGIT:.8f}",
         f"Top20 BOX: {m['box20']}/{n} = {m['box20']/n:.4%}",
         f"Top20 ミニ: {m['mini20']}/{n} = {m['mini20']/n:.4%}",
+        "", "独立した1口購入シナリオ（各回200円）", "-" * 92,
+        "対象は過去データによる仮想検証。2方式は同時購入しません。",
+        *[
+            line for mode, name in (("straight", "ストレートのみ"), ("box", "ボックスのみ"))
+            for line in (
+                f"{name}: 的中={int(df[f'{mode}_ticket_hit'].sum())}/{n} ({df[f'{mode}_ticket_hit'].mean():.4%})",
+                (f"  購入額={int(df[f'{mode}_ticket_stake'].sum()):,}円"
+                 f" / 払戻={int(df[f'{mode}_ticket_return'].sum()):,}円"
+                 f" / 損益={int(df[f'{mode}_ticket_profit'].sum()):+,}円"
+                 f" / ROI={df[f'{mode}_ticket_profit'].sum()/df[f'{mode}_ticket_stake'].sum():+.4%}"
+                 if df[f"{mode}_ticket_return"].notna().all()
+                 else "  払戻データ欠損につき損益・ROI算出不可"),
+            )
+        ],
+        "ボックスは3桁同一数字を除外し、次の購入可能な予測を採用。",
         "", "直近期間", "-" * 92,
     ]
     for w in (100, 500, 1000):
@@ -174,10 +191,14 @@ def write_summary(path, df, warmup, refit):
 
 def write_rounds(path, df):
     lines = ["NUMBERS3 過去回別予測一覧（未来情報リークなし）", "=" * 116,
-             "回号 / 日付 / 実数字 / Top1 / 実数字順位 / S20 / B20 / M20 / Top20候補", ""]
+             "回号 / 日付 / 実数字 / Straight1口 / Box1口 / S的中 / B的中 / 実数字順位 / S20 / B20 / M20 / Top20候補", ""]
     for _, r in df.sort_values("target_issue", ascending=False).iterrows():
-        lines.append(f"第{int(r.target_issue):04d}回  {r.draw_date}  実={r.actual}  Top1={r.top1}  "
-                     f"順位={int(r.actual_rank):04d}/1000  S20={'○' if r.hit20 else '×'}  "
+        lines.append(f"第{int(r.target_issue):04d}回  {r.draw_date}  実={r.actual}  "
+                     f"S={r.top1}  BOX={r.box_ticket_number} "
+                     f"S1={'○' if r.straight_ticket_hit else '×'}  "
+                     f"B1={'○' if r.box_ticket_hit else '×'}  "
+                     f"順位={int(r.actual_rank):04d}/1000  "
+                     f"S20={'○' if r.hit20 else '×'}  "
                      f"B20={'○' if r.box20 else '×'}  M20={'○' if r.mini20 else '×'}  候補={r.top20}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -185,8 +206,8 @@ def write_rounds(path, df):
 def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
                           refit_interval=1000, top_k=20, ewma_alpha=.02,
                           force=False, random_state=42):
-    if warmup_draws < 100 or refit_interval < 1 or top_k < 20:
-        raise ValueError("warmup>=100, refit>=1, top_k>=20 が必要です")
+    if warmup_draws < 1 or refit_interval < 1 or top_k < 20:
+        raise ValueError("warmup>=1, refit>=1, top_k>=20 が必要です")
     outdir.mkdir(parents=True, exist_ok=True)
     meta_p, idx_p = outdir / "historical_meta.json", outdir / "historical_index.json"
     summary_p, rounds_dir = outdir / "historical_accuracy.txt", outdir / "historical_rounds"
@@ -209,10 +230,22 @@ def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
     losses = {k: U_DIGIT for k in MODEL_NAMES}
     rows = []
 
-    for bs in range(start, len(df), refit_interval):
-        be = min(bs + refit_interval, len(df))
-        lr, et = fit_logreg(X, nums, bs, random_state), fit_trees(X, nums, bs, random_state)
-        ml = predict_ml({"logreg": lr, "extra_trees": et}, X.iloc[bs:be])
+    # The first 99 predictions use only available past observations.
+    # At 100 historical draws, fit ML for the next block; never fit on future data.
+    segments = []
+    if start < MIN_ML_TRAIN_DRAWS:
+        segments.append((start, min(MIN_ML_TRAIN_DRAWS, len(df))))
+    for bs in range(max(start, MIN_ML_TRAIN_DRAWS), len(df), refit_interval):
+        segments.append((bs, min(bs + refit_interval, len(df))))
+    for bs, be in segments:
+        ml_ready = bs >= MIN_ML_TRAIN_DRAWS and all(
+            np.unique(nums[5:bs, pos]).size >= 2 for pos in range(3)
+        )
+        if ml_ready:
+            lr, et = fit_logreg(X, nums, bs, random_state), fit_trees(X, nums, bs, random_state)
+            ml = predict_ml({"logreg": lr, "extra_trees": et}, X.iloc[bs:be])
+        else:
+            ml = None
         refit_issue = issue_no(df.iloc[bs - 1]["回別"])
         for j, t in enumerate(range(bs, be)):
             hist = nums[:t]
@@ -220,16 +253,44 @@ def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
             probs = {
                 "frequency": freq[None, :, :],
                 "markov": markov_probs(hist, freq)[None, :, :],
-                "logreg": ml["logreg"][j:j+1],
-                "extra_trees": ml["extra_trees"][j:j+1],
             }
-            w = adaptive_weights(losses, cfg.weight_temperature)
-            ens = ensemble_probs(probs, w)[0]
+            if ml is not None:
+                probs.update({
+                    "logreg": ml["logreg"][j:j+1],
+                    "extra_trees": ml["extra_trees"][j:j+1],
+                })
+            raw_weights = adaptive_weights(losses, cfg.weight_temperature)
+            weight_sum = sum(raw_weights[name] for name in probs)
+            weights = {name: raw_weights[name] / weight_sum for name in probs}
+            ens = ensemble_probs(probs, weights)[0]
             jp = joint_probs(ens)
             actual = num3(nums[t]); ai = int(actual); ap = float(jp[ai])
             rank = int(1 + np.sum(jp > ap))
             top = [n for n, _ in top_k_numbers(ens, top_k)]
+            # Evaluate two separate bets, never add their stakes or payouts.
+            box_choice = next((n for n in top if len(set(n)) > 1), None)
+            if box_choice is None:
+                raise RuntimeError("No eligible BOX number in the Top20")
+            ticket_hit = int(actual == top[0])
+            prize = pd.to_numeric(df.iloc[t].get("ストレート", np.nan), errors="coerce") if ticket_hit else 0.0
+            ticket_return = float(prize) if pd.notna(prize) else np.nan
+            box_hit = int(sorted(actual) == sorted(box_choice))
+            box_prize = pd.to_numeric(df.iloc[t].get("ボックス", np.nan), errors="coerce") if box_hit else 0.0
+            box_return = float(box_prize) if pd.notna(box_prize) else np.nan
             row = {
+                "model_stage": "ensemble_ml" if ml is not None else "frequency_markov_only",
+                "ticket_mode": "straight", "ticket_number": top[0],
+                "ticket_count": 1, "ticket_stake": TICKET_PRICE_YEN,
+                "ticket_hit": ticket_hit, "ticket_return": ticket_return,
+                "ticket_profit": ticket_return - TICKET_PRICE_YEN if pd.notna(ticket_return) else np.nan,
+                "straight_ticket_number": top[0],
+                "straight_ticket_count": 1, "straight_ticket_stake": TICKET_PRICE_YEN,
+                "straight_ticket_hit": ticket_hit, "straight_ticket_return": ticket_return,
+                "straight_ticket_profit": ticket_return - TICKET_PRICE_YEN if pd.notna(ticket_return) else np.nan,
+                "box_ticket_number": box_choice,
+                "box_ticket_count": 1, "box_ticket_stake": TICKET_PRICE_YEN,
+                "box_ticket_hit": box_hit, "box_ticket_return": box_return,
+                "box_ticket_profit": box_return - TICKET_PRICE_YEN if pd.notna(box_return) else np.nan,
                 "target_issue": issue_no(df.iloc[t]["回別"]),
                 "draw_date": str(pd.to_datetime(df.iloc[t]["抽せん日"]).date()),
                 "actual": actual, "refit_issue": refit_issue,
@@ -241,11 +302,13 @@ def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
             for k in KS:
                 row[f"hit{k}"] = int(actual in top[:k])
             rows.append(row)
-            for name in MODEL_NAMES:
+            for name in probs:
                 loss = digit_nll(nums[t], probs[name][0])
                 losses[name] = (1 - ewma_alpha) * losses[name] + ewma_alpha * loss
 
     result = pd.DataFrame(rows)
+    # Include all missed drawings in the expense and ROI denominator.
+    result.to_csv(outdir / "historical_tickets.csv", index=False, encoding="utf-8-sig")
     write_summary(summary_p, result, warmup_draws, refit_interval)
     rounds_dir.mkdir(parents=True, exist_ok=True)
     for p in rounds_dir.glob("rounds_*.txt"):
@@ -264,7 +327,11 @@ def run_historical_replay(csv_path: Path, outdir: Path, *, warmup_draws=500,
         "evaluated_draws": len(result), "first_evaluated_issue": int(result.target_issue.iloc[0]),
         "last_evaluated_issue": int(result.target_issue.iloc[-1]), "warmup_draws": warmup_draws,
         "refit_interval": refit_interval, "top_k": top_k, "chunks": chunks, "skipped": False,
-        "method": "past-only prequential walk-forward; periodic lightweight ML refit; causal adaptive weights",
+        "method": "past-only prequential walk-forward; frequency/Markov before 100 draws and periodic ML afterwards; causal adaptive weights",
+        "purchase_policy": "independent_one_ticket_straight_vs_box",
+        "ticket_count_per_scenario": 1, "unit_price_yen": TICKET_PRICE_YEN,
+        "box_selection": "first ranked candidate with at least two distinct digits",
+        "ticket_file": "historical_tickets.csv",
     }
     meta_p.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     return meta

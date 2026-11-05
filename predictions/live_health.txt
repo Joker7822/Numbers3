@@ -18,12 +18,10 @@ mean actual rank: 452.55/1000
 
 Virtual purchase audit
 --------------------------------------------------------------------------------------------
-scored: 51 / any-hit draws: 16
-stake=698,800円 return=430,200円 profit=-268,600円 ROI=-38.4373%
-straight: hits=1 stake=204,000円 return=77,600円 ROI=-61.9608%
-box     : hits=11 stake=185,600円 return=161,600円 ROI=-12.9310%
-set     : hits=11 stake=201,200円 return=131,900円 ROI=-34.4433%
-mini    : hits=6 stake=108,000円 return=59,100円 ROI=-45.2778%
+scored: 51 / any-hit draws: 1
+直下のStraight / BOXは独立した各1口の仮想購入シナリオ。合算しません。
+straight: hits=0 stake=10,200円 return=0円 ROI=-100.0000%
+box     : hits=1 stake=10,200円 return=12,600円 ROI=+23.5294%
 
 Forecast coverage
 --------------------------------------------------------------------------------------------

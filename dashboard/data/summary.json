@@ -1,0 +1,550 @@
+{
+  "generated_at": "2026-11-05T15:10:04+09:00",
+  "source": "Joker7822/Numbers3 repository snapshot",
+  "last_draw": {
+    "issue": 7107,
+    "date": "2026-11-04",
+    "number": "533"
+  },
+  "period": {
+    "start": "2026-10-04",
+    "end": "2026-11-04",
+    "draws": 23,
+    "definition": "last confirmed draw date minus one calendar month (inclusive)"
+  },
+  "recent_draws": [
+    {
+      "issue": 7107,
+      "date": "2026-11-04",
+      "actual": "533",
+      "walkforward_top1": "715",
+      "walkforward_hit": false,
+      "walkforward_box": "715",
+      "walkforward_box_hit": false,
+      "live_top1": "010",
+      "live_hit": false,
+      "live_box": "010",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7106,
+      "date": "2026-11-03",
+      "actual": "753",
+      "walkforward_top1": "269",
+      "walkforward_hit": false,
+      "walkforward_box": "269",
+      "walkforward_box_hit": false,
+      "live_top1": "218",
+      "live_hit": false,
+      "live_box": "218",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7105,
+      "date": "2026-11-02",
+      "actual": "110",
+      "walkforward_top1": "115",
+      "walkforward_hit": false,
+      "walkforward_box": "115",
+      "walkforward_box_hit": false,
+      "live_top1": "017",
+      "live_hit": false,
+      "live_box": "017",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7104,
+      "date": "2026-10-30",
+      "actual": "061",
+      "walkforward_top1": "805",
+      "walkforward_hit": false,
+      "walkforward_box": "805",
+      "walkforward_box_hit": false,
+      "live_top1": "615",
+      "live_hit": false,
+      "live_box": "615",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7103,
+      "date": "2026-10-29",
+      "actual": "617",
+      "walkforward_top1": "906",
+      "walkforward_hit": false,
+      "walkforward_box": "906",
+      "walkforward_box_hit": false,
+      "live_top1": null,
+      "live_hit": null,
+      "live_box": null,
+      "live_box_hit": null
+    },
+    {
+      "issue": 7102,
+      "date": "2026-10-28",
+      "actual": "952",
+      "walkforward_top1": "016",
+      "walkforward_hit": false,
+      "walkforward_box": "016",
+      "walkforward_box_hit": false,
+      "live_top1": "215",
+      "live_hit": false,
+      "live_box": "215",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7101,
+      "date": "2026-10-27",
+      "actual": "912",
+      "walkforward_top1": "889",
+      "walkforward_hit": false,
+      "walkforward_box": "889",
+      "walkforward_box_hit": false,
+      "live_top1": "815",
+      "live_hit": false,
+      "live_box": "815",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7100,
+      "date": "2026-10-26",
+      "actual": "825",
+      "walkforward_top1": "166",
+      "walkforward_hit": false,
+      "walkforward_box": "166",
+      "walkforward_box_hit": false,
+      "live_top1": "206",
+      "live_hit": false,
+      "live_box": "206",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7099,
+      "date": "2026-10-23",
+      "actual": "216",
+      "walkforward_top1": "406",
+      "walkforward_hit": false,
+      "walkforward_box": "406",
+      "walkforward_box_hit": false,
+      "live_top1": "045",
+      "live_hit": false,
+      "live_box": "045",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7098,
+      "date": "2026-10-22",
+      "actual": "645",
+      "walkforward_top1": "786",
+      "walkforward_hit": false,
+      "walkforward_box": "786",
+      "walkforward_box_hit": false,
+      "live_top1": "715",
+      "live_hit": false,
+      "live_box": "715",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7097,
+      "date": "2026-10-21",
+      "actual": "725",
+      "walkforward_top1": "438",
+      "walkforward_hit": false,
+      "walkforward_box": "438",
+      "walkforward_box_hit": false,
+      "live_top1": "256",
+      "live_hit": false,
+      "live_box": "256",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7096,
+      "date": "2026-10-20",
+      "actual": "986",
+      "walkforward_top1": "112",
+      "walkforward_hit": false,
+      "walkforward_box": "112",
+      "walkforward_box_hit": false,
+      "live_top1": "100",
+      "live_hit": false,
+      "live_box": "100",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7095,
+      "date": "2026-10-19",
+      "actual": "208",
+      "walkforward_top1": "450",
+      "walkforward_hit": false,
+      "walkforward_box": "450",
+      "walkforward_box_hit": false,
+      "live_top1": "110",
+      "live_hit": false,
+      "live_box": "110",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7094,
+      "date": "2026-10-16",
+      "actual": "011",
+      "walkforward_top1": "172",
+      "walkforward_hit": false,
+      "walkforward_box": "172",
+      "walkforward_box_hit": false,
+      "live_top1": "165",
+      "live_hit": false,
+      "live_box": "165",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7093,
+      "date": "2026-10-15",
+      "actual": "745",
+      "walkforward_top1": "262",
+      "walkforward_hit": false,
+      "walkforward_box": "262",
+      "walkforward_box_hit": false,
+      "live_top1": "159",
+      "live_hit": false,
+      "live_box": "159",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7092,
+      "date": "2026-10-14",
+      "actual": "215",
+      "walkforward_top1": "466",
+      "walkforward_hit": false,
+      "walkforward_box": "466",
+      "walkforward_box_hit": false,
+      "live_top1": "126",
+      "live_hit": false,
+      "live_box": "126",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7091,
+      "date": "2026-10-13",
+      "actual": "552",
+      "walkforward_top1": "239",
+      "walkforward_hit": false,
+      "walkforward_box": "239",
+      "walkforward_box_hit": false,
+      "live_top1": "138",
+      "live_hit": false,
+      "live_box": "138",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7090,
+      "date": "2026-10-12",
+      "actual": "910",
+      "walkforward_top1": "429",
+      "walkforward_hit": false,
+      "walkforward_box": "429",
+      "walkforward_box_hit": false,
+      "live_top1": "486",
+      "live_hit": false,
+      "live_box": "486",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7089,
+      "date": "2026-10-09",
+      "actual": "431",
+      "walkforward_top1": "296",
+      "walkforward_hit": false,
+      "walkforward_box": "296",
+      "walkforward_box_hit": false,
+      "live_top1": "186",
+      "live_hit": false,
+      "live_box": "186",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7088,
+      "date": "2026-10-08",
+      "actual": "175",
+      "walkforward_top1": "466",
+      "walkforward_hit": false,
+      "walkforward_box": "466",
+      "walkforward_box_hit": false,
+      "live_top1": "166",
+      "live_hit": false,
+      "live_box": "166",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7087,
+      "date": "2026-10-07",
+      "actual": "045",
+      "walkforward_top1": "266",
+      "walkforward_hit": false,
+      "walkforward_box": "266",
+      "walkforward_box_hit": false,
+      "live_top1": "166",
+      "live_hit": false,
+      "live_box": "166",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7086,
+      "date": "2026-10-06",
+      "actual": "105",
+      "walkforward_top1": "166",
+      "walkforward_hit": false,
+      "walkforward_box": "166",
+      "walkforward_box_hit": false,
+      "live_top1": "889",
+      "live_hit": false,
+      "live_box": "889",
+      "live_box_hit": false
+    },
+    {
+      "issue": 7085,
+      "date": "2026-10-05",
+      "actual": "869",
+      "walkforward_top1": "186",
+      "walkforward_hit": false,
+      "walkforward_box": "186",
+      "walkforward_box_hit": false,
+      "live_top1": "156",
+      "live_hit": false,
+      "live_box": "156",
+      "live_box_hit": false
+    }
+  ],
+  "digit_counts": [
+    [
+      3,
+      3,
+      3,
+      0,
+      1,
+      2,
+      2,
+      3,
+      2,
+      4
+    ],
+    [
+      2,
+      7,
+      2,
+      2,
+      3,
+      3,
+      2,
+      1,
+      1,
+      0
+    ],
+    [
+      2,
+      3,
+      3,
+      2,
+      0,
+      8,
+      2,
+      1,
+      1,
+      1
+    ]
+  ],
+  "walkforward_from_second": {
+    "available": true,
+    "first_issue": 2,
+    "last_issue": 7107,
+    "draws": 7106,
+    "straight": {
+      "available": true,
+      "draws": 7106,
+      "hits": 10,
+      "hit_rate": 0.0014072614691809737,
+      "tickets_per_draw": 1,
+      "price_yen": 200,
+      "stake": 1421200.0,
+      "return": null,
+      "profit": null,
+      "roi": null,
+      "missing_payouts": 10
+    },
+    "box": {
+      "available": true,
+      "draws": 7106,
+      "hits": 45,
+      "hit_rate": 0.0063326766113143826,
+      "tickets_per_draw": 1,
+      "price_yen": 200,
+      "stake": 1421200.0,
+      "return": null,
+      "profit": null,
+      "roi": null,
+      "missing_payouts": 45
+    },
+    "exact_nll": 6.945682321154228,
+    "random_straight_baseline": 0.001,
+    "method": "past-only prequential walk-forward; frequency/Markov before 100 draws and periodic ML afterwards; causal adaptive weights",
+    "generated_at": "2026-11-05T15:10:02+09:00"
+  },
+  "previous_walkforward": {
+    "first_issue": 501,
+    "draws": 6607
+  },
+  "live": {
+    "available": true,
+    "draws": 51,
+    "straight": {
+      "available": true,
+      "draws": 51,
+      "hits": 0,
+      "hit_rate": 0.0,
+      "tickets_per_draw": 1,
+      "price_yen": 200,
+      "stake": 10200.0,
+      "return": 0.0,
+      "profit": -10200.0,
+      "roi": -1.0,
+      "missing_payouts": 0
+    },
+    "box": {
+      "available": true,
+      "draws": 51,
+      "hits": 1,
+      "hit_rate": 0.0196078431372549,
+      "tickets_per_draw": 1,
+      "price_yen": 200,
+      "stake": 10200.0,
+      "return": 12600.0,
+      "profit": 2400.0,
+      "roi": 0.23529411764705882,
+      "missing_payouts": 0
+    },
+    "missing_issues": [
+      7059,
+      7103
+    ]
+  },
+  "forecast": {
+    "target_issue": 7108,
+    "generated_at": "2026-11-05T09:51:57+09:00",
+    "top_predictions": [
+      {
+        "rank": 1,
+        "number": "213",
+        "probability": 0.001406298039104048
+      },
+      {
+        "rank": 2,
+        "number": "212",
+        "probability": 0.0013889078840966579
+      },
+      {
+        "rank": 3,
+        "number": "215",
+        "probability": 0.0013753194173374565
+      },
+      {
+        "rank": 4,
+        "number": "113",
+        "probability": 0.0013684513433061618
+      },
+      {
+        "rank": 5,
+        "number": "112",
+        "probability": 0.0013517873952175177
+      },
+      {
+        "rank": 6,
+        "number": "218",
+        "probability": 0.001343536087377897
+      },
+      {
+        "rank": 7,
+        "number": "115",
+        "probability": 0.0013387663781775096
+      },
+      {
+        "rank": 8,
+        "number": "913",
+        "probability": 0.001324948615412881
+      },
+      {
+        "rank": 9,
+        "number": "713",
+        "probability": 0.0013245532596086393
+      },
+      {
+        "rank": 10,
+        "number": "912",
+        "probability": 0.0013091194028622905
+      },
+      {
+        "rank": 11,
+        "number": "712",
+        "probability": 0.0013087316331924352
+      },
+      {
+        "rank": 12,
+        "number": "118",
+        "probability": 0.0013083103091944964
+      },
+      {
+        "rank": 13,
+        "number": "211",
+        "probability": 0.001308248408909242
+      },
+      {
+        "rank": 14,
+        "number": "613",
+        "probability": 0.0013057632620297821
+      },
+      {
+        "rank": 15,
+        "number": "915",
+        "probability": 0.0012967506385541728
+      },
+      {
+        "rank": 16,
+        "number": "715",
+        "probability": 0.0012963687966023219
+      },
+      {
+        "rank": 17,
+        "number": "216",
+        "probability": 0.0012936184210821573
+      },
+      {
+        "rank": 18,
+        "number": "612",
+        "probability": 0.0012903021803310837
+      },
+      {
+        "rank": 19,
+        "number": "615",
+        "probability": 0.0012782210692291536
+      },
+      {
+        "rank": 20,
+        "number": "219",
+        "probability": 0.0012778229536037772
+      }
+    ],
+    "edge_status": "not_confirmed",
+    "model_weights": {
+      "frequency": 0.30612232998722533,
+      "markov": 0.29130558190237366,
+      "logreg": 0.059523964581276054,
+      "extra_trees": 0.3430481235291249
+    }
+  },
+  "purchase_policy": {
+    "description": "Independent one-ticket simulations per draw: Straight vs BOX",
+    "unit_price_yen": 200,
+    "tickets_per_mode": 1,
+    "straight_selection": "rank 1",
+    "box_selection": "highest-ranked ticket with at least two distinct digits",
+    "never_combine_stakes_or_returns": true
+  },
+  "disclaimer": "Historical replay is retrospective, unlike prospective live audit. Both purchase modes are independent hypothetical scenarios. Winnings are not guaranteed."
+}
