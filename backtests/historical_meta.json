@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-06T03:37:53+09:00",
-  "dataset_fingerprint": "78415879360b1f918016",
-  "latest_issue": 7108,
-  "evaluated_draws": 6608,
+  "generated_at": "2026-11-09T01:59:23+09:00",
+  "dataset_fingerprint": "8c3671c3f294b3e53d5b",
+  "latest_issue": 7109,
+  "evaluated_draws": 6609,
   "first_evaluated_issue": 501,
-  "last_evaluated_issue": 7108,
+  "last_evaluated_issue": 7109,
   "warmup_draws": 500,
   "refit_interval": 1000,
   "top_k": 20,
@@ -47,9 +47,9 @@
     },
     {
       "first_issue": 6501,
-      "last_issue": 7108,
-      "rows": 608,
-      "text": "historical_rounds/rounds_6501_7108.txt"
+      "last_issue": 7109,
+      "rows": 609,
+      "text": "historical_rounds/rounds_6501_7109.txt"
     }
   ],
   "skipped": false,

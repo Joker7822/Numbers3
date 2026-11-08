@@ -1,18 +1,18 @@
 NUMBERS3 最新モデル 全過去回再予測・照合結果
 ================================================================================================================
 report_version=replay-text-v2
-generated_at=2026-11-06T03:37:13+09:00
+generated_at=2026-11-09T01:58:51+09:00
 primary_champion=champ-93e379335cc8 generation=3
 champion_pool=pool-90c3165cf721 members=1
-latest_issue=7108 evaluated_draws=6608 audit_draws=1000
-displayed_rows=1128 omitted_all_miss_rows=5480
+latest_issue=7109 evaluated_draws=6609 audit_draws=1000
+displayed_rows=1129 omitted_all_miss_rows=5480
 display_policy=ストレートTop20・BOX20・MINI20のすべてが外れた回は各回一覧に掲載しない
 method=causal_walk_forward (第N回の予測には第N-1回以前のデータだけを使用)
 note=これは最新モデルを過去へ再適用した再予測結果であり、当時保存されたlive予測そのものではありません。
 
-SELECTION: n=5608 exact_nll=6.91308035 mean_rank=497.06 top1=0.1070% top20=2.1576% box20=9.5043% mini20=10.3067%
-AUDIT_REPORT_ONLY: n=1000 exact_nll=6.91156378 mean_rank=495.19 top1=0.0000% top20=2.6000% box20=10.0000% mini20=11.8000%
-FULL: n=6608 exact_nll=6.91285084 mean_rank=496.77 top1=0.0908% top20=2.2246% box20=9.5793% mini20=10.5327%
+SELECTION: n=5609 exact_nll=6.91306250 mean_rank=497.00 top1=0.1070% top20=2.1572% box20=9.5026% mini20=10.3049%
+AUDIT_REPORT_ONLY: n=1000 exact_nll=6.91177252 mean_rank=495.85 top1=0.0000% top20=2.6000% box20=10.1000% mini20=11.8000%
+FULL: n=6609 exact_nll=6.91286732 mean_rank=496.83 top1=0.0908% top20=2.2242% box20=9.5930% mini20=10.5311%
 
 Pool members
 ----------------------------------------------------------------------------------------------------------------
@@ -1150,17 +1150,18 @@ straight: TOP1/TOP3/TOP5/TOP10/TOP20/OUT; box20,mini20: 1=Top20内で該当 0=�
 0007085 2026-10-05 AUDIT pred=156 actual=869 rank=0077 straight=OUT   box20=1 mini20=1 nll=6.75015896 refit=0007000
 0007101 2026-10-27 AUDIT pred=689 actual=912 rank=0763 straight=OUT   box20=1 mini20=0 nll=6.99170413 refit=0007000
 0007104 2026-10-30 AUDIT pred=616 actual=061 rank=0906 straight=OUT   box20=1 mini20=0 nll=7.04531953 refit=0007000
+0007109 2026-11-06 AUDIT pred=679 actual=947 rank=0849 straight=OUT   box20=1 mini20=0 nll=7.02172054 refit=0007000
 
 照合件数（集計は全評価回を母数に計算）
 ----------------------------------------------------------------------------------------------------------------
-Displayed_hit_rows=1128
+Displayed_hit_rows=1129
 Omitted_all_miss_rows=5480
 Top1_hits=6
 Top3_hits=15
 Top5_hits=28
 Top10_hits=64
 Top20_hits=147
-BOX20_hits=633
+BOX20_hits=634
 MINI20_hits=696
 
 重要: 全口外れは表示だけ省略します。NLL・的中率などの集計からは除外しません。
