@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T06:21:32+09:00",
+  "generated_at": "2026-11-10T11:42:40+09:00",
   "dataset_fingerprint": "f8f5bb49a47b9b52e8a0",
   "champion_id": "champ-93e379335cc8",
   "generation": 3,
@@ -26,7 +26,7 @@
   "audit_report_only": {
     "n": 1000,
     "exact_nll": 6.9116582880231725,
-    "digit_nll": 2.3039866506525697,
+    "digit_nll": 2.3039866506525692,
     "mean_rank": 495.444,
     "top1_rate": 0.0,
     "top3_rate": 0.003,
@@ -38,7 +38,7 @@
   },
   "full": {
     "n": 6610,
-    "exact_nll": 6.912858879716266,
+    "exact_nll": 6.912858879716267,
     "digit_nll": 2.3043435261128105,
     "mean_rank": 496.79425113464447,
     "top1_rate": 0.000907715582450832,
@@ -52,7 +52,7 @@
   "best_selection_exact_nll": 6.913041093875423,
   "improvement_vs_previous_best": -3.179505529793403e-05,
   "improved_best": false,
-  "stagnation_count": 10,
+  "stagnation_count": 11,
   "replay_version": "v4-champion-pool-text-v1",
   "skipped": false,
   "text_report": {
