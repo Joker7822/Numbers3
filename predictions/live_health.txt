@@ -6,26 +6,26 @@ STATUS: DEGRADED_HISTORY
 次回予測 continuity
 --------------------------------------------------------------------------------------------
 guard: ok
-latest issue: 7110 / expected target: 7111
-generated: 2026-11-10T06:19:28+09:00
+latest issue: 7111 / expected target: 7112
+generated: 2026-11-11T03:30:55+09:00
 Champion: champ-93e379335cc8 / generation=3 / config=pool-90c3165cf721
 
 Prospective live evidence
 --------------------------------------------------------------------------------------------
-scored draws: 54 / evidence=INSUFFICIENT_LIVE_SAMPLE
-Exact NLL: 6.89896948 / uniform=6.90775528 / improvement=+0.00878580
-mean actual rank: 461.11/1000
+scored draws: 55 / evidence=INSUFFICIENT_LIVE_SAMPLE
+Exact NLL: 6.89847059 / uniform=6.90775528 / improvement=+0.00928469
+mean actual rank: 459.20/1000
 
 Virtual purchase audit
 --------------------------------------------------------------------------------------------
-scored: 54 / any-hit draws: 1
+scored: 55 / any-hit draws: 1
 直下のStraight / BOXは独立した各1口の仮想購入シナリオ。合算しません。
-straight: hits=0 stake=10,800円 return=0円 ROI=-100.0000%
-box     : hits=1 stake=10,800円 return=12,600円 ROI=+16.6667%
+straight: hits=0 stake=11,000円 return=0円 ROI=-100.0000%
+box     : hits=1 stake=11,000円 return=12,600円 ROI=+14.5455%
 
 Forecast coverage
 --------------------------------------------------------------------------------------------
-coverage: 54/56 (96.43%)
+coverage: 55/57 (96.49%)
 historical missing issues: 7059,7103
 過去欠番はreplayで埋めません。抽せん前に永続保存された予測だけをprospective成績として扱います。
 

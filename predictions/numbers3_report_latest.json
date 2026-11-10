@@ -1,47 +1,47 @@
 {
-  "generated_at": "2026-11-10T11:40:32+09:00",
+  "generated_at": "2026-11-11T03:30:55+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
   "config_id": "pool-90c3165cf721",
   "primary_config_id": "20fc1e094187",
-  "dataset_fingerprint": "2da471c5d404d358",
+  "dataset_fingerprint": "7c6a89ae0aec416d",
   "dataset": {
-    "rows": 7110,
+    "rows": 7111,
     "first_draw_date": "1994-10-07",
-    "last_draw_date": "2026-11-09",
-    "last_issue": "第7110回",
-    "last_number": "205",
-    "model_next_weekday_candidate": "2026-11-10"
+    "last_draw_date": "2026-11-10",
+    "last_issue": "第7111回",
+    "last_number": "641",
+    "model_next_weekday_candidate": "2026-11-11"
   },
   "validation": {
     "draws": 700,
     "calibration_draws": 300,
-    "period_start": "2024-02-23",
-    "period_end": "2026-11-09",
+    "period_start": "2024-02-26",
+    "period_end": "2026-11-10",
     "model_logloss": {
-      "frequency": 2.315991819456499,
-      "markov": 2.3177312797394913,
-      "logreg": 2.452630457722467,
-      "extra_trees": 2.3067106417584817
+      "frequency": 2.3164165993804384,
+      "markov": 2.3173397039304002,
+      "logreg": 2.4513959174603106,
+      "extra_trees": 2.3057856354201847
     },
-    "ensemble_logloss": 2.304052089129798,
+    "ensemble_logloss": 2.3041377596865713,
     "uniform_logloss": 2.302585092994046,
-    "logloss_improvement_vs_uniform": -0.0014669961357522965,
-    "exact_nll": 6.911681884770647,
+    "logloss_improvement_vs_uniform": -0.0015526666925254062,
+    "exact_nll": 6.91186525052792,
     "uniform_exact_nll": 6.907755278982137,
-    "exact_nll_improvement_vs_uniform": -0.003926605788509896,
+    "exact_nll_improvement_vs_uniform": -0.0041099715457830754,
     "top1_straight_hit_rate": 0.002857142857142857,
-    "top20_straight_hit_rate": 0.02857142857142857,
+    "top20_straight_hit_rate": 0.032857142857142856,
     "uniform_expected_top1_rate": 0.001,
     "uniform_expected_top20_rate": 0.02,
     "edge_status": "not_confirmed"
   },
   "model_weights": {
-    "frequency": 0.30462405898432404,
-    "markov": 0.2980720301789995,
-    "logreg": 0.05520731400082431,
-    "extra_trees": 0.3420965968358522
+    "frequency": 0.30159746593173814,
+    "markov": 0.2981373919717118,
+    "logreg": 0.05580434635480308,
+    "extra_trees": 0.3444607957417468
   },
   "v4_config": {
     "validation_draws": 1000,
@@ -77,108 +77,108 @@
   "top_predictions": [
     {
       "rank": 1,
-      "number": "915",
-      "probability": 0.0016822186453187926
+      "number": "615",
+      "probability": 0.0015966719406388195
     },
     {
       "rank": 2,
-      "number": "215",
-      "probability": 0.001657324993003083
+      "number": "915",
+      "probability": 0.0015206324724800781
     },
     {
       "rank": 3,
-      "number": "615",
-      "probability": 0.0016033186779961421
+      "number": "015",
+      "probability": 0.0015101957989504453
     },
     {
       "rank": 4,
-      "number": "965",
-      "probability": 0.001540104352583038
+      "number": "611",
+      "probability": 0.0015017515727478678
     },
     {
       "rank": 5,
-      "number": "265",
-      "probability": 0.001518203161777274
+      "number": "215",
+      "probability": 0.0014916937257922849
     },
     {
       "rank": 6,
-      "number": "415",
-      "probability": 0.001512867399762755
+      "number": "675",
+      "probability": 0.001477670386357302
     },
     {
       "rank": 7,
-      "number": "665",
-      "probability": 0.001470688936275829
+      "number": "610",
+      "probability": 0.0014737831635666854
     },
     {
       "rank": 8,
-      "number": "115",
-      "probability": 0.0014669406790742403
+      "number": "619",
+      "probability": 0.0014530641643911183
     },
     {
       "rank": 9,
-      "number": "905",
-      "probability": 0.0014455201011849322
+      "number": "645",
+      "probability": 0.001444121275072801
     },
     {
       "rank": 10,
-      "number": "945",
-      "probability": 0.0014347774494800811
+      "number": "613",
+      "probability": 0.0014434958366424029
     },
     {
       "rank": 11,
-      "number": "205",
-      "probability": 0.0014256105449030943
+      "number": "911",
+      "probability": 0.0014322935570950197
     },
     {
       "rank": 12,
-      "number": "985",
-      "probability": 0.0014155843506750546
+      "number": "011",
+      "probability": 0.001422760210124844
     },
     {
       "rank": 13,
-      "number": "245",
-      "probability": 0.0014150940982556141
+      "number": "616",
+      "probability": 0.0014108855314265618
     },
     {
       "rank": 14,
-      "number": "515",
-      "probability": 0.0014082946547811443
+      "number": "975",
+      "probability": 0.0014098820775127665
     },
     {
       "rank": 15,
-      "number": "285",
-      "probability": 0.0013963051432444667
+      "number": "910",
+      "probability": 0.001406264381407989
     },
     {
       "rank": 16,
-      "number": "465",
-      "probability": 0.0013911107900845413
+      "number": "211",
+      "probability": 0.0014058595489531112
     },
     {
       "rank": 17,
-      "number": "015",
-      "probability": 0.0013892316618339718
+      "number": "075",
+      "probability": 0.0014005779034349129
     },
     {
       "rank": 18,
-      "number": "605",
-      "probability": 0.0013824171334032968
+      "number": "010",
+      "probability": 0.0013969972007770353
     },
     {
       "rank": 19,
-      "number": "645",
-      "probability": 0.00137239143441428
+      "number": "671",
+      "probability": 0.001393049973168772
     },
     {
       "rank": 20,
-      "number": "925",
-      "probability": 0.001365944302633793
+      "number": "618",
+      "probability": 0.001388839143426009
     }
   ],
   "experimental_box_recommendation": {
-    "number": "156",
-    "model_permutation_mass": 0.006814461762860206,
+    "number": "016",
+    "model_permutation_mass": 0.00711322540647159,
     "method": "maximum joint probability summed over 6 permutations",
     "digits_distinct": true,
     "status": "shadow_not_production"
