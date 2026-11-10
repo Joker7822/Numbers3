@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T06:19:28+09:00",
+  "generated_at": "2026-11-10T11:40:32+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
@@ -108,7 +108,7 @@
     {
       "rank": 7,
       "number": "665",
-      "probability": 0.0014706889362758294
+      "probability": 0.001470688936275829
     },
     {
       "rank": 8,
@@ -168,7 +168,7 @@
     {
       "rank": 19,
       "number": "645",
-      "probability": 0.0013723914344142803
+      "probability": 0.00137239143441428
     },
     {
       "rank": 20,
