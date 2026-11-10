@@ -1,18 +1,31 @@
 {
-  "generated_at": "2026-11-10T08:07:53+09:00",
+  "generated_at": "2026-11-11T05:34:29+09:00",
   "source": "Joker7822/Numbers3 repository snapshot",
   "last_draw": {
-    "issue": 7110,
-    "date": "2026-11-09",
-    "number": "205"
+    "issue": 7111,
+    "date": "2026-11-10",
+    "number": "641"
   },
   "period": {
-    "start": "2026-10-09",
-    "end": "2026-11-09",
+    "start": "2026-10-10",
+    "end": "2026-11-10",
     "draws": 22,
     "definition": "last confirmed draw date minus one calendar month (inclusive)"
   },
   "recent_draws": [
+    {
+      "issue": 7111,
+      "date": "2026-11-10",
+      "actual": "641",
+      "walkforward_top1": "115",
+      "walkforward_hit": false,
+      "walkforward_box": "115",
+      "walkforward_box_hit": false,
+      "live_top1": "915",
+      "live_hit": false,
+      "live_box": "915",
+      "live_box_hit": false
+    },
     {
       "issue": 7110,
       "date": "2026-11-09",
@@ -285,19 +298,6 @@
       "live_hit": false,
       "live_box": "486",
       "live_box_hit": false
-    },
-    {
-      "issue": 7089,
-      "date": "2026-10-09",
-      "actual": "431",
-      "walkforward_top1": "296",
-      "walkforward_hit": false,
-      "walkforward_box": "296",
-      "walkforward_box_hit": false,
-      "live_top1": "186",
-      "live_hit": false,
-      "live_box": "186",
-      "live_box_hit": false
     }
   ],
   "digit_counts": [
@@ -306,9 +306,9 @@
       1,
       4,
       0,
-      1,
+      0,
       2,
-      3,
+      4,
       3,
       1,
       5
@@ -317,8 +317,8 @@
       2,
       7,
       2,
-      2,
-      3,
+      1,
+      4,
       3,
       1,
       0,
@@ -341,38 +341,38 @@
   "walkforward_from_second": {
     "available": true,
     "first_issue": 2,
-    "last_issue": 7110,
-    "draws": 7109,
+    "last_issue": 7111,
+    "draws": 7110,
     "straight": {
       "available": true,
-      "draws": 7109,
+      "draws": 7110,
       "hits": 10,
-      "hit_rate": 0.0014066676044450696,
+      "hit_rate": 0.0014064697609001407,
       "tickets_per_draw": 1,
       "price_yen": 200,
-      "stake": 1421800.0,
+      "stake": 1422000.0,
       "return": 848000.0,
-      "profit": -573800.0,
-      "roi": -0.40357293571529046,
+      "profit": -574000.0,
+      "roi": -0.40365682137834036,
       "missing_payouts": 0
     },
     "box": {
       "available": true,
-      "draws": 7109,
+      "draws": 7110,
       "hits": 45,
-      "hit_rate": 0.006330004220002813,
+      "hit_rate": 0.006329113924050633,
       "tickets_per_draw": 1,
       "price_yen": 200,
-      "stake": 1421800.0,
+      "stake": 1422000.0,
       "return": 740700.0,
-      "profit": -681100.0,
-      "roi": -0.47904065269376844,
+      "profit": -681300.0,
+      "roi": -0.4791139240506329,
       "missing_payouts": 0
     },
-    "exact_nll": 6.945693388748743,
+    "exact_nll": 6.945723341012423,
     "random_straight_baseline": 0.001,
     "method": "past-only prequential walk-forward; frequency/Markov before 100 draws and periodic ML afterwards; causal adaptive weights",
-    "generated_at": "2026-11-10T08:07:49+09:00",
+    "generated_at": "2026-11-11T05:34:26+09:00",
     "payout_reconciliation": {
       "source_type": "third_party_public_result_archive",
       "officially_crosschecked_all_records": false,
@@ -387,35 +387,35 @@
   },
   "previous_walkforward": {
     "first_issue": 501,
-    "draws": 6610
+    "draws": 6611
   },
   "live": {
     "available": true,
-    "draws": 54,
+    "draws": 55,
     "straight": {
       "available": true,
-      "draws": 54,
+      "draws": 55,
       "hits": 0,
       "hit_rate": 0.0,
       "tickets_per_draw": 1,
       "price_yen": 200,
-      "stake": 10800.0,
+      "stake": 11000.0,
       "return": 0.0,
-      "profit": -10800.0,
+      "profit": -11000.0,
       "roi": -1.0,
       "missing_payouts": 0
     },
     "box": {
       "available": true,
-      "draws": 54,
+      "draws": 55,
       "hits": 1,
-      "hit_rate": 0.018518518518518517,
+      "hit_rate": 0.01818181818181818,
       "tickets_per_draw": 1,
       "price_yen": 200,
-      "stake": 10800.0,
+      "stake": 11000.0,
       "return": 12600.0,
-      "profit": 1800.0,
-      "roi": 0.16666666666666666,
+      "profit": 1600.0,
+      "roi": 0.14545454545454545,
       "missing_payouts": 0
     },
     "missing_issues": [
@@ -426,13 +426,13 @@
   "box_shadows": {
     "historical": {
       "available": true,
-      "draws": 7109,
+      "draws": 7110,
       "retrospective_policy_design": true,
       "production_policy_unchanged": true,
       "modes": {
         "baseline": {
           "hits": 45,
-          "hit_rate": 0.006330004220002813,
+          "hit_rate": 0.006329113924050633,
           "delta_hits_vs_baseline": 0,
           "baseline_only": 0,
           "challenger_only": 0,
@@ -440,7 +440,7 @@
         },
         "mass": {
           "hits": 48,
-          "hit_rate": 0.006752004501336334,
+          "hit_rate": 0.006751054852320675,
           "delta_hits_vs_baseline": 3,
           "baseline_only": 39,
           "challenger_only": 42,
@@ -448,7 +448,7 @@
         },
         "unique": {
           "hits": 48,
-          "hit_rate": 0.006752004501336334,
+          "hit_rate": 0.006751054852320675,
           "delta_hits_vs_baseline": 3,
           "baseline_only": 39,
           "challenger_only": 42,
@@ -456,7 +456,7 @@
         }
       },
       "recent_5000_plus": {
-        "draws": 2111,
+        "draws": 2112,
         "baseline_hits": 15,
         "mass_hits": 11,
         "unique_hits": 11
@@ -464,13 +464,13 @@
     },
     "archived_pre_draw": {
       "available": true,
-      "draws": 54,
+      "draws": 55,
       "retrospective_policy_design": true,
       "production_policy_unchanged": true,
       "modes": {
         "baseline": {
           "hits": 1,
-          "hit_rate": 0.018518518518518517,
+          "hit_rate": 0.01818181818181818,
           "delta_hits_vs_baseline": 0,
           "baseline_only": 0,
           "challenger_only": 0,
@@ -478,7 +478,7 @@
         },
         "mass": {
           "hits": 1,
-          "hit_rate": 0.018518518518518517,
+          "hit_rate": 0.01818181818181818,
           "delta_hits_vs_baseline": 0,
           "baseline_only": 0,
           "challenger_only": 0,
@@ -486,7 +486,7 @@
         },
         "unique": {
           "hits": 1,
-          "hit_rate": 0.018518518518518517,
+          "hit_rate": 0.01818181818181818,
           "delta_hits_vs_baseline": 0,
           "baseline_only": 0,
           "challenger_only": 0,
@@ -494,7 +494,7 @@
         }
       },
       "recent_5000_plus": {
-        "draws": 54,
+        "draws": 55,
         "baseline_hits": 1,
         "mass_hits": 1,
         "unique_hits": 1
@@ -504,120 +504,120 @@
     "existing_purchase_policy_unchanged": true
   },
   "forecast": {
-    "target_issue": 7111,
-    "generated_at": "2026-11-10T06:19:28+09:00",
+    "target_issue": 7112,
+    "generated_at": "2026-11-11T03:30:55+09:00",
     "top_predictions": [
       {
         "rank": 1,
-        "number": "915",
-        "probability": 0.0016822186453187926
+        "number": "615",
+        "probability": 0.0015966719406388195
       },
       {
         "rank": 2,
-        "number": "215",
-        "probability": 0.001657324993003083
+        "number": "915",
+        "probability": 0.0015206324724800781
       },
       {
         "rank": 3,
-        "number": "615",
-        "probability": 0.0016033186779961421
+        "number": "015",
+        "probability": 0.0015101957989504453
       },
       {
         "rank": 4,
-        "number": "965",
-        "probability": 0.001540104352583038
+        "number": "611",
+        "probability": 0.0015017515727478678
       },
       {
         "rank": 5,
-        "number": "265",
-        "probability": 0.001518203161777274
+        "number": "215",
+        "probability": 0.0014916937257922849
       },
       {
         "rank": 6,
-        "number": "415",
-        "probability": 0.001512867399762755
+        "number": "675",
+        "probability": 0.001477670386357302
       },
       {
         "rank": 7,
-        "number": "665",
-        "probability": 0.0014706889362758294
+        "number": "610",
+        "probability": 0.0014737831635666854
       },
       {
         "rank": 8,
-        "number": "115",
-        "probability": 0.0014669406790742403
+        "number": "619",
+        "probability": 0.0014530641643911183
       },
       {
         "rank": 9,
-        "number": "905",
-        "probability": 0.0014455201011849322
+        "number": "645",
+        "probability": 0.001444121275072801
       },
       {
         "rank": 10,
-        "number": "945",
-        "probability": 0.0014347774494800811
+        "number": "613",
+        "probability": 0.0014434958366424029
       },
       {
         "rank": 11,
-        "number": "205",
-        "probability": 0.0014256105449030943
+        "number": "911",
+        "probability": 0.0014322935570950197
       },
       {
         "rank": 12,
-        "number": "985",
-        "probability": 0.0014155843506750546
+        "number": "011",
+        "probability": 0.001422760210124844
       },
       {
         "rank": 13,
-        "number": "245",
-        "probability": 0.0014150940982556141
+        "number": "616",
+        "probability": 0.0014108855314265618
       },
       {
         "rank": 14,
-        "number": "515",
-        "probability": 0.0014082946547811443
+        "number": "975",
+        "probability": 0.0014098820775127665
       },
       {
         "rank": 15,
-        "number": "285",
-        "probability": 0.0013963051432444667
+        "number": "910",
+        "probability": 0.001406264381407989
       },
       {
         "rank": 16,
-        "number": "465",
-        "probability": 0.0013911107900845413
+        "number": "211",
+        "probability": 0.0014058595489531112
       },
       {
         "rank": 17,
-        "number": "015",
-        "probability": 0.0013892316618339718
+        "number": "075",
+        "probability": 0.0014005779034349129
       },
       {
         "rank": 18,
-        "number": "605",
-        "probability": 0.0013824171334032968
+        "number": "010",
+        "probability": 0.0013969972007770353
       },
       {
         "rank": 19,
-        "number": "645",
-        "probability": 0.0013723914344142803
+        "number": "671",
+        "probability": 0.001393049973168772
       },
       {
         "rank": 20,
-        "number": "925",
-        "probability": 0.001365944302633793
+        "number": "618",
+        "probability": 0.001388839143426009
       }
     ],
     "edge_status": "not_confirmed",
     "model_weights": {
-      "frequency": 0.30462405898432404,
-      "markov": 0.2980720301789995,
-      "logreg": 0.05520731400082431,
-      "extra_trees": 0.3420965968358522
+      "frequency": 0.30159746593173814,
+      "markov": 0.2981373919717118,
+      "logreg": 0.05580434635480308,
+      "extra_trees": 0.3444607957417468
     },
     "experimental_box_recommendation": {
-      "number": "156",
-      "model_permutation_mass": 0.006814461762860206,
+      "number": "016",
+      "model_permutation_mass": 0.00711322540647159,
       "method": "maximum joint probability summed over 6 permutations",
       "digits_distinct": true,
       "status": "shadow_not_production"
