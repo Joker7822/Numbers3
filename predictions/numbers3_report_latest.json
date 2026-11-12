@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-12T03:26:37+09:00",
+  "generated_at": "2026-11-12T10:54:17+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
@@ -22,15 +22,15 @@
     "model_logloss": {
       "frequency": 2.316309135728179,
       "markov": 2.3169746655613124,
-      "logreg": 2.4510761855892125,
-      "extra_trees": 2.304685627437656
+      "logreg": 2.451076185588489,
+      "extra_trees": 2.3047190330183747
     },
-    "ensemble_logloss": 2.304372001525416,
+    "ensemble_logloss": 2.304371656557783,
     "uniform_logloss": 2.302585092994046,
-    "logloss_improvement_vs_uniform": -0.0017869085313702016,
-    "exact_nll": 6.912620766039613,
+    "logloss_improvement_vs_uniform": -0.0017865635637370758,
+    "exact_nll": 6.912623855485958,
     "uniform_exact_nll": 6.907755278982137,
-    "exact_nll_improvement_vs_uniform": -0.004865487057475804,
+    "exact_nll_improvement_vs_uniform": -0.004868576503820776,
     "top1_straight_hit_rate": 0.002857142857142857,
     "top20_straight_hit_rate": 0.032857142857142856,
     "uniform_expected_top1_rate": 0.001,
@@ -38,10 +38,10 @@
     "edge_status": "not_confirmed"
   },
   "model_weights": {
-    "frequency": 0.29997460357025524,
-    "markov": 0.2974894295389105,
-    "logreg": 0.05565153681391652,
-    "extra_trees": 0.3468844300769178
+    "frequency": 0.30001805164728296,
+    "markov": 0.29753251766535754,
+    "logreg": 0.05565959733764221,
+    "extra_trees": 0.34678983334971736
   },
   "v4_config": {
     "validation_draws": 1000,
@@ -78,107 +78,107 @@
     {
       "rank": 1,
       "number": "648",
-      "probability": 0.0018218592205458092
+      "probability": 0.0018218362058453703
     },
     {
       "rank": 2,
       "number": "608",
-      "probability": 0.0017789534280012761
+      "probability": 0.0017789566107627856
     },
     {
       "rank": 3,
       "number": "618",
-      "probability": 0.0017003943924617155
+      "probability": 0.0017003919040983245
     },
     {
       "rank": 4,
       "number": "658",
-      "probability": 0.0016610698660271773
+      "probability": 0.0016610612733113247
     },
     {
       "rank": 5,
       "number": "640",
-      "probability": 0.0016236702856628196
+      "probability": 0.0016236451680826552
     },
     {
       "rank": 6,
       "number": "600",
-      "probability": 0.0015871974424010403
+      "probability": 0.0015871947745990896
     },
     {
       "rank": 7,
       "number": "688",
-      "probability": 0.00157797466278737
+      "probability": 0.0015779809110155743
     },
     {
       "rank": 8,
       "number": "649",
-      "probability": 0.0015689247192946123
+      "probability": 0.0015689054331055332
     },
     {
       "rank": 9,
       "number": "668",
-      "probability": 0.001541232608048075
+      "probability": 0.0015412095713577486
     },
     {
       "rank": 10,
       "number": "609",
-      "probability": 0.0015342288443187277
+      "probability": 0.0015342307646780428
     },
     {
       "rank": 11,
       "number": "610",
-      "probability": 0.00152041691650685
+      "probability": 0.0015204097579419804
     },
     {
       "rank": 12,
       "number": "646",
-      "probability": 0.0014986666529731743
+      "probability": 0.001498638825633113
     },
     {
       "rank": 13,
       "number": "650",
-      "probability": 0.001486988393132018
+      "probability": 0.0014869762106945804
     },
     {
       "rank": 14,
       "number": "645",
-      "probability": 0.001485655342340932
+      "probability": 0.001485629753538519
     },
     {
       "rank": 15,
       "number": "638",
-      "probability": 0.001480977232918955
+      "probability": 0.0014809816365356136
     },
     {
       "rank": 16,
       "number": "619",
-      "probability": 0.0014707018864498658
+      "probability": 0.0014706992609768883
     },
     {
       "rank": 17,
       "number": "948",
-      "probability": 0.0014701176458437972
+      "probability": 0.0014701112054753855
     },
     {
       "rank": 18,
       "number": "606",
-      "probability": 0.0014662512614037775
+      "probability": 0.0014662435649438282
     },
     {
       "rank": 19,
       "number": "605",
-      "probability": 0.0014536622806127484
+      "probability": 0.0014536564995557759
     },
     {
       "rank": 20,
       "number": "659",
-      "probability": 0.0014389020111476563
+      "probability": 0.001438894469468091
     }
   ],
   "experimental_box_recommendation": {
     "number": "068",
-    "model_permutation_mass": 0.007632524857788852,
+    "model_permutation_mass": 0.007632542569675559,
     "method": "maximum joint probability summed over 6 permutations",
     "digits_distinct": true,
     "status": "shadow_not_production"
