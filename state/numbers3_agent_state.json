@@ -53,32 +53,32 @@
     {
       "rank": 4,
       "number": "669",
-      "probability": 0.0016888662291519416
+      "probability": 0.0016888662291519418
     },
     {
       "rank": 5,
       "number": "689",
-      "probability": 0.0016775779775667309
+      "probability": 0.001677577977566731
     },
     {
       "rank": 6,
       "number": "615",
-      "probability": 0.0016296045542468576
+      "probability": 0.0016296045542468572
     },
     {
       "rank": 7,
       "number": "613",
-      "probability": 0.001609203587308952
+      "probability": 0.0016092035873089517
     },
     {
       "rank": 8,
       "number": "629",
-      "probability": 0.0016076132981828932
+      "probability": 0.0016076132981828934
     },
     {
       "rank": 9,
       "number": "605",
-      "probability": 0.0015952848628683586
+      "probability": 0.0015952848628683583
     },
     {
       "rank": 10,
@@ -88,22 +88,22 @@
     {
       "rank": 11,
       "number": "603",
-      "probability": 0.0015755037189353264
+      "probability": 0.001575503718935326
     },
     {
       "rank": 12,
       "number": "602",
-      "probability": 0.0015584342724852393
+      "probability": 0.001558434272485239
     },
     {
       "rank": 13,
       "number": "635",
-      "probability": 0.0015499981648947176
+      "probability": 0.0015499981648947172
     },
     {
       "rank": 14,
       "number": "610",
-      "probability": 0.0015462893097389766
+      "probability": 0.0015462893097389764
     },
     {
       "rank": 15,
@@ -113,27 +113,27 @@
     {
       "rank": 16,
       "number": "633",
-      "probability": 0.001531034911102632
+      "probability": 0.0015310349111026318
     },
     {
       "rank": 17,
       "number": "685",
-      "probability": 0.001530668596845139
+      "probability": 0.0015306685968451389
     },
     {
       "rank": 18,
       "number": "663",
-      "probability": 0.0015217559848247622
+      "probability": 0.001521755984824762
     },
     {
       "rank": 19,
       "number": "649",
-      "probability": 0.0015172495818522097
+      "probability": 0.0015172495818522099
     },
     {
       "rank": 20,
       "number": "632",
-      "probability": 0.0015146712343496974
+      "probability": 0.0015146712343496972
     }
   ],
   "champion_pool": {
@@ -148,5 +148,5 @@
       }
     ]
   },
-  "updated_at": "2026-11-19T04:17:30+09:00"
+  "updated_at": "2026-11-19T10:51:22+09:00"
 }
