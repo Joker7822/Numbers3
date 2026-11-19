@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-19T04:19:56+09:00",
+  "generated_at": "2026-11-19T10:53:26+09:00",
   "dataset_fingerprint": "2cfe00aa98ad57cdf3d9",
   "champion_id": "champ-93e379335cc8",
   "generation": 3,
@@ -50,9 +50,9 @@
     "mini20_rate": 0.10518361795375548
   },
   "best_selection_exact_nll": 6.912965689301703,
-  "improvement_vs_previous_best": 1.1145023454339764e-05,
-  "improved_best": true,
-  "stagnation_count": 0,
+  "improvement_vs_previous_best": 0.0,
+  "improved_best": false,
+  "stagnation_count": 1,
   "replay_version": "v4-champion-pool-text-v1",
   "skipped": false,
   "text_report": {
