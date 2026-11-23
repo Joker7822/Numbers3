@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-23T03:18:36+09:00",
+  "generated_at": "2026-11-23T09:48:54+09:00",
   "dataset_fingerprint": "5b3b589f185b65851b0a",
   "champion_id": "champ-93e379335cc8",
   "generation": 3,
@@ -52,7 +52,7 @@
   "best_selection_exact_nll": 6.912965689301703,
   "improvement_vs_previous_best": -2.1089405080942925e-05,
   "improved_best": false,
-  "stagnation_count": 4,
+  "stagnation_count": 5,
   "replay_version": "v4-champion-pool-text-v1",
   "skipped": false,
   "text_report": {
