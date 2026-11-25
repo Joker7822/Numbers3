@@ -1,36 +1,36 @@
 {
-  "generated_at": "2026-11-25T12:30:28+09:00",
+  "generated_at": "2026-11-26T05:24:41+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
   "config_id": "pool-90c3165cf721",
   "primary_config_id": "20fc1e094187",
-  "dataset_fingerprint": "c60ff6cd71090f2f",
+  "dataset_fingerprint": "2264fac601f6c551",
   "dataset": {
-    "rows": 7121,
+    "rows": 7122,
     "first_draw_date": "1994-10-07",
-    "last_draw_date": "2026-11-24",
-    "last_issue": "第7121回",
-    "last_number": "863",
-    "model_next_weekday_candidate": "2026-11-25"
+    "last_draw_date": "2026-11-25",
+    "last_issue": "第7122回",
+    "last_number": "611",
+    "model_next_weekday_candidate": "2026-11-26"
   },
   "validation": {
     "draws": 700,
     "calibration_draws": 300,
-    "period_start": "2024-03-11",
-    "period_end": "2026-11-24",
+    "period_start": "2024-03-12",
+    "period_end": "2026-11-25",
     "model_logloss": {
-      "frequency": 2.3162124942889357,
-      "markov": 2.3166494441479766,
-      "logreg": 2.449301928289024,
-      "extra_trees": 2.310656222690372
+      "frequency": 2.3159664147508323,
+      "markov": 2.31580204850518,
+      "logreg": 2.4491813210407005,
+      "extra_trees": 2.3107802124686216
     },
-    "ensemble_logloss": 2.30428415282403,
+    "ensemble_logloss": 2.304522176999039,
     "uniform_logloss": 2.302585092994046,
-    "logloss_improvement_vs_uniform": -0.0016990598299839732,
-    "exact_nll": 6.912358216275373,
+    "logloss_improvement_vs_uniform": -0.0019370840049930393,
+    "exact_nll": 6.913066201080336,
     "uniform_exact_nll": 6.907755278982137,
-    "exact_nll_improvement_vs_uniform": -0.004602937293236131,
+    "exact_nll_improvement_vs_uniform": -0.005310922098199278,
     "top1_straight_hit_rate": 0.002857142857142857,
     "top20_straight_hit_rate": 0.02857142857142857,
     "uniform_expected_top1_rate": 0.001,
@@ -38,10 +38,10 @@
     "edge_status": "not_confirmed"
   },
   "model_weights": {
-    "frequency": 0.3071321522107948,
-    "markov": 0.3054592081911319,
-    "logreg": 0.058186897073176806,
-    "extra_trees": 0.32922174252489644
+    "frequency": 0.306919146672607,
+    "markov": 0.30755038426222575,
+    "logreg": 0.058055416912490596,
+    "extra_trees": 0.3274750521526767
   },
   "v4_config": {
     "validation_draws": 1000,
@@ -77,108 +77,108 @@
   "top_predictions": [
     {
       "rank": 1,
-      "number": "663",
-      "probability": 0.0018341831560844915
+      "number": "667",
+      "probability": 0.001814595404237304
     },
     {
       "rank": 2,
-      "number": "665",
-      "probability": 0.001786831741798055
+      "number": "663",
+      "probability": 0.001797963559154776
     },
     {
       "rank": 3,
-      "number": "669",
-      "probability": 0.001765502341107928
+      "number": "666",
+      "probability": 0.0017184895550021754
     },
     {
       "rank": 4,
-      "number": "660",
-      "probability": 0.0015934073152833095
+      "number": "617",
+      "probability": 0.0016967385381399464
     },
     {
       "rank": 5,
-      "number": "662",
-      "probability": 0.001581729083353065
+      "number": "613",
+      "probability": 0.0016815977808343307
     },
     {
       "rank": 6,
-      "number": "666",
-      "probability": 0.0015429210821799016
+      "number": "660",
+      "probability": 0.0016746955630537754
     },
     {
       "rank": 7,
-      "number": "613",
-      "probability": 0.0015328144340425122
+      "number": "616",
+      "probability": 0.0016092488259824068
     },
     {
       "rank": 8,
-      "number": "603",
-      "probability": 0.0015149649899644574
+      "number": "637",
+      "probability": 0.0015749675838119298
     },
     {
       "rank": 9,
-      "number": "063",
-      "probability": 0.0015048631949031378
+      "number": "669",
+      "probability": 0.0015737770923581137
     },
     {
       "rank": 10,
-      "number": "615",
-      "probability": 0.0014961588789754825
+      "number": "610",
+      "probability": 0.0015693810782824614
     },
     {
       "rank": 11,
-      "number": "633",
-      "probability": 0.0014938550161323729
+      "number": "665",
+      "probability": 0.0015661464116856654
     },
     {
       "rank": 12,
-      "number": "667",
-      "probability": 0.0014895940357020794
+      "number": "633",
+      "probability": 0.0015613674340890023
     },
     {
       "rank": 13,
-      "number": "664",
-      "probability": 0.0014870971464656156
+      "number": "662",
+      "probability": 0.0015521262386812738
     },
     {
       "rank": 14,
-      "number": "619",
-      "probability": 0.0014796474181600948
+      "number": "661",
+      "probability": 0.001542165487319358
     },
     {
       "rank": 15,
-      "number": "605",
-      "probability": 0.0014789429284454971
+      "number": "647",
+      "probability": 0.0015151897325295274
     },
     {
       "rank": 16,
-      "number": "263",
-      "probability": 0.0014731649371193005
+      "number": "687",
+      "probability": 0.001504131323218349
     },
     {
       "rank": 17,
-      "number": "065",
-      "probability": 0.0014691996555861737
+      "number": "643",
+      "probability": 0.0015023458732657715
     },
     {
       "rank": 18,
-      "number": "609",
-      "probability": 0.0014627168242118507
+      "number": "636",
+      "probability": 0.0014963801551555681
     },
     {
       "rank": 19,
-      "number": "635",
-      "probability": 0.0014585821674272161
+      "number": "683",
+      "probability": 0.0014914273714500322
     },
     {
       "rank": 20,
-      "number": "069",
-      "probability": 0.0014531350473462143
+      "number": "619",
+      "probability": 0.0014775102085818977
     }
   ],
   "experimental_box_recommendation": {
-    "number": "036",
-    "model_permutation_mass": 0.00729716374021841,
+    "number": "016",
+    "model_permutation_mass": 0.007332619774511061,
     "method": "maximum joint probability summed over 6 permutations",
     "digits_distinct": true,
     "status": "shadow_not_production"
