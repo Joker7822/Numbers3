@@ -1,47 +1,47 @@
 {
-  "generated_at": "2026-11-26T11:47:05+09:00",
+  "generated_at": "2026-11-27T05:00:51+09:00",
   "generation": 3,
   "champion_generation": 3,
   "champion_id": "champ-93e379335cc8",
   "config_id": "pool-90c3165cf721",
   "primary_config_id": "20fc1e094187",
-  "dataset_fingerprint": "2264fac601f6c551",
+  "dataset_fingerprint": "49a68bf2c8aee534",
   "dataset": {
-    "rows": 7122,
+    "rows": 7123,
     "first_draw_date": "1994-10-07",
-    "last_draw_date": "2026-11-25",
-    "last_issue": "第7122回",
-    "last_number": "611",
-    "model_next_weekday_candidate": "2026-11-26"
+    "last_draw_date": "2026-11-26",
+    "last_issue": "第7123回",
+    "last_number": "412",
+    "model_next_weekday_candidate": "2026-11-27"
   },
   "validation": {
     "draws": 700,
     "calibration_draws": 300,
-    "period_start": "2024-03-12",
-    "period_end": "2026-11-25",
+    "period_start": "2024-03-13",
+    "period_end": "2026-11-26",
     "model_logloss": {
-      "frequency": 2.3159664147508323,
-      "markov": 2.31580204850518,
-      "logreg": 2.449181321046776,
-      "extra_trees": 2.3106760475026342
+      "frequency": 2.316184507586887,
+      "markov": 2.3169812718580887,
+      "logreg": 2.447835425883874,
+      "extra_trees": 2.3102178520790866
     },
-    "ensemble_logloss": 2.304494932982413,
+    "ensemble_logloss": 2.304789836666246,
     "uniform_logloss": 2.302585092994046,
-    "logloss_improvement_vs_uniform": -0.0019098399883672457,
-    "exact_nll": 6.912982544552345,
+    "logloss_improvement_vs_uniform": -0.002204743672200138,
+    "exact_nll": 6.913836261543688,
     "uniform_exact_nll": 6.907755278982137,
-    "exact_nll_improvement_vs_uniform": -0.005227265570208139,
+    "exact_nll_improvement_vs_uniform": -0.006080982561551096,
     "top1_straight_hit_rate": 0.002857142857142857,
-    "top20_straight_hit_rate": 0.03142857142857143,
+    "top20_straight_hit_rate": 0.027142857142857142,
     "uniform_expected_top1_rate": 0.001,
     "uniform_expected_top20_rate": 0.02,
     "edge_status": "not_confirmed"
   },
   "model_weights": {
-    "frequency": 0.3067882491594711,
-    "markov": 0.3074192175334623,
-    "logreg": 0.058030656935366555,
-    "extra_trees": 0.32776187637169996
+    "frequency": 0.30670945883893996,
+    "markov": 0.3036699309036597,
+    "logreg": 0.05916111190948466,
+    "extra_trees": 0.3304594983479157
   },
   "v4_config": {
     "validation_draws": 1000,
@@ -77,108 +77,108 @@
   "top_predictions": [
     {
       "rank": 1,
-      "number": "667",
-      "probability": 0.0018208333193160525
+      "number": "612",
+      "probability": 0.0019366296241869851
     },
     {
       "rank": 2,
-      "number": "663",
-      "probability": 0.0017988911480167288
+      "number": "613",
+      "probability": 0.0018952473562750135
     },
     {
       "rank": 3,
-      "number": "666",
-      "probability": 0.0017183958443702109
+      "number": "619",
+      "probability": 0.0017694625184078053
     },
     {
       "rank": 4,
-      "number": "617",
-      "probability": 0.0017023021701856491
+      "number": "611",
+      "probability": 0.0017117334634265187
     },
     {
       "rank": 5,
-      "number": "613",
-      "probability": 0.001682329082146484
+      "number": "662",
+      "probability": 0.0017084332333298163
     },
     {
       "rank": 6,
-      "number": "660",
-      "probability": 0.0016747948699076226
+      "number": "615",
+      "probability": 0.0016962569037369808
     },
     {
       "rank": 7,
-      "number": "616",
-      "probability": 0.0016090574006643154
+      "number": "663",
+      "probability": 0.0016736241865348326
     },
     {
       "rank": 8,
-      "number": "637",
-      "probability": 0.001579945440460702
+      "number": "610",
+      "probability": 0.0016392419567668492
     },
     {
       "rank": 9,
-      "number": "665",
-      "probability": 0.0015705528886495257
+      "number": "617",
+      "probability": 0.0016356005128102225
     },
     {
       "rank": 10,
-      "number": "610",
-      "probability": 0.0015693691633583975
+      "number": "616",
+      "probability": 0.0015881641670786595
     },
     {
       "rank": 11,
       "number": "669",
-      "probability": 0.001568275084106661
+      "probability": 0.0015678191998015553
     },
     {
       "rank": 12,
-      "number": "633",
-      "probability": 0.001562004987640521
+      "number": "632",
+      "probability": 0.001558966677537765
     },
     {
       "rank": 13,
-      "number": "662",
-      "probability": 0.0015520050025091263
+      "number": "633",
+      "probability": 0.0015284630306534692
     },
     {
       "rank": 14,
       "number": "661",
-      "probability": 0.001542570998278963
+      "probability": 0.001519259913960857
     },
     {
       "rank": 15,
-      "number": "647",
-      "probability": 0.0015198216096626764
+      "number": "665",
+      "probability": 0.0015062416740808085
     },
     {
       "rank": 16,
-      "number": "687",
-      "probability": 0.001508728053447179
+      "number": "602",
+      "probability": 0.0014643024601694184
     },
     {
       "rank": 17,
-      "number": "643",
-      "probability": 0.0015028799561423384
+      "number": "112",
+      "probability": 0.0014604438853540345
     },
     {
       "rank": 18,
-      "number": "636",
-      "probability": 0.0014961900699818943
+      "number": "912",
+      "probability": 0.0014592400320575598
     },
     {
       "rank": 19,
-      "number": "683",
-      "probability": 0.0014919706901830294
+      "number": "660",
+      "probability": 0.001458283066270368
     },
     {
       "rank": 20,
-      "number": "615",
-      "probability": 0.0014744818233297862
+      "number": "667",
+      "probability": 0.0014552200346995233
     }
   ],
   "experimental_box_recommendation": {
-    "number": "016",
-    "model_permutation_mass": 0.007332755165325482,
+    "number": "126",
+    "model_permutation_mass": 0.007815722403113425,
     "method": "maximum joint probability summed over 6 permutations",
     "digits_distinct": true,
     "status": "shadow_not_production"
