@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-27T07:32:29+09:00",
+  "generated_at": "2026-11-28T07:16:22+09:00",
   "source": "Joker7822/Numbers3 repository snapshot",
   "last_draw": {
     "issue": 7123,
@@ -398,7 +398,7 @@
     "exact_nll": 6.945649989869994,
     "random_straight_baseline": 0.001,
     "method": "past-only prequential walk-forward; frequency/Markov before 100 draws and periodic ML afterwards; causal adaptive weights",
-    "generated_at": "2026-11-27T07:32:26+09:00",
+    "generated_at": "2026-11-28T07:16:17+09:00",
     "payout_reconciliation": {
       "source_type": "third_party_public_result_archive",
       "officially_crosschecked_all_records": false,
@@ -531,17 +531,17 @@
   },
   "forecast": {
     "target_issue": 7124,
-    "generated_at": "2026-11-27T05:00:51+09:00",
+    "generated_at": "2026-11-27T11:46:02+09:00",
     "top_predictions": [
       {
         "rank": 1,
         "number": "612",
-        "probability": 0.0019366296241869851
+        "probability": 0.0019366296241869847
       },
       {
         "rank": 2,
         "number": "613",
-        "probability": 0.0018952473562750135
+        "probability": 0.0018952473562750133
       },
       {
         "rank": 3,
@@ -556,7 +556,7 @@
       {
         "rank": 5,
         "number": "662",
-        "probability": 0.0017084332333298163
+        "probability": 0.0017084332333298158
       },
       {
         "rank": 6,
@@ -566,7 +566,7 @@
       {
         "rank": 7,
         "number": "663",
-        "probability": 0.0016736241865348326
+        "probability": 0.0016736241865348324
       },
       {
         "rank": 8,
@@ -581,17 +581,17 @@
       {
         "rank": 10,
         "number": "616",
-        "probability": 0.0015881641670786595
+        "probability": 0.0015881641670786593
       },
       {
         "rank": 11,
         "number": "669",
-        "probability": 0.0015678191998015553
+        "probability": 0.001567819199801555
       },
       {
         "rank": 12,
         "number": "632",
-        "probability": 0.001558966677537765
+        "probability": 0.0015589666775377648
       },
       {
         "rank": 13,
@@ -601,12 +601,12 @@
       {
         "rank": 14,
         "number": "661",
-        "probability": 0.001519259913960857
+        "probability": 0.0015192599139608569
       },
       {
         "rank": 15,
         "number": "665",
-        "probability": 0.0015062416740808085
+        "probability": 0.0015062416740808083
       },
       {
         "rank": 16,
@@ -616,7 +616,7 @@
       {
         "rank": 17,
         "number": "112",
-        "probability": 0.0014604438853540345
+        "probability": 0.0014604438853540343
       },
       {
         "rank": 18,
@@ -626,12 +626,12 @@
       {
         "rank": 19,
         "number": "660",
-        "probability": 0.001458283066270368
+        "probability": 0.0014582830662703676
       },
       {
         "rank": 20,
         "number": "667",
-        "probability": 0.0014552200346995233
+        "probability": 0.001455220034699523
       }
     ],
     "edge_status": "not_confirmed",
