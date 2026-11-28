@@ -1,11 +1,11 @@
 {
-  "total_experiments": 97906,
-  "last_experiment_id": "exp-0097906-59d6239a7f3d",
-  "last_completed_at": "2026-11-28T11:04:56+09:00",
+  "total_experiments": 97929,
+  "last_experiment_id": "exp-0097929-6f399424d713",
+  "last_completed_at": "2026-11-28T11:35:10+09:00",
   "last_dataset_fingerprint": "c7ec4b3130669b2ee204",
   "current_champion_id": "champ-93e379335cc8",
   "current_generation": 3,
-  "experiments_since_last_promotion": 92102,
+  "experiments_since_last_promotion": 92125,
   "search_mode": "structural",
   "eval_version": "rolling7-bootstrap-metasearch-structural-diversity-v6",
   "meta_search_strategy": "v6_stability_meta_lcb",
@@ -13,6 +13,6 @@
   "champion_pool_id": "pool-90c3165cf721",
   "champion_pool_members": 1,
   "structural_model_version": "pairwise-regime-v6",
-  "shadow_pool_candidates": 4,
+  "shadow_pool_candidates": 7,
   "active_pool_policy": "promoted-only-diversity-aware"
 }
